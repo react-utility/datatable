@@ -1,0 +1,23 @@
+.header {
+    background-color: blanchedalmond;
+    border-width: 1px;
+    border-color: blueviolet;
+    text-align: left;
+    padding-left: 0.5rem/* 8px */;
+    padding-right: 0.5rem/* 8px */;
+}
+
+.headerInner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 10rem/* 160px */;
+}
+
+.appearance-none{
+    appearance: none;
+}
+.appearance-none:focus{
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}

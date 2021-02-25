@@ -5,6 +5,8 @@ import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
 import { uglify } from 'rollup-plugin-uglify';
 import typescript from 'rollup-plugin-typescript2';
+import postcss from 'rollup-plugin-postcss';
+
 import pkg from './package.json';
 
 const input = "src/index.tsx"
@@ -15,10 +17,15 @@ export default [
         output: {
             name: pkg.name,
             file: `dist/${pkg.name}.dev.js`,
-            format: "cjs",
+            format: "iife",
             exports: "named",
+            sourceMap: 'inline',
+            extend: true
         },
         plugins: [
+            postcss({
+              extensions: [ '.css' ],
+            }),
             resolve({
                 browser: true,
                 preferBuiltins: true,
@@ -46,6 +53,9 @@ export default [
             exports: "named",
         },
         plugins: [
+            postcss({
+                extensions: [ '.css' ],
+            }),
             resolve({
                 browser: true,
                 preferBuiltins: true,
@@ -74,6 +84,9 @@ export default [
             exports: "named",
         },
         plugins: [
+            postcss({
+                extensions: [ '.css' ],
+            }),
             resolve({
                 browser: true,
                 preferBuiltins: true,
@@ -105,6 +118,9 @@ export default [
             exports: "named",
         },
         plugins: [
+            postcss({
+                extensions: [ '.css' ],
+            }),
             resolve({
                 browser: true,
                 preferBuiltins: true,
