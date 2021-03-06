@@ -1,48 +1,47 @@
-import { IHeaderCss, Sorting, SortOptions } from "./interfaces";
+import { IColumn, IHeaderCss } from "./interfaces";
 
-export interface IDataTableProps {
-    header: Array<IColumn> | null | undefined,
-    data: Array<any> | null | undefined,
-    options?: IDataTableOptions
-    classNames? : IDataTableCSS
+export type TableColumn = IColumn & {
+    isSorted : boolean,
+    sortDirection? : Sorting
 }
 
-export interface IColumn {
-    name?: string,
-    selector?: string,
-    sortable?: boolean,
-    format? : (row : {},index: number) => {},
-    className? : string,
-    width?: string,
-    minWidth?: string,
-    maxWidth?: string,
-    right?:string,
-    center?:string,
-    compact?:string,
-    wrap?: boolean,
-    hide?: number | string,
-    omit?: boolean,
-    id? : string | number,
-    sortIcon? : React.FC
+export type HeaderItem = {
+    isHeaderClicked : boolean,
+    onSortClicked : (sortDirection: Sorting, headerItem: TableColumn,event: React.MouseEvent)  => void,
+    prevDirection : Sorting,
+    isHovered? : boolean,
+    props : HeaderProps
 }
 
-export interface IDataTableOptions{
-    stripped? : boolean,
-    highlightOnHover? : boolean,
-    noDataComponent? : React.FC,
-    dense? : boolean,
-    direction?: string,
-    pagination? : boolean,
-    pageNumber? : number[],
-    defaultSortHeader? : string,
-    defaultSortAsc? : boolean,
-    onSort? : (column : any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
-    customSortFunction? : (options:SortOptions) => any[],
-    showProgressPending? : boolean,
-    customProgressPendingComponent? : React.FC,
+export type SortOptions = {
+    sortArray: any[], 
+    stortKey: string, 
+    sortDirection?: Sorting,
 }
 
-export interface IDataTableCSS {
-    highlightOnHoverClass?: string,
-    header?: IHeaderCss,
+export type CellProps = {
+    displayValue: string,
+    rest?: any
+}
+
+export enum Sorting {
+    ASC,
+    DESC
+}
+
+export type HeaderProps = {
+    item: TableColumn,
+    sortState?: {sortKey: string | null | undefined, isSorted: boolean}
+    sortIcon? : React.FC,
+    classNames? : IHeaderCss,
+    onColumnClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
+    onSortClick?: (sortDirection: Sorting, headerItem: TableColumn,event: React.MouseEvent) => void
+}
+
+
+export type RowProps = {
+    header: Array<IColumn>,
+    dataItem: any,
+    index: string,
+    rest?: any
 }

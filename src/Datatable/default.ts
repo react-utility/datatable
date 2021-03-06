@@ -1,7 +1,15 @@
-import { IDataTableOptions } from "./types";
+import { IDataTableCSS, IDataTableOptions } from "./interfaces"
+
 
 export const defaultOptions : IDataTableOptions = {
-    pagination : true,
-    pageNumber : [10, 40, 70, 100],
-    showProgressPending : true,
+
+}
+
+export const defaultCss : IDataTableCSS = {
+    header : {
+        header : 'header',
+        headerInner : 'headerInner',
+        headerButton : 'button',
+        headerIcon : 'icon'
+    }
 }

@@ -1,184 +1,137 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import '../index.css';
-import { defaultOptions } from './default';
-
+import { defaultCss, defaultOptions } from './default';
 import Header from './Header';
-import usePagination from './hooks/usePagination';
-import useSort from './hooks/useSort';
-import { Sorting } from './interfaces';
+//import usePagination from './hooks/usePagination';
+//import useSort from './hooks/useSort';
+import { Sorting, SortOptions, TableColumn } from './types';
+//import Row from './Row';
+import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces';
 import Row from './Row';
-import { IColumn, IDataTableOptions, IDataTableProps } from './types';
+import useSort from './hooks/useSort';
 
 
 const DataTable : React.FC<IDataTableProps> = (props) => {
-    //console.log('Rendering Datatable since props has changed',props);
-    const [currentSortedItem,setCurrentSortedItem] = useState<{sortKey: string | null | undefined, isSorted: boolean}>({sortKey: null, isSorted: false});
-    const [tableHeader, setTableHeader] = useState<Array<IColumn>>([]);
-    const [tableData, setTableData] = useState<any[]>([]);
+
+    const UniqueId = '_' + Math.random().toString(36).substr(2,9);
+
     const [tableOptions, setTableOptions] = useState<IDataTableOptions>(defaultOptions);
-    const [currentPageNumber, setCurrentPageNumber] = useState<number>(tableOptions.pageNumber![0]);
+    const [tableCss, setTableCss] = useState<IDataTableCSS>(defaultCss);
+    const [tableHeader,setTableHeader] =  useState<TableColumn[]>([]);
+    const [tableData,setTableData] = useState<any[]>([]);
 
-
-    const sortFunction = tableOptions.customSortFunction ? tableOptions.customSortFunction : useSort;
-
+    /**
+     * Set the table options by merging default options and props options to TableOptions.
+     * Re-render the table if props.options changes
+     */
     useEffect(() => {
-        let options = {...defaultOptions,...props.options}; 
-        setTableOptions(options);
-    },[props.options])
+        let newOptions = {...defaultOptions, ...props.options};
+        setTableOptions(newOptions);
+    },[props.options]);
 
+    /**
+     * Set the table css by merging default css and props classnames to TableCss.
+     * Re-render the table if props.classnames changes.
+     */
     useEffect(() => {
-        if(props.header && props.header !== null && props.header.length > 0){
-            /* let newHeader = props.header?.map((item) => ({ ...item, isSortOpen: false }));
-            if(newHeader){
-                setTableHeader(newHeader);
-            } */
-            setTableHeader(props.header);
+        let newCss = {...defaultCss, ...props.classNames};
+        setTableCss(newCss);
+    },[props.classNames]);
+
+    /**
+     * Set Header Data after Initial Render. 
+     * Change table Header whenever the props changes  
+     */
+    useEffect(() => {
+        if(props.header){
+            let newHeader : TableColumn[] = props.header!.map((item) => ({...item, isSorted : false}));
+            setTableHeader(newHeader);
         }
-    }, [props.header]);
+    },[props.header]);
 
+    /**
+     * Set Table Data after Initial Render. 
+     * Change table data whenever the props changes for props.data
+     */
     useEffect(() => {
-        if(props.data && props.data !== null && props.data.length > 0) {
-            console.log(props.options?.defaultSortHeader,props.options?.defaultSortAsc);
-
-            if(props.options?.defaultSortHeader){
-                if(props.options?.defaultSortAsc === undefined){
-                    setTableData(sortFunction({sortArray : props.data, stortKey: props.options.defaultSortHeader, sortDirection: Sorting.ASC}));
+        if(props.data){
+            let data = [...props.data];
+            if(props.options && props.options!.defaultSortHeader!){
+                let sortFunction = determineSortFunction();
+                if(props.options!.defaultSortAscending === undefined || props.options!.defaultSortAscending){
+                    let newData = sortFunction({sortArray : data, stortKey: props.options!.defaultSortHeader!, sortDirection: Sorting.ASC});
+                    setTableData(newData);
                 }else{
-                    if(props.options?.defaultSortAsc){
-                        setTableData(sortFunction({sortArray : props.data, stortKey: props.options.defaultSortHeader, sortDirection: Sorting.ASC}));
-                    }else{
-                        setTableData(sortFunction({sortArray : props.data, stortKey: props.options.defaultSortHeader, sortDirection: Sorting.DESC}));
-                    }
+                    let newData = sortFunction({sortArray : data, stortKey: props.options!.defaultSortHeader!, sortDirection: Sorting.DESC});
+                    setTableData(newData);
                 }
             }else{
-                setTableData(props.data);
+                setTableData(data);
             }
-            setTableOptions({...tableOptions, showProgressPending : false});
         }
-    }, [props.data]);
+    },[props.data,props.options]);
 
+    
 
-    const [setPage,isFirst,isLast,data] = usePagination({currentArray : tableData, currentPage: currentPageNumber});
-    //console.log({isFirst,isLast,totalRows,data});
-
-    if(tableHeader.length === 0){
-        return (<div>NoHeader</div>)
+    const determineSortFunction = () : ((options: SortOptions) => any[]) => {
+        return tableOptions.customSortFunction ? tableOptions.customSortFunction : useSort;
     }
 
-    const handleColumnClick = (isSortOpen : boolean, selectedItem: IColumn, event: React.MouseEvent<HTMLButtonElement> ) => {
 
-        setCurrentSortedItem(prevstate => {
-            if(prevstate.sortKey === null || prevstate.sortKey === selectedItem.selector){
-                return {sortKey:selectedItem.selector, isSorted:!isSortOpen}
-            }
-            return {sortKey:selectedItem.selector, isSorted:true};
+    const handleOnCloumnClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
+        //console.log('From Datatable Handle Column Click is triggered');
+        let sortFunction = determineSortFunction();
+        setTableHeader(prevState => {
+            return prevState.map(item => {
+                if(item.selector === selectedItem.selector){
+                    return ({...item,isSorted : isSortOpen,sortDirection : Sorting.ASC});
+                }
+                return ({...item,isSorted : false,sortDirection : undefined});
+            });
         });
-
-        if(props.data){
-            let newData = [...props.data];
-            setTableData(sortFunction({sortArray : newData, stortKey: selectedItem.selector!}));
-        }
-
-        if(props.options && props.options.onSort){
-            props.options!.onSort([],Sorting.ASC,event);
-        }
+        let newData = [...props.data!];
+        setTableData(sortFunction({sortArray : newData, stortKey: selectedItem.selector!, sortDirection: Sorting.ASC}));
         
-    }
+        if(props.options && props.options!.onSort)
+            props.options!.onSort!([],Sorting.ASC,event);
+    };
 
-    const handleSorting = (sortDirection: Sorting, headerItem: IColumn ) => {
-        if(props.data){
-            let newData = [...props.data];
-            setTableData(sortFunction({sortArray : newData, stortKey: headerItem.selector!, sortDirection: sortDirection}));
-        }
-    }
+    const handleOnSortClick = (sortDirection : Sorting ,headerItem : TableColumn) => {
+        //console.log('Sorting is called',sortDirection);
+        let sortFunction = determineSortFunction();
+        setTableHeader(prevState => {
+            return prevState.map(item => {
+                if(item.selector === headerItem.selector){
+                    return ({...item,sortDirection : sortDirection});
+                }
+                return ({...item,sortDirection : undefined});
+            });
+        });
+        let newData = [...props.data!];
+        setTableData(sortFunction({sortArray : newData, stortKey: headerItem.selector!, sortDirection: sortDirection}));
+    };
 
     return(
         <>
-            <div className="overflow-x-auto">
-                <div className="w-max">
-                    <table className="mt-8">
-                        <thead>
-                            <tr>
-                                {
-                                    tableHeader.length > 0 &&
-                                    tableHeader.map((item) => {
-                                        return (<Header item={item} key={item.selector} sortState={currentSortedItem} onColumnClick={handleColumnClick} onSortClick={handleSorting} classNames={props.classNames!.header}/>)
-                                    })
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
                             {
-                                tableOptions.showProgressPending && 
-                                <tr>
-                                    <td colSpan={tableHeader.length}>
-                                        {
-                                            tableOptions.customProgressPendingComponent && 
-                                            <tableOptions.customProgressPendingComponent />
-                                        }
-                                        {
-                                            !tableOptions.customProgressPendingComponent && 
-                                            <>
-                                                Loading... {JSON.stringify(tableOptions)}
-                                            </>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                            {
-                                !tableOptions.showProgressPending && 
-                                data.map((dataItem, index) => {
-                                    return (<Row header={tableHeader} dataItem={dataItem} index={index + ''} key={index} />)
+                                tableHeader.map((item,index) => {
+                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onColumnClick={handleOnCloumnClick} onSortClick={handleOnSortClick}/>)
                                 })
                             }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div className="mt-4 flex items-center space-x-12">
-                <select
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                        setCurrentPageNumber(parseInt(e.target.value));
-                    }}
-                >
-                    {
-                        tableOptions.pageNumber!.map((item, index) => {
-                            return (
-                                <option key={index + 'pageNumber'} value={item}>{item}</option>
-                            )
-                        })
-                    }
-                </select>
-                <div className="flex items-center space-x-3">
-                    <button 
-                        disabled={isFirst}
-                        onClick={() => {
-                            setPage();
-                        }}
-                        className="disabled:opacity-30"
-                    >Fist Page</button>
-                    <button 
-                        disabled={isFirst}
-                        onClick={() => {
-                            setPage('previous');
-                        }}
-                        className="disabled:opacity-30"
-                    >Previous</button>
-                    <button 
-                        disabled={isLast}
-                        onClick={() => {
-                            setPage('next');
-                        }}
-                        className="disabled:opacity-30"
-                    >Next</button>
-                    <button 
-                        disabled={isLast}
-                        onClick={() => {
-                            setPage('last');
-                        }}
-                        className="disabled:opacity-30"
-                    >Last Page</button>
-                </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            tableData.map((dataItem,index) => {
+                                return <Row header={tableHeader} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
         </>
     )

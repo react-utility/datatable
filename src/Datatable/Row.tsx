@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
-import { RowProps } from './interfaces';
+import { RowProps } from './types';
 
 
 const Row :React.FC<RowProps> = (props: RowProps) => {

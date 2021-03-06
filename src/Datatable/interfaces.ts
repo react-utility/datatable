@@ -1,46 +1,37 @@
-import { IColumn } from "./types";
+import { HeaderItem, Sorting, SortOptions } from "./types";
 
-export interface SortOptions{
-    sortArray: any[], 
-    stortKey: string, 
-    sortDirection?: Sorting,
+export interface IDataTableProps {
+    header: IColumn[] | undefined,
+    data: any[] | undefined,
+    options?: IDataTableOptions,
+    classNames? : IDataTableCSS
 }
 
-export interface CellProps {
-    displayValue: string,
-    rest?: any
+export interface IColumn {
+    name?: string,
+    selector?: string,
+    sortable?: boolean,
+    sortIcon? : React.FC<HeaderItem>
 }
 
-export enum Sorting {
-    ASC,
-    DESC
+export interface IDataTableOptions{
+    defaultSortHeader? : string,
+    defaultSortAscending? : boolean,
+    onSort? : (column : any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
+    customSortFunction? : (options:SortOptions) => any[],
 }
 
-export interface HeaderProps {
-    item: IColumn,
-    sortState?: {sortKey: string | null | undefined, isSorted: boolean}
-    sortIcon? : React.FC,
-    classNames? : IHeaderCss,
-    onColumnClick: (isSortOpen: boolean, selectedItem: IColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortClick: (sortDirection: Sorting, headerItem: IColumn,event: React.MouseEvent<HTMLButtonElement>) => void
+export interface IDataTableCSS {
+    highlightOnHoverClass?: string,
+    header?: IHeaderCss,
 }
 
 export interface IHeaderCss {
     header? : string,
     headerInner?: string,
-    headerName?: string,
-    sortIcon?: string
+    headerButton?: string,
+    headerIcon?: string
 }
-
-
-export interface RowProps {
-    header: Array<IColumn>,
-    dataItem: any,
-    index: string,
-    rest?: any
-}
-
-
 
 
 

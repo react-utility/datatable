@@ -1,7 +1,6 @@
-import { Sorting, SortOptions } from "../interfaces";
+import { Sorting, SortOptions } from "../types";
 
 const useSort = ({sortArray, stortKey, sortDirection = Sorting.ASC} : SortOptions) : any[] => {
-
     switch (sortDirection) {
         case Sorting.ASC:
             return sortArray.sort((a: any, b: any) => {
