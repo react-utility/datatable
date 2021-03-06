@@ -1,0 +1,110 @@
+[
+    {
+        "id" : 1,
+        "name": "Person Id",
+        "i18Name": "i18n-id",
+        "selector": "id"
+    },
+    {
+        "id" : 2,
+        "name": "First Name",
+        "i18Name": "i18n-first_name",
+        "selector": "first_name"
+    },
+    {
+        "id" : 3,
+        "name": "Last Name",
+        "i18Name": "i18n-last_name",
+        "selector": "last_name"
+    },
+    {
+        "id" : 4,
+        "name": "Email",
+        "i18Name": "i18n-email",
+        "selector": "email"
+    },
+    {
+        "id" : 5,
+        "name": "Gender",
+        "i18Name": "i18n-gender",
+        "selector": "gender"
+    },
+    {
+        "id" : 6,
+        "name": "Department",
+        "i18Name": "i18n-department",
+        "selector": "department"
+    },
+    {
+        "id" : 7,
+        "name": "Salary",
+        "i18Name": "i18n-salary",
+        "selector": "salary"
+    },
+    {
+        "id" : 8,
+        "name": "Joining Date",
+        "i18Name": "i18n-joining_date",
+        "selector": "joining_date"
+    },
+    {
+        "id" : 9,
+        "name": "NHS Number",
+        "i18Name": "i18n-nhs_number",
+        "selector": "nhs_number"
+    },
+    {
+        "id" : 10,
+        "name": "University",
+        "i18Name": "i18n-university",
+        "selector": "university"
+    },
+    {
+        "id" : 11,
+        "name": "City",
+        "i18Name": "i18n-city",
+        "selector": "city"
+    },
+    {
+        "id" : 12,
+        "name": "Postal Code",
+        "i18Name": "i18n-postal_code",
+        "selector": "postal_code"
+    },
+    {
+        "id" : 13,
+        "name": "Street Address",
+        "i18Name": "i18n-street_address",
+        "selector": "street_address"
+    },
+    {
+        "id" : 14,
+        "name": "Street Number",
+        "i18Name": "i18n-street_number",
+        "selector": "street_number"
+    },
+    {
+        "id" : 15,
+        "name": "Street Name",
+        "i18Name": "i18n-street_name",
+        "selector": "street_name"
+    },
+    {
+        "id" : 16,
+        "name": "State",
+        "i18Name": "i18n-state",
+        "selector": "state"
+    },
+    {
+        "id" : 17,
+        "name": "Country",
+        "i18Name": "i18n-country",
+        "selector": "country"
+    },
+    {
+        "id" : 18,
+        "name": "Description",
+        "i18Name": "i18n-description",
+        "selector": "description"
+    }
+]

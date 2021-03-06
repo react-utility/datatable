@@ -1,0 +1,76 @@
+.header {
+    background-color: transparent;
+    text-align: left;
+    margin-left: 0;
+    padding-right: 0.5rem/* 8px */;
+}
+
+.headerInner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 10rem/* 160px */;
+}
+
+.button{
+    appearance: none;
+    border:none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background-color: transparent;
+    padding: 0.375rem 0 0.375rem 0;
+    cursor: pointer;
+}
+
+.button:hover{
+    color: tomato;
+}
+
+.button:hover~.icon{
+    display: flex;
+}
+
+.button:focus{
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+}
+
+.icon{
+    display: none;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    color:rgb(182, 183, 196);
+    margin-right: 2rem;
+}
+
+.icon * {
+    padding: 0;
+    cursor: pointer;
+}
+.icon *:hover {
+    color: rgb(49, 47, 47);
+}
+
+.icon > *:first-child{
+    margin-bottom: -5px;
+}
+
+.icon-focus{
+    color:rgb(26, 25, 34);
+}
+
+.show{
+    display: flex !important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td{
+    padding: 0.875rem 0 0.875rem 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgb(199, 198, 198);
+}
