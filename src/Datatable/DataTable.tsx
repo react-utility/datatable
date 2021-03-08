@@ -9,6 +9,7 @@ import { Sorting, SortOptions, TableColumn } from './types';
 import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces';
 import Row from './Row';
 import useSort from './hooks/useSort';
+import Progress from './Progress';
 
 
 const DataTable : React.FC<IDataTableProps> = (props) => {
@@ -126,6 +127,20 @@ const DataTable : React.FC<IDataTableProps> = (props) => {
                     </thead>
                     <tbody>
                         {
+                            tableOptions.showProgressPending &&
+                            <tr>
+                                <td colSpan={tableHeader.length}>
+                                {
+                                    tableOptions.customProgressPendingComponent && <tableOptions.customProgressPendingComponent />
+                                }
+                                {
+                                    !tableOptions.customProgressPendingComponent && <Progress/>
+                                }
+                                </td>                                
+                            </tr>
+                        }
+                        {
+                            !tableOptions.showProgressPending &&
                             tableData.map((dataItem,index) => {
                                 return <Row header={tableHeader} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
                             })

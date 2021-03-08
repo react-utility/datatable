@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import {
     Title,
     Subtitle,
@@ -13,24 +13,9 @@ import '../stories.css';
 import DataTable from '../../src/index';
 import {Data, Header} from '../data/weather.js';
 
-
 export default {
-    title: 'Sorting/Default Sorting',
+    title: 'General/Progress Bar',
     component: DataTable,
-    argsType: {
-            label: {
-              name: 'label',
-              type: { name: 'string', required: false },
-              defaultValue: 'Hello',
-              description: 'demo description',
-              table: {
-                type: { summary: 'string' },
-                defaultValue: { summary: 'Hello' },
-              }
-            }
-    },
-
-    
     parameters: {
         docs: {
           page: () => (
@@ -47,31 +32,36 @@ export default {
       },
 }
 
-const newData = [...Data];
-const newHeader = [...Header];
 const options = {
-    defaultSortHeader: 'id',
-    defaultSortAscending: true
+    showProgressPending: true
 }
 
-const Template = ({header,data,options}) => {
+const Template = ({header, data,options}) => {
+    const [newData, setNewData] = useState([]);
+    const [pending,setPending] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setPending(false);
+            setNewData([...Data]);
+        },10000);
+        return () => {
+            clearTimeout(timer);
+        }
+    },[]);
     return (
         <div>
             <div>
                 <h2 className="header">Weather Report</h2>
                 <p className="header-desc">Change the options in below control tab to see effect</p>
-                <pre>
-                    {JSON.stringify(options)}
-                </pre>
             </div>
-            <DataTable header={header} data={data} options={options}/>
+            <DataTable header={header} data={newData} options={{...options, showProgressPending : pending}} />
         </div>
     )
 }
 
-export const DefaultSorting = Template.bind({});
-DefaultSorting.args = {
-    header: newHeader,
-    data : newData,
-    options: options,
+export const ProgressBar = Template.bind({});
+ProgressBar.args = {
+    header: [...Header],
+    data: [...Data],
+    options : options
 }

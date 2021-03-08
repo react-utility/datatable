@@ -1,3 +1,4 @@
+import React from "react";
 import { HeaderItem, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
@@ -19,6 +20,8 @@ export interface IDataTableOptions{
     defaultSortAscending? : boolean,
     onSort? : (column : any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
     customSortFunction? : (options:SortOptions) => any[],
+    showProgressPending? : boolean,
+    customProgressPendingComponent ? : React.FC,
 }
 
 export interface IDataTableCSS {
