@@ -2,13 +2,11 @@ import React, { useState, useEffect, useCallback} from 'react';
 import '../index.css';
 import { defaultCss, defaultOptions } from './default';
 import Header from './Header';
-//import usePagination from './hooks/usePagination';
-//import useSort from './hooks/useSort';
 import { Sorting, SortOptions, TableColumn } from './types';
-//import Row from './Row';
 import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces';
 import Row from './Row';
 import useSort from './hooks/useSort';
+import Pagination from './Pagination';
 
 
 const DataTable : React.FC<IDataTableProps> = (props) => {
@@ -133,6 +131,9 @@ const DataTable : React.FC<IDataTableProps> = (props) => {
                     </tbody>
                 </table>
             </div>
+            {
+                tableOptions.pagination && <Pagination classNames={tableCss.pagination!}/>
+            }
         </>
     )
 }

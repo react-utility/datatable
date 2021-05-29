@@ -1,4 +1,4 @@
-import { IColumn, IHeaderCss } from "./interfaces";
+import { IColumn, IHeaderCss, PaginationCss } from "./interfaces";
 
 export type TableColumn = IColumn & {
     isSorted : boolean,
@@ -44,4 +44,8 @@ export type RowProps = {
     dataItem: any,
     index: string,
     rest?: any
+}
+
+export type PaginationProps = {
+    classNames : PaginationCss,
 }

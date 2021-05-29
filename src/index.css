@@ -74,3 +74,35 @@ td{
     font-size: 0.85rem;
     border-bottom: 1px solid rgb(199, 198, 198);
 }
+
+
+/** PAGINATION */
+.pagination{
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pagination *:nth-child(n+2) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2rem * var(--tw-space-x-reverse));
+    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.pagination p {
+    font-size: small;
+    padding-right: 0.575rem;
+}
+
+.pagination-button{
+
+}
+
+.pagination-buttonGroup{
+
+}
+
+.pagination-select{
+    min-width: 2.5rem;
+}

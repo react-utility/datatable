@@ -1,3 +1,4 @@
+import React from "react";
 import { HeaderItem, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
@@ -15,6 +16,13 @@ export interface IColumn {
 }
 
 export interface IDataTableOptions{
+    pagination? : boolean,
+    rowsPerPage? : number[],
+    customRowPerPageSelection? : React.FC<any>,
+    onPreviousClicked? : () => void,
+    onNextClicked? : () => void,
+    onFirstPageClicked? : () => void,
+    onLastPageClicked? : () => void,
     defaultSortHeader? : string,
     defaultSortAscending? : boolean,
     onSort? : (column : any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
@@ -24,8 +32,15 @@ export interface IDataTableOptions{
 export interface IDataTableCSS {
     highlightOnHoverClass?: string,
     header?: IHeaderCss,
+    pagination? : PaginationCss
 }
 
+export interface PaginationCss {
+    page? : string,
+    select? : string,
+    pageButtonGroup? : string,
+    pageButton? : string
+}
 export interface IHeaderCss {
     header? : string,
     headerInner?: string,
