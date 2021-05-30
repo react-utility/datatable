@@ -1,5 +1,5 @@
 import React from "react";
-import { IColumn, IHeaderCss, PaginationCss } from "./interfaces";
+import { IColumn, IDataTableOptions, IHeaderCss, PaginationCss, RowsPerPage } from "./interfaces";
 
 export type TableColumn = IColumn & {
     isSorted: boolean,
@@ -35,8 +35,8 @@ export type HeaderProps = {
     sortState?: { sortKey: string | null | undefined, isSorted: boolean }
     sortIcon?: React.FC,
     classNames?: IHeaderCss,
-    onColumnClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void
+    onHeaderClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
+    onSortIconClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void
 }
 
 
@@ -49,6 +49,7 @@ export type RowProps = {
 
 export type PaginationProps = {
     classNames: PaginationCss,
-    rowsPerPage?: number[],
-    onRowPerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+    tableOptions?: IDataTableOptions,
+    data: any[];
+    updateRowsPerPage: (data: any[], newRowsPerPage: number) => void
 }

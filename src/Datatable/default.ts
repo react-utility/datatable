@@ -2,8 +2,9 @@ import { IDataTableCSS, IDataTableOptions } from "./interfaces"
 
 
 export const defaultOptions: IDataTableOptions = {
+    defaultSortAscending: true,
     pagination: false,
-    rowsPerPage: [5, 10, 15, 20]
+    rowsPerPage: { option: [5, 10, 15, 20], defaultIndex: 0 }
 }
 
 export const defaultCss: IDataTableCSS = {

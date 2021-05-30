@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../index.css';
 import { defaultCss, defaultOptions } from './default';
 import Header from './Header';
@@ -12,7 +12,7 @@ import Pagination from './Pagination';
 const DataTable: React.FC<IDataTableProps> = (props) => {
 
     const UniqueId = '_' + Math.random().toString(36).substr(2, 9);
-
+    const currentSortedData = useRef<any[]>([]);
     const [tableOptions, setTableOptions] = useState<IDataTableOptions>(defaultOptions);
     const [tableCss, setTableCss] = useState<IDataTableCSS>(defaultCss);
     const [tableHeader, setTableHeader] = useState<TableColumn[]>([]);
@@ -64,9 +64,10 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                     data = sortFunction({ sortArray: data, stortKey: newOptions.defaultSortHeader!, sortDirection: Sorting.DESC });
                 }
             }
+            currentSortedData.current = data;
 
             if (newOptions.pagination) {
-                let rowPerPage: number = newOptions.rowsPerPage!.slice(0, 1)[0];
+                let rowPerPage: number = newOptions.rowsPerPage!.option[newOptions.rowsPerPage!.defaultIndex];
                 data = data.slice(0, rowPerPage);
             }
 
@@ -81,8 +82,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     }
 
 
-    const handleOnCloumnClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
-        //console.log('From Datatable Handle Column Click is triggered');
+    const handleOnHeaderClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
         let sortFunction = determineSortFunction();
         setTableHeader(prevState => {
             return prevState.map(item => {
@@ -92,14 +92,20 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 return ({ ...item, isSorted: false, sortDirection: undefined });
             });
         });
-        let newData = [...props.data!];
-        setTableData(sortFunction({ sortArray: newData, stortKey: selectedItem.selector!, sortDirection: Sorting.ASC }));
+        let data = [...props.data!];
+        data = sortFunction({ sortArray: data, stortKey: selectedItem.selector!, sortDirection: Sorting.ASC });
+        currentSortedData.current = data;
+        if (tableOptions.pagination) {
+            let rowPerPage: number = tableOptions.rowsPerPage!.option[tableOptions.rowsPerPage!.defaultIndex];
+            data = data.slice(0, rowPerPage);
+        }
+        setTableData(data);
 
-        if (props.options && props.options!.onSort)
-            props.options!.onSort!([], Sorting.ASC, event);
+        if (tableOptions.onSort)
+            tableOptions.onSort!([], Sorting.ASC, event);
     };
 
-    const handleOnSortClick = (sortDirection: Sorting, headerItem: TableColumn) => {
+    const handleOnSortIconClick = (sortDirection: Sorting, headerItem: TableColumn) => {
         //console.log('Sorting is called',sortDirection);
         let sortFunction = determineSortFunction();
         setTableHeader(prevState => {
@@ -110,22 +116,22 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 return ({ ...item, sortDirection: undefined });
             });
         });
-        let newData = [...props.data!];
-        setTableData(sortFunction({ sortArray: newData, stortKey: headerItem.selector!, sortDirection: sortDirection }));
+        let data = [...props.data!];
+        data = sortFunction({ sortArray: data, stortKey: headerItem.selector!, sortDirection: sortDirection });
+        currentSortedData.current = data;
+        if (tableOptions.pagination) {
+            let rowPerPage: number = tableOptions.rowsPerPage!.option[tableOptions.rowsPerPage!.defaultIndex];
+            data = data.slice(0, rowPerPage);
+        }
+        setTableData(data);
     };
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        let rowPerPage: number = parseInt(event.target.value);
-        let sortFunction = determineSortFunction();
-        let sortedItem = tableHeader.find(item => item.isSorted);
-        let newData = [];
-        let data = [...props.data!];
-        if (sortedItem) {
-            newData = sortFunction({ sortArray: data, stortKey: sortedItem!.selector!, sortDirection: sortedItem!.sortDirection }).slice(0, rowPerPage);
-        } else {
-            newData = data.slice(0, rowPerPage);
-        }
-        setTableData(newData);
+    const handleUpdateRowsPerPage = (data: any[], newIndex: number) => {
+        setTableData(data);
+        setTableOptions(prevOptions => {
+            prevOptions.rowsPerPage!.defaultIndex = newIndex;
+            return prevOptions;
+        })
     }
 
     return (
@@ -136,7 +142,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                         <tr>
                             {
                                 tableHeader.map((item, index) => {
-                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onColumnClick={handleOnCloumnClick} onSortClick={handleOnSortClick} />)
+                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} />)
                                 })
                             }
                         </tr>
@@ -151,7 +157,11 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 </table>
             </div>
             {
-                tableOptions.pagination && <Pagination classNames={tableCss.pagination!} rowsPerPage={tableOptions.rowsPerPage} onRowPerPageChange={handleChangeRowsPerPage} />
+                tableOptions.pagination && <Pagination
+                    classNames={tableCss.pagination!}
+                    tableOptions={tableOptions}
+                    data={[...currentSortedData.current]}
+                    updateRowsPerPage={handleUpdateRowsPerPage} />
             }
         </>
     )
