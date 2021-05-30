@@ -1,21 +1,22 @@
+import React from "react";
 import { IColumn, IHeaderCss, PaginationCss } from "./interfaces";
 
 export type TableColumn = IColumn & {
-    isSorted : boolean,
-    sortDirection? : Sorting
+    isSorted: boolean,
+    sortDirection?: Sorting
 }
 
 export type HeaderItem = {
-    isHeaderClicked : boolean,
-    onSortClicked : (sortDirection: Sorting, headerItem: TableColumn,event: React.MouseEvent)  => void,
-    prevDirection : Sorting,
-    isHovered? : boolean,
-    props : HeaderProps
+    isHeaderClicked: boolean,
+    onSortClicked: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
+    prevDirection: Sorting,
+    isHovered?: boolean,
+    props: HeaderProps
 }
 
 export type SortOptions = {
-    sortArray: any[], 
-    stortKey: string, 
+    sortArray: any[],
+    stortKey: string,
     sortDirection?: Sorting,
 }
 
@@ -31,11 +32,11 @@ export enum Sorting {
 
 export type HeaderProps = {
     item: TableColumn,
-    sortState?: {sortKey: string | null | undefined, isSorted: boolean}
-    sortIcon? : React.FC,
-    classNames? : IHeaderCss,
+    sortState?: { sortKey: string | null | undefined, isSorted: boolean }
+    sortIcon?: React.FC,
+    classNames?: IHeaderCss,
     onColumnClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortClick?: (sortDirection: Sorting, headerItem: TableColumn,event: React.MouseEvent) => void
+    onSortClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void
 }
 
 
@@ -47,5 +48,7 @@ export type RowProps = {
 }
 
 export type PaginationProps = {
-    classNames : PaginationCss,
+    classNames: PaginationCss,
+    rowsPerPage?: number[],
+    onRowPerPageChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }

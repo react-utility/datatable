@@ -1,13 +1,19 @@
 import { PaginationProps } from "./types";
 
 
-const Pagination : React.FC<PaginationProps> = (props) => {
+const Pagination: React.FC<PaginationProps> = (props) => {
 
-    return(
-        <div className={props.classNames.page}> 
+    return (
+        <div className={props.classNames.page}>
             <p>Rows per page</p>
-            <select className={props.classNames.select}>
-                <option>1</option>
+            <select className={props.classNames.select} onChange={props.onRowPerPageChange}>
+                {
+                    props.rowsPerPage?.map((number, index) => {
+                        return (
+                            <option key={'rpp_' + index}>{number}</option>
+                        )
+                    })
+                }
             </select>
 
             <div className={props.classNames.pageButtonGroup}>
