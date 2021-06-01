@@ -25,7 +25,7 @@ export interface IDataTableOptions {
     paginationIconLastPage?: React.FC<any>,
     paginationIconNext?: React.FC<any>,
     paginationIconPrevious?: React.FC<any>,
-    customRowPerPageDropdown?: React.FC<any>,
+    customRowPerPageDropdown?: React.FC<{ className?: string, updateRows: (currentSelectedIndex: number) => void, rowsPerPage?: RowsPerPage }>,
     customPagination?: React.FC<any>,
     onPaginationPageChange?: () => void,
 

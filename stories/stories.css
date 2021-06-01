@@ -59,3 +59,120 @@ code{
 .paginationCustomIcon{
     margin-top: 0.25rem;
 }
+
+.custom-pagination-dropdown{
+    min-width: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.custom-pagination-dropdown p{
+    font-size: small;
+}
+
+.custom-select-wrapper {
+     position: relative;
+     user-select: none;
+     width: auto;
+}
+ .custom-select {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     border-width: 0 1px 0 1px;
+     border-style: solid;
+     border-color: #7d91b9;
+     border-radius: 4px;
+}
+ .custom-select__trigger {
+     position: relative;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     padding: 0 0.5rem;
+     font-size: 0.86rem;
+     font-weight: 400;
+     color: #3b3b3b;
+     height: 1.4rem;
+     line-height: 1rem;
+     background: #ffffff;
+     cursor: pointer;
+     border-width: 1px 0 1px 0;
+     border-style: solid;
+     border-color: #7d91b9;
+     border-radius: 4px;
+}
+ .custom-options {
+     position: absolute;
+     display: block;
+     left:0;
+     right:0;
+     margin-top: 2px;
+     margin-left:0 !important;
+     top: 100%;
+     border: 1px dashed #394a6d83;
+     background: #fff;
+     transition: all 0.5s;
+     opacity: 0;
+     visibility: hidden;
+     pointer-events: none;
+     z-index: 2;
+}
+ .custom-select.open .custom-options {
+     opacity: 1;
+     visibility: visible;
+     pointer-events: all;
+}
+ .custom-option {
+     margin-left:0 !important;
+     position: relative;
+     display: block;
+     padding: 0 1rem 0 0.5rem;
+     font-size: 1rem;
+     font-weight: 300;
+     color: #3b3b3b;
+     line-height: 2rem;
+     cursor: pointer;
+     transition: all 0.5s;
+}
+ .custom-option:hover {
+     cursor: pointer;
+     background-color: #0d9775;
+}
+ .custom-option.selected {
+     color: #ffffff;
+     background-color: #598bc9;
+}
+
+.arrow {
+     position: relative;
+     height: 10px;
+     width: 10px;
+}
+ .arrow::before, .arrow::after {
+     content: "";
+     position: absolute;
+     width: 0.15rem;
+     height: 100%;
+     transition: all 0.5s;
+}
+ .arrow::before {
+     left: -0.05rem;
+     transform: rotate(45deg);
+     background-color: #394a6d;
+}
+ .arrow::after {
+     left: 5px;
+     transform: rotate(-45deg);
+     background-color: #394a6d;
+}
+ .open .arrow::before {
+     top: 0.1rem;
+     left: -0.07rem;
+     transform: rotate(-45deg);
+}
+ .open .arrow::after {
+     top: 0.1rem;
+     left: 5px;
+     transform: rotate(45deg);
+}

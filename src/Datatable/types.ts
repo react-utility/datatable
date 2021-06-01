@@ -49,9 +49,9 @@ export type RowProps = {
 
 export type PaginationProps = {
     classNames: PaginationCss,
-    tableOptions?: IDataTableOptions,
+    tableOptions: IDataTableOptions,
     data: any[];
-    updateRowsPerPage: (data: any[], newRowsPerPage: number) => void
+    updateRowsPerPage: (data: any[], newIndex: number) => void
 }
 
 export type DeepMerge = {
