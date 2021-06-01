@@ -11,6 +11,7 @@ import {
 
 import '../stories.css';
 import DataTable from '../../src/index';
+import { Data, Header } from '../data/weather.js';
 
 export default {
   title: 'Pagination/Custom Pagination Icon',
@@ -29,11 +30,6 @@ export default {
       ),
     },
   },
-}
-
-const getDataFromApi = async (api) => {
-  let response = await fetch(api);
-  return await response.json();
 }
 
 const FirstIcon = () => {
@@ -87,33 +83,17 @@ const options = {
 
 }
 
-const Template = ({ options, classNames }) => {
-  const [data, setData] = useState([]);
-  const [header, setHeader] = useState([]);
-
-  useEffect(() => {
-    async function getHeader() {
-      let respheader = await getDataFromApi('https://sangram1987.github.io/Sangram1987/weather-anomalies-header.json');
-      setHeader(respheader.weathernaomaliesHeader);
-    }
-    async function getData() {
-      let respdata = await getDataFromApi('https://sangram1987.github.io/Sangram1987/weather-anomalies.json');
-      setData(respdata.results);
-    }
-    getHeader();
-    getData();
-  }, []);
-
+const Template = ({ header, data, options, classNames }) => {
   return (
     <div>
       <div>
-        <h2 className="header">Weather Anomalies - <span>Custom Pagination Icon</span></h2>
+        <h2 className="header">Weather Report - <span>Custom Pagination Icon</span></h2>
         <p className="header-desc">Change the options in below control tab to see effect</p>
         <pre>
           {JSON.stringify(options)}
         </pre>
       </div>
-      <DataTable header={[...header]} data={[...data]} options={options} classNames={classNames} />
+      <DataTable header={header} data={data} options={options} classNames={classNames} />
     </div>
   )
 }
@@ -121,6 +101,8 @@ const Template = ({ options, classNames }) => {
 export const CustomPaginationIcon = Template.bind({});
 
 CustomPaginationIcon.args = {
+  header: [...Header],
+  data: [...Data],
   options: options,
   classNames: customClassNames,
 }
