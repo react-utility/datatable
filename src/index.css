@@ -90,19 +90,36 @@ td{
     margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-.pagination p {
+.pagination-dropdown{
+    min-width: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.pagination .pagination-dropdown p {
     font-size: small;
-    padding-right: 0.575rem;
+    font-weight: 500;
+    padding: 0 0.75rem 0 0;
+}
+
+.pagination .pagination-dropdown select {
+    padding: 0;
+    margin:0;
+    width: 3rem;
+}
+
+.pagination-rowsperpage{
+    font-size: small;
+    font-weight: 600;
+    color:rgb(18, 89, 221);
+}
+
+.pagination-buttonGroup{
+    display: flex;
+    align-items: center;
 }
 
 .pagination-button:disabled{
     pointer-events: none !important;
 }
 
-.pagination-buttonGroup{
-
-}
-
-.pagination-select{
-    min-width: 2.5rem;
-}

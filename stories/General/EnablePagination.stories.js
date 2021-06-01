@@ -11,32 +11,49 @@ import {
 
 import '../stories.css';
 import DataTable from '../../src/index';
-import {Data, Header} from '../data/weather.js';
+import { Data, Header } from '../data/weather.js';
 
+
+const CustomDescription = (DescriptionProps) => {
+
+    return (
+        <div className="custom-description">
+            This flag helps to enable pagination with the datatable. By default you will get Dropwdown menu to select rows per page, a text indicator for rows per page navigated and pagination navigation buttons.
+            <br />
+            Some other useful flags are as follows:
+            <br />
+            <code>showRowPerPageDropdown</code><span style={{ 'fontStyle': 'italic', 'fontSize': 'small', 'color': '#8b8b8b' }}> By Default it is set to true</span>
+            <br />
+            <code>showRowsPerPage</code><span style={{ 'fontStyle': 'italic', 'fontSize': 'small', 'color': '#8b8b8b' }}> By Default it is not set, means false.</span>
+        </div>
+    )
+}
 export default {
     title: 'General/Pagination',
     component: DataTable,
     parameters: {
         docs: {
-          page: () => (
-            <>
-              <Title />
-              <Subtitle>Use <code>defaultSortHeader</code> and <code>defaultSortAscending</code> options for Sort Data by default during initial load.</Subtitle>
-              <Description>Default sorting doesn't require `stortable` parameter to be added into header. Just pass the key and sort direction to sort the data during initial load. If no custom sort function is provided then it uses in-built sorting algorithim.</Description>
-              <Primary />
-              <ArgsTable story={PRIMARY_STORY} />
-              <Stories />
-            </>
-          ),
+            page: () => (
+                <>
+                    <Title />
+                    <Subtitle>Use <code>pagination</code> option for enable pagination in the datatable.</Subtitle>
+                    <CustomDescription />
+                    <Primary />
+                    <ArgsTable story={PRIMARY_STORY} />
+                    <Stories />
+                </>
+            ),
         },
-      },
+    },
 }
 
 const options = {
-    pagination : true,
+    pagination: true,
+    showRowPerPageDropdown: true,
+    showRowsPerPage: true,
 }
 
-const Template = ({header,data,options}) => {
+const Template = ({ header, data, options }) => {
     return (
         <div>
             <div>
@@ -54,6 +71,6 @@ const Template = ({header,data,options}) => {
 export const Pagination = Template.bind({});
 Pagination.args = {
     header: [...Header],
-    data : [...Data],
+    data: [...Data],
     options: options
 }

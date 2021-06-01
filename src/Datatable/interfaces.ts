@@ -18,13 +18,17 @@ export interface IColumn {
 export interface IDataTableOptions {
     pagination?: boolean,
     paginationServer?: boolean,
-
+    showRowPerPageDropdown?: boolean,
+    showRowsPerPage?: boolean,
     rowsPerPage?: RowsPerPage,
-    customRowPerPageSelection?: React.FC<any>,
-    onPreviousClicked?: () => void,
-    onNextClicked?: () => void,
-    onFirstPageClicked?: () => void,
-    onLastPageClicked?: () => void,
+    paginationIconFirstPage?: React.FC<any>,
+    paginationIconLastPage?: React.FC<any>,
+    paginationIconNext?: React.FC<any>,
+    paginationIconPrevious?: React.FC<any>,
+    customRowPerPageDropdown?: React.FC<any>,
+    customPagination?: React.FC<any>,
+    onPaginationPageChange?: () => void,
+
     defaultSortHeader?: string,
     defaultSortAscending?: boolean,
     onSort?: (column: any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
@@ -38,10 +42,11 @@ export interface IDataTableCSS {
 }
 
 export interface PaginationCss {
-    page?: string,
-    select?: string,
-    pageButtonGroup?: string,
-    pageButton?: string
+    pagination?: string,
+    paginationDropdown?: string,
+    rowPerPageDisplay?: string,
+    paginationButtonGroup?: string,
+    paginationButton?: string
 }
 export interface IHeaderCss {
     header?: string,

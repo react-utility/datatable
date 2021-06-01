@@ -1,5 +1,5 @@
 import React from "react";
-import { IColumn, IDataTableOptions, IHeaderCss, PaginationCss, RowsPerPage } from "./interfaces";
+import { IColumn, IDataTableOptions, IHeaderCss, PaginationCss } from "./interfaces";
 
 export type TableColumn = IColumn & {
     isSorted: boolean,
@@ -52,4 +52,9 @@ export type PaginationProps = {
     tableOptions?: IDataTableOptions,
     data: any[];
     updateRowsPerPage: (data: any[], newRowsPerPage: number) => void
+}
+
+export type DeepMerge = {
+    target: any,
+    source: any
 }

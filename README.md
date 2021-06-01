@@ -3,12 +3,24 @@
 ## API
 
 ### Pagination
+*Pagination is a property to navigate rows within the table when dataset is large. By default pagination starts from begining. Following are the API available to controll pagination from your React Functional Component (JSX/TSX).*
+<br>
 Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
-pagination | boolean | | *Enable pagination in the table*<br>*Expected Value `true` or `false`*<br><br>**`pagination : true`**
-rowsPerPage | `{option : number[], defaultIndex: number` | `{ option: [5, 10, 15, 20], defaultIndex: 0 }` | *Collection of number of Rows to be displayed per page. `option` contains the choice of numbers and `defaulIndex` will contain the index value of the option that needs to selected by default.*
-
+pagination | boolean | false | *Enable pagination in the table. By default this value is set to false.*<br>*Expected Value `true` or `false`*<br><br>**`pagination : true`**
+paginationServer __(not-implemented)__ | boolean | | *Enable pagination at server*<br>*Expected Value `true` or `false`*<br><br>**`paginationServer : true`**|
+showRowPerPageDropdown | boolean | true | *Show rows per page options dropdown for pagination. By default this value is set to true.*<br>*Expected Value `true` or `false`*<br><br>**`showRowPerPageDropdown : true`**|
+showRowsPerPage | boolean | | *Show rows per page for pagination.*<br>*Expected Value `true` or `false`*<br><br>**`showRowsPerPage : true`**<br>If enabled this will show rows per page against total number of data.|
+rowsPerPage | `{option : number[], defaultIndex: number` | `{ option: [5, 10, 15, 20], defaultIndex: 0 }` | *Collection of number of Rows to be displayed per page. `option` contains the choice of numbers and `defaulIndex` will contain the index value of the option that needs to selected by default.*<br><br>This default value depicts that by default rows per page will be `5` since `defaultIndex` is set to `0` which means `1st item` from the `option` array.
+paginationIconFirstPage | `React.FC<any>` | | |
+paginationIconLastPage | `React.FC<any>` | | |
+paginationIconNext | `React.FC<any>` | | |
+paginationIconPrevious | `React.FC<any>` | | |
+customRowPerPageDropdown | `React.FC<any>` | | |
+customPagination | `React.FC<any>` | | |
+onPaginationPageChange | `function` | | |
 <br>
+
 
 ### Sorting
 Property | Type | Default | Description/Example

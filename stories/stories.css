@@ -25,3 +25,37 @@ code{
 .header-config > *{
     word-wrap: break-word !important;
 }
+
+.custom-description{
+    font-family: "Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco",BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-overflow-scrolling: touch;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 24px;
+    color: #333333;
+}
+
+.paginationCustomButton{
+    appearance: none;
+    border:none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    background-color: transparent;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    cursor: pointer;
+}
+
+.paginationCustomButton:hover:enabled{
+    background-color: rgb(94, 94, 206);
+    color: whitesmoke;
+    border-radius: 100%;
+}
+
+.paginationCustomIcon{
+    margin-top: 0.25rem;
+}

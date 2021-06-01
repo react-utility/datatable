@@ -7,6 +7,7 @@ import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces'
 import Row from './Row';
 import useSort from './hooks/useSort';
 import Pagination from './Pagination';
+import useDeepMerge from './hooks/useDeepMerge';
 
 
 const DataTable: React.FC<IDataTableProps> = (props) => {
@@ -32,7 +33,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      * Re-render the table if props.classnames changes.
      */
     useEffect(() => {
-        let newCss = { ...defaultCss, ...props.classNames };
+        let newCss = useDeepMerge({ source: props.classNames, target: defaultCss });
         setTableCss(newCss);
     }, [props.classNames]);
 
