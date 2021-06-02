@@ -6,6 +6,7 @@ import { Sorting, SortOptions, TableColumn } from './types';
 import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces';
 import Row from './Row';
 import useSort from './hooks/useSort';
+import Progress from './Progress';
 import Pagination from './Pagination';
 import useDeepMerge from './hooks/useDeepMerge';
 
@@ -77,7 +78,6 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     }, [props.data, props.options]);
 
 
-
     const determineSortFunction = (): ((options: SortOptions) => any[]) => {
         return tableOptions.customSortFunction ? tableOptions.customSortFunction : useSort;
     }
@@ -117,6 +117,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 return ({ ...item, sortDirection: undefined });
             });
         });
+
         let data = [...props.data!];
         data = sortFunction({ sortArray: data, stortKey: headerItem.selector!, sortDirection: sortDirection });
         currentSortedData.current = data;
@@ -150,6 +151,20 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                     </thead>
                     <tbody>
                         {
+                            tableOptions.showProgressPending &&
+                            <tr>
+                                <td colSpan={tableHeader.length}>
+                                    {
+                                        tableOptions.customProgressPendingComponent && <tableOptions.customProgressPendingComponent />
+                                    }
+                                    {
+                                        !tableOptions.customProgressPendingComponent && <Progress classNames={tableCss.progressbar} />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        {
+                            !tableOptions.showProgressPending &&
                             tableData.map((dataItem, index) => {
                                 return <Row header={tableHeader} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
                             })

@@ -28,16 +28,18 @@ export interface IDataTableOptions {
     customRowPerPageDropdown?: React.FC<{ className?: string, updateRows: (currentSelectedIndex: number) => void, rowsPerPage?: RowsPerPage }>,
     customPagination?: React.FC<any>,
     onPaginationPageChange?: () => void,
-
     defaultSortHeader?: string,
     defaultSortAscending?: boolean,
     onSort?: (column: any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>) => void,
     customSortFunction?: (options: SortOptions) => any[],
+    showProgressPending?: boolean,
+    customProgressPendingComponent?: React.FC,
 }
 
 export interface IDataTableCSS {
     highlightOnHoverClass?: string,
     header?: IHeaderCss,
+    progressbar: IProgressPendingCss
     pagination?: PaginationCss
 }
 
@@ -54,6 +56,13 @@ export interface IHeaderCss {
     headerButton?: string,
     headerIcon?: string
 }
+
+export interface IProgressPendingCss {
+    progressPendingWrapper: string,
+    progressPending: string,
+    progressPendingAnimation: string,
+    progressPendingCircle: string,
+    progressPendingPath: string
 
 export interface RowsPerPage {
     option: number[],

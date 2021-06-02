@@ -15,6 +15,13 @@ export const defaultCss: IDataTableCSS = {
         headerButton: 'button',
         headerIcon: 'icon'
     },
+    progressbar: {
+        progressPendingWrapper: 'progress-pending-wrapper',
+        progressPending: 'progress-pending',
+        progressPendingAnimation: 'progress-pending-animation',
+        progressPendingCircle: 'progress-pending-circle',
+        progressPendingPath: 'progress-pending-path'
+    },
     pagination: {
         pagination: 'pagination',
         paginationDropdown: 'pagination-dropdown',

@@ -76,6 +76,50 @@ td{
 }
 
 
+.progress-pending-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1.2rem 0 1.2rem 0;
+}
+
+.progress-pending{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: rgb(160, 158, 158);
+    color: white;
+    font-size: large;
+    border-radius: 4px;
+    border:transparent;
+}
+
+.progress-pending-animation{
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    color:white;
+    margin-right: .75rem;
+    animation: spin 1s linear infinite;
+}
+
+.progress-pending-circle{
+    opacity: .25;
+}
+
+.progress-pending-path{
+    opacity: .75;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /** PAGINATION */
 .pagination{
     margin-top: 1.5rem;
@@ -122,4 +166,3 @@ td{
 .pagination-button:disabled{
     pointer-events: none !important;
 }
-
