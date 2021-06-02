@@ -1,21 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../index.css';
 import { defaultCss, defaultOptions } from './default';
 import Header from './Header';
-//import usePagination from './hooks/usePagination';
-//import useSort from './hooks/useSort';
 import { Sorting, SortOptions, TableColumn } from './types';
-//import Row from './Row';
 import { IDataTableCSS, IDataTableOptions, IDataTableProps } from './interfaces';
 import Row from './Row';
 import useSort from './hooks/useSort';
 import Progress from './Progress';
+import Pagination from './Pagination';
+import useDeepMerge from './hooks/useDeepMerge';
 
 
 const DataTable: React.FC<IDataTableProps> = (props) => {
 
     const UniqueId = '_' + Math.random().toString(36).substr(2, 9);
-
+    const currentSortedData = useRef<any[]>([]);
     const [tableOptions, setTableOptions] = useState<IDataTableOptions>(defaultOptions);
     const [tableCss, setTableCss] = useState<IDataTableCSS>(defaultCss);
     const [tableHeader, setTableHeader] = useState<TableColumn[]>([]);
@@ -35,7 +34,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      * Re-render the table if props.classnames changes.
      */
     useEffect(() => {
-        let newCss = { ...defaultCss, ...props.classNames };
+        let newCss = useDeepMerge({ source: props.classNames, target: defaultCss });
         setTableCss(newCss);
     }, [props.classNames]);
 
@@ -57,21 +56,26 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         if (props.data) {
             let data = [...props.data];
-            if (props.options && props.options!.defaultSortHeader!) {
+            let newOptions = { ...defaultOptions, ...props.options };
+
+            if (newOptions.defaultSortHeader!) {
                 let sortFunction = determineSortFunction();
-                if (props.options!.defaultSortAscending === undefined || props.options!.defaultSortAscending) {
-                    let newData = sortFunction({ sortArray: data, stortKey: props.options!.defaultSortHeader!, sortDirection: Sorting.ASC });
-                    setTableData(newData);
+                if (newOptions.defaultSortAscending === undefined || newOptions.defaultSortAscending) {
+                    data = sortFunction({ sortArray: data, stortKey: newOptions.defaultSortHeader!, sortDirection: Sorting.ASC });
                 } else {
-                    let newData = sortFunction({ sortArray: data, stortKey: props.options!.defaultSortHeader!, sortDirection: Sorting.DESC });
-                    setTableData(newData);
+                    data = sortFunction({ sortArray: data, stortKey: newOptions.defaultSortHeader!, sortDirection: Sorting.DESC });
                 }
-            } else {
-                setTableData(data);
             }
+            currentSortedData.current = data;
+
+            if (newOptions.pagination) {
+                let rowPerPage: number = newOptions.rowsPerPage!.option[newOptions.rowsPerPage!.defaultIndex];
+                data = data.slice(0, rowPerPage);
+            }
+
+            setTableData(data);
         }
     }, [props.data, props.options]);
-
 
 
     const determineSortFunction = (): ((options: SortOptions) => any[]) => {
@@ -79,8 +83,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     }
 
 
-    const handleOnCloumnClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
-        //console.log('From Datatable Handle Column Click is triggered');
+    const handleOnHeaderClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
         let sortFunction = determineSortFunction();
         setTableHeader(prevState => {
             return prevState.map(item => {
@@ -90,14 +93,20 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 return ({ ...item, isSorted: false, sortDirection: undefined });
             });
         });
-        let newData = [...props.data!];
-        setTableData(sortFunction({ sortArray: newData, stortKey: selectedItem.selector!, sortDirection: Sorting.ASC }));
+        let data = [...props.data!];
+        data = sortFunction({ sortArray: data, stortKey: selectedItem.selector!, sortDirection: Sorting.ASC });
+        currentSortedData.current = data;
+        if (tableOptions.pagination) {
+            let rowPerPage: number = tableOptions.rowsPerPage!.option[tableOptions.rowsPerPage!.defaultIndex];
+            data = data.slice(0, rowPerPage);
+        }
+        setTableData(data);
 
-        if (props.options && props.options!.onSort)
-            props.options!.onSort!([], Sorting.ASC, event);
+        if (tableOptions.onSort)
+            tableOptions.onSort!([], Sorting.ASC, event);
     };
 
-    const handleOnSortClick = (sortDirection: Sorting, headerItem: TableColumn) => {
+    const handleOnSortIconClick = (sortDirection: Sorting, headerItem: TableColumn) => {
         //console.log('Sorting is called',sortDirection);
         let sortFunction = determineSortFunction();
         setTableHeader(prevState => {
@@ -108,9 +117,24 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                 return ({ ...item, sortDirection: undefined });
             });
         });
-        let newData = [...props.data!];
-        setTableData(sortFunction({ sortArray: newData, stortKey: headerItem.selector!, sortDirection: sortDirection }));
+
+        let data = [...props.data!];
+        data = sortFunction({ sortArray: data, stortKey: headerItem.selector!, sortDirection: sortDirection });
+        currentSortedData.current = data;
+        if (tableOptions.pagination) {
+            let rowPerPage: number = tableOptions.rowsPerPage!.option[tableOptions.rowsPerPage!.defaultIndex];
+            data = data.slice(0, rowPerPage);
+        }
+        setTableData(data);
     };
+
+    const handleUpdateRowsPerPage = (data: any[], newIndex: number) => {
+        setTableData(data);
+        setTableOptions(prevOptions => {
+            prevOptions.rowsPerPage!.defaultIndex = newIndex;
+            return prevOptions;
+        })
+    }
 
     return (
         <>
@@ -120,7 +144,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                         <tr>
                             {
                                 tableHeader.map((item, index) => {
-                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onColumnClick={handleOnCloumnClick} onSortClick={handleOnSortClick} />)
+                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} />)
                                 })
                             }
                         </tr>
@@ -148,6 +172,13 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                     </tbody>
                 </table>
             </div>
+            {
+                tableOptions.pagination && <Pagination
+                    classNames={tableCss.pagination!}
+                    tableOptions={tableOptions}
+                    data={[...currentSortedData.current]}
+                    updateRowsPerPage={handleUpdateRowsPerPage} />
+            }
         </>
     )
 }

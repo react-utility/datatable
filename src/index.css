@@ -76,7 +76,6 @@ td{
 }
 
 
-
 .progress-pending-wrapper{
     width: 100%;
     display: flex;
@@ -119,4 +118,51 @@ td{
   to {
     transform: rotate(360deg);
   }
+}
+
+/** PAGINATION */
+.pagination{
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pagination *:nth-child(n+2) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2rem * var(--tw-space-x-reverse));
+    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.pagination-dropdown{
+    min-width: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.pagination .pagination-dropdown p {
+    font-size: small;
+    font-weight: 500;
+    padding: 0 0.75rem 0 0;
+}
+
+.pagination .pagination-dropdown select {
+    padding: 0;
+    margin:0;
+    width: 3rem;
+}
+
+.pagination-rowsperpage{
+    font-size: small;
+    font-weight: 600;
+    color:rgb(18, 89, 221);
+}
+
+.pagination-buttonGroup{
+    display: flex;
+    align-items: center;
+}
+
+.pagination-button:disabled{
+    pointer-events: none !important;
 }
