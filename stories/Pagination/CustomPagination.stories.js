@@ -11,7 +11,7 @@ import {
 
 import '../stories.css';
 import DataTable from '../../src/index';
-import { Data, Header } from '../data/weather.js';
+import { Data, Header } from '../assets/data/weather.js';
 
 export default {
   title: 'Pagination/Custom Pagination',
