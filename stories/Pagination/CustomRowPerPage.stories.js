@@ -63,11 +63,11 @@ const Template = ({ options, classNames }) => {
 
   useEffect(() => {
     async function getHeader() {
-      let respheader = await getDataFromApi('https://sangram1987.github.io/Sangram1987/weather-anomalies-header.json');
+      let respheader = await getDataFromApi('https://sangramthecoder.github.io/api/weather-anomalies-header.json');
       setHeader(respheader.weathernaomaliesHeader);
     }
     async function getData() {
-      let respdata = await getDataFromApi('https://sangram1987.github.io/Sangram1987/weather-anomalies.json');
+      let respdata = await getDataFromApi('https://sangramthecoder.github.io/api/weather-anomalies.json');
       setData(respdata.results);
     }
     getHeader();

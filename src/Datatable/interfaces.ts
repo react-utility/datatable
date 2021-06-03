@@ -63,7 +63,7 @@ export interface IProgressPendingCss {
     progressPendingAnimation: string,
     progressPendingCircle: string,
     progressPendingPath: string
-
+}
 export interface RowsPerPage {
     option: number[],
     defaultIndex: number
