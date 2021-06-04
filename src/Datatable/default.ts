@@ -2,6 +2,7 @@ import { IDataTableCSS, IDataTableOptions } from "./interfaces"
 
 
 export const defaultOptions: IDataTableOptions = {
+    tableId: Math.floor(Math.random() * 1000).toString(),
     defaultSortAscending: true,
     pagination: false,
     showRowPerPageDropdown: false,

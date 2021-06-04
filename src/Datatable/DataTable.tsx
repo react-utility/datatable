@@ -17,7 +17,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     const currentSortedData = useRef<any[]>([]);
     const [tableOptions, setTableOptions] = useState<IDataTableOptions>(defaultOptions);
     const [tableCss, setTableCss] = useState<IDataTableCSS>(defaultCss);
-    const [tableHeader, setTableHeader] = useState<TableColumn[]>([]);
+    const [tableColumns, setTableColumns] = useState<TableColumn[]>([]);
     const [tableData, setTableData] = useState<any[]>([]);
 
     /**
@@ -43,11 +43,11 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      * Change table Header whenever the props changes  
      */
     useEffect(() => {
-        if (props.header) {
-            let newHeader: TableColumn[] = props.header!.map((item) => ({ ...item, isSorted: false }));
-            setTableHeader(newHeader);
+        if (props.columns) {
+            let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false }));
+            setTableColumns(newHeader);
         }
-    }, [props.header]);
+    }, [props.columns]);
 
     /**
      * Set Table Data after Initial Render. 
@@ -85,7 +85,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
 
     const handleOnHeaderClick = (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => {
         let sortFunction = determineSortFunction();
-        setTableHeader(prevState => {
+        setTableColumns(prevState => {
             return prevState.map(item => {
                 if (item.selector === selectedItem.selector) {
                     return ({ ...item, isSorted: isSortOpen, sortDirection: Sorting.ASC });
@@ -109,7 +109,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     const handleOnSortIconClick = (sortDirection: Sorting, headerItem: TableColumn) => {
         //console.log('Sorting is called',sortDirection);
         let sortFunction = determineSortFunction();
-        setTableHeader(prevState => {
+        setTableColumns(prevState => {
             return prevState.map(item => {
                 if (item.selector === headerItem.selector) {
                     return ({ ...item, sortDirection: sortDirection });
@@ -139,11 +139,22 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     return (
         <>
             <div>
-                <table>
+                <table id={tableOptions.tableId}>
+                    {
+                        tableOptions.showCaption &&
+                        <>
+                            {
+                                !tableOptions.customCaption && <caption>Movie List</caption>
+                            }
+                            {
+                                tableOptions.customCaption && <tableOptions.customCaption />
+                            }
+                        </>
+                    }
                     <thead>
                         <tr>
                             {
-                                tableHeader.map((item, index) => {
+                                tableColumns.map((item, index) => {
                                     return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} />)
                                 })
                             }
@@ -153,7 +164,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                         {
                             tableOptions.showProgressPending &&
                             <tr>
-                                <td colSpan={tableHeader.length}>
+                                <td colSpan={tableColumns.length}>
                                     {
                                         tableOptions.customProgressPendingComponent && <tableOptions.customProgressPendingComponent />
                                     }
@@ -166,7 +177,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                         {
                             !tableOptions.showProgressPending &&
                             tableData.map((dataItem, index) => {
-                                return <Row header={tableHeader} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
+                                return <Row header={tableColumns} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
                             })
                         }
                     </tbody>

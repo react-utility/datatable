@@ -36,7 +36,7 @@ const options = {
     showProgressPending: true
 }
 
-const Template = ({ header, data, options }) => {
+const Template = ({ columns, data, options }) => {
     const [newData, setNewData] = useState([]);
     const [pending, setPending] = useState(true);
     useEffect(() => {
@@ -54,14 +54,14 @@ const Template = ({ header, data, options }) => {
                 <h2 className="header">Weather Report</h2>
                 <p className="header-desc">Change the options in below control tab to see effect</p>
             </div>
-            <DataTable header={header} data={newData} options={{ ...options, showProgressPending: pending }} />
+            <DataTable columns={columns} data={newData} options={{ ...options, showProgressPending: pending }} />
         </div>
     )
 }
 
 export const ProgressBar = Template.bind({});
 ProgressBar.args = {
-    header: [...Header],
+    columns: [...Header],
     data: [...Data],
     options: options
 }

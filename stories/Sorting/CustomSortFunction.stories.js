@@ -98,7 +98,7 @@ const newHeader = Header.map(item => {
 });
 
 
-const Template = ({ header, data }) => {
+const Template = ({ columns, data }) => {
     return (
         <div>
             <div>
@@ -114,13 +114,13 @@ const Template = ({ header, data }) => {
                 </div>
 
             </div>
-            <DataTable header={header} data={data} />
+            <DataTable columns={columns} data={data} />
         </div>
     )
 }
 
 export const CustomSortFunction = Template.bind({});
 CustomSortFunction.args = {
-    header: newHeader,
+    columns: newHeader,
     data: newData
 }

@@ -83,7 +83,7 @@ const options = {
 
 }
 
-const Template = ({ header, data, options, classNames }) => {
+const Template = ({ columns, data, options, classNames }) => {
   return (
     <div>
       <div>
@@ -93,7 +93,7 @@ const Template = ({ header, data, options, classNames }) => {
           {JSON.stringify(options)}
         </pre>
       </div>
-      <DataTable header={header} data={data} options={options} classNames={classNames} />
+      <DataTable columns={columns} data={data} options={options} classNames={classNames} />
     </div>
   )
 }
@@ -101,7 +101,7 @@ const Template = ({ header, data, options, classNames }) => {
 export const CustomPaginationIcon = Template.bind({});
 
 CustomPaginationIcon.args = {
-  header: [...Header],
+  columns: [...Header],
   data: [...Data],
   options: options,
   classNames: customClassNames,

@@ -2,7 +2,7 @@ import React from "react";
 import { HeaderItem, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
-    header: IColumn[] | undefined,
+    columns: IColumn[] | undefined,
     data: any[] | undefined,
     options?: IDataTableOptions,
     classNames?: IDataTableCSS
@@ -12,10 +12,20 @@ export interface IColumn {
     name?: string,
     selector?: string,
     sortable?: boolean,
-    sortIcon?: React.FC<HeaderItem>
+    sortIcon?: React.FC<HeaderItem>,
+    showColumn?: boolean
 }
 
 export interface IDataTableOptions {
+    tableId?: string,
+    showCaption?: boolean,
+    caption?: string,
+    customCaption?: React.FC<any>,
+    noDataComponent?: React.FC<any>,
+    dense?: boolean,
+    persistTableHead?: boolean,
+    responsive?: boolean,
+
     pagination?: boolean,
     paginationServer?: boolean,
     showRowPerPageDropdown?: boolean,

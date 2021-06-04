@@ -54,7 +54,7 @@ const options = {
   defaultSortAscending: true
 }
 
-const Template = ({ header, data, options }) => {
+const Template = ({ columns, data, options }) => {
   return (
     <div>
       <div>
@@ -64,14 +64,14 @@ const Template = ({ header, data, options }) => {
           {JSON.stringify(options)}
         </pre>
       </div>
-      <DataTable header={header} data={data} options={options} />
+      <DataTable columns={columns} data={data} options={options} />
     </div>
   )
 }
 
 export const DefaultSorting = Template.bind({});
 DefaultSorting.args = {
-  header: newHeader,
+  columns: newHeader,
   data: newData,
   options: options,
 }

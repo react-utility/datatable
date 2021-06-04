@@ -83,7 +83,7 @@ const Template = ({ options, classNames }) => {
           {JSON.stringify(options)}
         </pre>
       </div>
-      <DataTable header={[...header]} data={[...data]} options={options} classNames={classNames} />
+      <DataTable columns={[...header]} data={[...data]} options={options} classNames={classNames} />
     </div>
   )
 }

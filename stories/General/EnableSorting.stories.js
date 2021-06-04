@@ -50,6 +50,6 @@ const Template = (args) => {
 
 export const Sorting = Template.bind({});
 Sorting.args = {
-  header: newHeader,
+  columns: newHeader,
   data: newData,
 }
