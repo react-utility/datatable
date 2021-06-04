@@ -16,7 +16,7 @@ import { Sorting } from '../General/EnableSorting.stories';
 
 
 export default {
-    title: 'Sorting/Custom Sort Icon',
+    title: 'Sorting/Custom Sort Function',
     component: DataTable,
     parameters: {
         docs: {
@@ -34,9 +34,15 @@ export default {
     },
 }
 
+
+const CustomSorting = () => {
+
+}
+
 const options = {
     defaultSortHeader: 'id',
-    defaultSortAscending: true
+    defaultSortAscending: true,
+    customSortFunction: CustomSorting
 }
 
 
@@ -90,7 +96,7 @@ const newHeader = Header.map(item => {
     }
     return ({ ...item, sortable: true })
 });
-//console.log(newHeader);
+
 
 const Template = ({ columns, data }) => {
     return (
@@ -113,8 +119,8 @@ const Template = ({ columns, data }) => {
     )
 }
 
-export const CustomSortIcon = Template.bind({});
-CustomSortIcon.args = {
+export const CustomSortFunction = Template.bind({});
+CustomSortFunction.args = {
     columns: newHeader,
     data: newData
 }

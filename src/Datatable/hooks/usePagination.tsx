@@ -11,40 +11,6 @@ const usePagination = (props: Pagination) : [setPage:(action?:string) => void,is
     const [currentSlice, setCurrentSlice] = useState<number>(0);
     const [totalRows, setTotalRows] = useState<number>(0);
     const [pageState, setPageState] =  useState<{isLast:boolean,isFirst:boolean}>({isLast: false, isFirst: true});
-    /* const [isLast,setIsLast] = useState<boolean>(false);
-    const [isFirst,setIsFirst] = useState<boolean>(true); */
-
-    /* const getPage = (action:string | null) => {
-        let tempArray= [];
-        switch (action) {
-            case 'previous':
-                if(slicedArray.current && currentSlice >= 0){
-                    tempArray =  slicedArray.current[currentSlice];
-                    setCurrentSlice(prevState => prevState -1);
-                    currentSlice === 0 ? setIsFirst(true) : setIsFirst(false);
-                }else {
-                    tempArray = slicedArray.current ? slicedArray.current[0] : [];
-                    setIsFirst(false);
-                }
-                return tempArray;
-            case 'next':
-                if(slicedArray.current && currentSlice < slicedArray.current.length){
-                    tempArray =  slicedArray.current[currentSlice + 1];
-                    setCurrentSlice(prevState => prevState +1);
-                    currentSlice === slicedArray.current.length ? setIsLast(true) : setIsLast(false);
-                }else {
-                    tempArray = slicedArray.current ? slicedArray.current[slicedArray.current.length -1] : [];
-                    setIsLast(false);
-                }
-                return tempArray;
-            default :
-                if(slicedArray.current){
-                    return slicedArray.current[0];
-                }else{
-                    return [];
-                }
-        }
-    } */
 
     const setPage = (action?:string) => {
         //console.log('setPage is called',currentSlice);

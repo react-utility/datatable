@@ -74,3 +74,95 @@ td{
     font-size: 0.85rem;
     border-bottom: 1px solid rgb(199, 198, 198);
 }
+
+
+.progress-pending-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1.2rem 0 1.2rem 0;
+}
+
+.progress-pending{
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: rgb(160, 158, 158);
+    color: white;
+    font-size: large;
+    border-radius: 4px;
+    border:transparent;
+}
+
+.progress-pending-animation{
+    display: block;
+    width: 1.25rem;
+    height: 1.25rem;
+    color:white;
+    margin-right: .75rem;
+    animation: spin 1s linear infinite;
+}
+
+.progress-pending-circle{
+    opacity: .25;
+}
+
+.progress-pending-path{
+    opacity: .75;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/** PAGINATION */
+.pagination{
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.pagination *:nth-child(n+2) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2rem * var(--tw-space-x-reverse));
+    margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.pagination-dropdown{
+    min-width: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.pagination .pagination-dropdown p {
+    font-size: small;
+    font-weight: 500;
+    padding: 0 0.75rem 0 0;
+}
+
+.pagination .pagination-dropdown select {
+    padding: 0;
+    margin:0;
+    width: 3rem;
+}
+
+.pagination-rowsperpage{
+    font-size: small;
+    font-weight: 600;
+    color:rgb(18, 89, 221);
+}
+
+.pagination-buttonGroup{
+    display: flex;
+    align-items: center;
+}
+
+.pagination-button:disabled{
+    pointer-events: none !important;
+}
