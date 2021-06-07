@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   Title,
   Subtitle,
@@ -9,7 +9,7 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
+import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
@@ -84,7 +84,9 @@ const options = {
   customRowPerPageDropdown: MyOwnDropdown
 }
 
-const Template = ({ columns, data, options, classNames }) => {
+const Template = ({ options, classNames }) => {
+  const [columns] = useState([...Header]);
+  const [data] = useState([...Data]);
   return (
     <div>
       <div>
@@ -102,8 +104,6 @@ const Template = ({ columns, data, options, classNames }) => {
 export const CustomDropdown = Template.bind({});
 
 CustomDropdown.args = {
-  columns: [...Header],
-  data: [...Data],
   options: options,
   classNames: customClassNames,
 }

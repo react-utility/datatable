@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Title,
   Subtitle,
@@ -9,7 +9,7 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
+import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
@@ -47,14 +47,14 @@ export default {
   },
 }
 
-const newData = [...Data];
-const newHeader = [...Header];
 const options = {
   defaultSortHeader: 'id',
   defaultSortAscending: true
 }
 
-const Template = ({ columns, data, options }) => {
+const Template = ({ options }) => {
+  const [columns] = useState([...Header]);
+  const [data] = useState([...Data]);
   return (
     <div>
       <div>
@@ -71,7 +71,5 @@ const Template = ({ columns, data, options }) => {
 
 export const DefaultSorting = Template.bind({});
 DefaultSorting.args = {
-  columns: newHeader,
-  data: newData,
   options: options,
 }

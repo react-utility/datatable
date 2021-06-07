@@ -9,7 +9,7 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
+import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
@@ -46,7 +46,8 @@ const options = {
   customProgressPendingComponent: customLoader
 }
 
-const Template = ({ columns, data, options }) => {
+const Template = ({ data, options }) => {
+  const [columns] = useState([...Header]);
   const [newData, setNewData] = useState([]);
   const [pending, setPending] = useState(true);
   useEffect(() => {
@@ -71,7 +72,5 @@ const Template = ({ columns, data, options }) => {
 
 export const CustomProgressBar = Template.bind({});
 CustomProgressBar.args = {
-  columns: [...Header],
-  data: [...Data],
   options: options
 }

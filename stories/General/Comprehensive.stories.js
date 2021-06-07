@@ -9,8 +9,8 @@ import {
     PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
-import './Comprehensive.css';
+import '../assets/css/stories.css';
+import '../assets/css/Comprehensive.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 

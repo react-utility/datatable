@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Title,
   Subtitle,
@@ -9,7 +9,7 @@ import {
   PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
+import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
@@ -36,14 +36,15 @@ export default {
 const newData = [...Data];
 const newHeader = Header.map(item => ({ ...item, sortable: true }));
 
-const Template = (args) => {
+const Template = ({ columns }) => {
+  const [data] = useState([...Data]);
   return (
     <div>
       <div>
         <h2 className="header">Weather Report</h2>
         <p className="header-desc">Change the options in below control tab to see effect</p>
       </div>
-      <DataTable {...args} />
+      <DataTable data={data} columns={columns} />
     </div>
   )
 }
@@ -51,5 +52,4 @@ const Template = (args) => {
 export const Sorting = Template.bind({});
 Sorting.args = {
   columns: newHeader,
-  data: newData,
 }

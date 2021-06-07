@@ -9,10 +9,9 @@ import {
     PRIMARY_STORY,
 } from '@storybook/addon-docs/blocks';
 
-import '../stories.css';
+import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
-import { Sorting } from '../General/EnableSorting.stories';
 
 
 export default {
@@ -83,16 +82,15 @@ const CustomIcon = (props) => {
     )
 }
 
-const newData = [...Data];
 const newHeader = Header.map(item => {
     if (item.selector === 'id') {
         return ({ ...item, sortable: true, sortIcon: CustomIcon });
     }
     return ({ ...item, sortable: true })
 });
-//console.log(newHeader);
 
-const Template = ({ columns, data }) => {
+const Template = ({ columns }) => {
+    const [data] = useState([...Data]);
     return (
         <div>
             <div>
@@ -116,5 +114,4 @@ const Template = ({ columns, data }) => {
 export const CustomSortIcon = Template.bind({});
 CustomSortIcon.args = {
     columns: newHeader,
-    data: newData
 }
