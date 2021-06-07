@@ -5,7 +5,12 @@ import { PaginationProps } from "./types";
 const Pagination: React.FC<PaginationProps> = (props) => {
 
     const currentSliceIndex = useRef<{ start: number, end: number }>({ start: 0, end: props.tableOptions.rowsPerPage!.option[props.tableOptions.rowsPerPage!.defaultIndex] });
-    const [pageState, setPageState] = useState<{ isLast: boolean, isFirst: boolean }>({ isLast: false, isFirst: true });
+    const [pageState, setPageState] = useState<{ isLast: boolean, isFirst: boolean }>(() => {
+        if (props.data.length === 0) {
+            return { isLast: true, isFirst: true }
+        }
+        return { isLast: false, isFirst: true }
+    });
 
     const handleCustomRowPerPageChange = (currentSelectedIndex: number) => {
         let selectedRowPerPage = props.tableOptions.rowsPerPage!.option[currentSelectedIndex];

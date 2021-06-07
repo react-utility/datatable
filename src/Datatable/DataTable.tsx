@@ -34,7 +34,8 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      * Re-render the table if props.classnames changes.
      */
     useEffect(() => {
-        let newCss = useDeepMerge({ source: props.classNames, target: defaultCss });
+        let target = JSON.parse(JSON.stringify(defaultCss));
+        let newCss = useDeepMerge({ source: props.classNames, target: target });
         setTableCss(newCss);
     }, [props.classNames]);
 
@@ -138,28 +139,31 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
 
     return (
         <>
-            <div>
-                <table id={tableOptions.tableId}>
+            {
+                tableOptions.showCaption &&
+                <>
                     {
-                        tableOptions.showCaption &&
-                        <>
-                            {
-                                !tableOptions.customCaption && <caption>Movie List</caption>
-                            }
-                            {
-                                tableOptions.customCaption && <tableOptions.customCaption />
-                            }
-                        </>
+                        !tableOptions.customCaption && <div className={tableCss.caption}>{tableOptions.caption!}</div>
                     }
-                    <thead>
-                        <tr>
-                            {
-                                tableColumns.map((item, index) => {
-                                    return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.header} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} />)
-                                })
-                            }
-                        </tr>
-                    </thead>
+                    {
+                        tableOptions.customCaption && <tableOptions.customCaption />
+                    }
+                </>
+            }
+            <div className={tableOptions.responsive ? tableCss.tableResponsive + ' ' + tableCss.tableWrapper : tableCss.tableWrapper}>
+                <table id={tableOptions.tableId} className={tableCss.table}>
+                    {
+                        !tableOptions.hideTableHeader &&
+                        <thead className={tableCss.tableHead}>
+                            <tr className={tableCss.tableHeaderRowElement}>
+                                {
+                                    tableColumns.map((item, index) => {
+                                        return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />)
+                                    })
+                                }
+                            </tr>
+                        </thead>
+                    }
                     <tbody>
                         {
                             tableOptions.showProgressPending &&
@@ -175,10 +179,22 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                             </tr>
                         }
                         {
-                            !tableOptions.showProgressPending &&
+                            !tableOptions.showProgressPending && tableData.length > 0 &&
                             tableData.map((dataItem, index) => {
-                                return <Row header={tableColumns} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} />
+                                return <Row header={tableColumns} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />
                             })
+                        }
+                        {
+                            !tableOptions.showProgressPending && tableData.length === 0 && !tableOptions.noDataComponent &&
+                            <tr>
+                                <td colSpan={tableColumns.length} className={tableCss.nodata}>{tableOptions.noDataMessage}</td>
+                            </tr>
+                        }
+                        {
+                            !tableOptions.showProgressPending && tableData.length === 0 && tableOptions.noDataComponent &&
+                            <>
+                                <tableOptions.noDataComponent />
+                            </>
                         }
                     </tbody>
                 </table>

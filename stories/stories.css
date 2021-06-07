@@ -1,3 +1,7 @@
+.text-sm {
+    font-size: 0.76rem;
+}
+
 code{
     background-color: rgb(236, 199, 103);
     font-size: medium;
@@ -70,6 +74,8 @@ code{
     font-size: small;
 }
 
+
+/* CUSTOM SELECT CSS */
 .custom-select-wrapper {
      position: relative;
      user-select: none;

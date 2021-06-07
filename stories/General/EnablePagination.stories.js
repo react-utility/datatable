@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Title,
     Subtitle,
@@ -53,7 +53,10 @@ const options = {
     showRowsPerPage: true,
 }
 
-const Template = ({ columns, data, options }) => {
+const Template = ({ options }) => {
+    const [columns] = useState([...Header]);
+    const [data] = useState([...Data]);
+
     return (
         <div>
             <div>
@@ -70,7 +73,5 @@ const Template = ({ columns, data, options }) => {
 
 export const Pagination = Template.bind({});
 Pagination.args = {
-    columns: [...Header],
-    data: [...Data],
     options: options
 }

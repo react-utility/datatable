@@ -1,19 +1,65 @@
-.header {
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-caption {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-size: large;
+    font-weight: 600;
+    padding: 1rem 0 1rem 0;
+}
+
+.table-nodata{
+    text-align: center;
+    font-size: medium;
+    font-weight: 600;
+    padding: 1.5rem 0 1rem 0;
+}
+
+.table-dense{
+    padding: 0.2rem 0 0.2rem 0;
+    font-size: 0.8rem;
+}
+
+/* Elemet level CSS Styling so that class level supplied from JSX Can take default preference */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th {
     background-color: transparent;
     text-align: left;
     margin-left: 0;
-    padding-right: 0.5rem/* 8px */;
+    padding: 0.475rem 0.5rem 0.475rem 0;
 }
 
-.headerInner{
+.th-inner{
     display: flex;
     align-items: center;
     justify-content: space-between;
     min-width: 10rem/* 160px */;
 }
 
+
+tr {
+    border-bottom: 1px solid #edeef0;
+}
+
+tr:last-child {
+    border-bottom:0;
+}
+
+td{
+    padding: 0.875rem 0 0.875rem 0;
+    font-size: 0.85rem;
+}
+
 .button{
     appearance: none;
+    color: inherit;
     border:none;
     font-family: inherit;
     font-size: 0.9rem;
@@ -64,18 +110,9 @@
     display: flex !important;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td{
-    padding: 0.875rem 0 0.875rem 0;
-    font-size: 0.85rem;
-    border-bottom: 1px solid rgb(199, 198, 198);
-}
 
 
+/** PROGRESS PENDING */
 .progress-pending-wrapper{
     width: 100%;
     display: flex;
@@ -164,5 +201,6 @@ td{
 }
 
 .pagination-button:disabled{
+    color: #c8c8c9;
     pointer-events: none !important;
 }

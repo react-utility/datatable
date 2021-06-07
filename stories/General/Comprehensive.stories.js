@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Title,
     Subtitle,
@@ -10,8 +10,10 @@ import {
 } from '@storybook/addon-docs/blocks';
 
 import '../stories.css';
+import './Comprehensive.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
+
 
 export default {
     title: 'General/Comprehensive',
@@ -29,34 +31,58 @@ export default {
                 </>
             ),
         },
+        backgrounds: {
+            default: '',
+            values: [
+                { name: 'light', value: '#F9FAFB' },
+                { name: 'dark', value: '#334155' },
+            ],
+        },
+    },
+}
+
+const customClassNames = {
+    tableWrapper: 'table-wrapper',
+    tableHead: 'table-header',
+    headerElement: {
+        header: 'header-cell',
+    },
+    cellElement: {
+        cell: 'tabel-cell'
     },
 }
 
 const options = {
     showCaption: true,
+    caption: 'Weather Report',
+    noDataMessage: 'I have nothing to show',
+    dense: false,
+    responsive: true,
+    hideTableHeader: false,
     pagination: true,
     showRowPerPageDropdown: true,
     showRowsPerPage: true,
 }
 
-const Template = ({ columns, data, options }) => {
+const Template = ({ options, classNames }) => {
+    const [columns] = useState(() => Header.map(item => ({ ...item, sortable: true })));
+    const [data] = useState([...Data]);
     return (
         <div>
             <div>
-                <h2 className="header">Weather Report - <span>Enable Pagination</span></h2>
+                <h2 className="header">Comprehensive<span>-All in one React Datatable</span></h2>
                 <p className="header-desc">Change the options in below control tab to see effect</p>
-                <pre>
+                <pre className="text-sm">
                     {JSON.stringify(options)}
                 </pre>
             </div>
-            <DataTable columns={columns} data={data} options={options} />
+            <DataTable columns={columns} data={data} options={options} classNames={classNames} />
         </div>
     )
 }
 
 export const Comprehensive = Template.bind({});
 Comprehensive.args = {
-    columns: [...Header],
-    data: [...Data],
-    options: options
+    options: options,
+    classNames: customClassNames
 }

@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         props.onHeaderClick!(!headerClicked, props.item, event);
     }
     return (
-        <th>
+        <th className={props.dense!.isDense ? props.classNames!.header + ' ' + props.dense!.denseCss : props.classNames!.header}>
             <div className={props.classNames!.headerInner}>
                 <Button className={props.classNames!.headerButton} onClickHandler={handleOnClick} onMouseOutHandler={() => { setIsHovered(false) }} onMouseOverHandler={() => { setIsHovered(true) }}>
                     {props.item.name!}

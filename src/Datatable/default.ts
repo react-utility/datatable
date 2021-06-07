@@ -3,6 +3,8 @@ import { IDataTableCSS, IDataTableOptions } from "./interfaces"
 
 export const defaultOptions: IDataTableOptions = {
     tableId: Math.floor(Math.random() * 1000).toString(),
+    noDataMessage: 'No Data to Display',
+    hideTableHeader: false,
     defaultSortAscending: true,
     pagination: false,
     showRowPerPageDropdown: false,
@@ -10,11 +12,19 @@ export const defaultOptions: IDataTableOptions = {
 }
 
 export const defaultCss: IDataTableCSS = {
-    header: {
-        header: 'header',
-        headerInner: 'headerInner',
+    caption: 'table-caption',
+    tableDense: 'table-dense',
+    tableResponsive: 'table-responsive',
+    nodata: 'table-nodata',
+    tableBodyRowElement: '',
+    headerElement: {
+        header: '',
+        headerInner: 'th-inner',
         headerButton: 'button',
         headerIcon: 'icon'
+    },
+    cellElement: {
+        cell: ''
     },
     progressbar: {
         progressPendingWrapper: 'progress-pending-wrapper',

@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderItem, Sorting, SortOptions } from "./types";
+import { HeaderItem, RowsPerPage, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
     columns: IColumn[] | undefined,
@@ -21,8 +21,10 @@ export interface IDataTableOptions {
     showCaption?: boolean,
     caption?: string,
     customCaption?: React.FC<any>,
+    noDataMessage?: string,
     noDataComponent?: React.FC<any>,
     dense?: boolean,
+    hideTableHeader?: boolean,
     persistTableHead?: boolean,
     responsive?: boolean,
 
@@ -47,24 +49,35 @@ export interface IDataTableOptions {
 }
 
 export interface IDataTableCSS {
+    caption?: string,
+    tableWrapper?: string,
+    table?: string,
+    tableHead?: string,
+    tableBody?: string,
+    tableFooter?: string,
+    tableDense?: string,
+    tableResponsive?: string,
+    nodata?: string,
     highlightOnHoverClass?: string,
-    header?: IHeaderCss,
+    tableHeaderRowElement?: string,
+    tableBodyRowElement?: string,
+    headerElement?: IHeaderElementCss,
+    cellElement?: ICellElementCss,
     progressbar: IProgressPendingCss
-    pagination?: PaginationCss
+    pagination?: IPaginationCss
 }
 
-export interface PaginationCss {
-    pagination?: string,
-    paginationDropdown?: string,
-    rowPerPageDisplay?: string,
-    paginationButtonGroup?: string,
-    paginationButton?: string
-}
-export interface IHeaderCss {
+
+export interface IHeaderElementCss {
     header?: string,
     headerInner?: string,
     headerButton?: string,
     headerIcon?: string
+}
+
+export interface ICellElementCss {
+    cell?: string,
+    cellInner?: string,
 }
 
 export interface IProgressPendingCss {
@@ -74,8 +87,13 @@ export interface IProgressPendingCss {
     progressPendingCircle: string,
     progressPendingPath: string
 }
-export interface RowsPerPage {
-    option: number[],
-    defaultIndex: number
+
+export interface IPaginationCss {
+    pagination?: string,
+    paginationDropdown?: string,
+    rowPerPageDisplay?: string,
+    paginationButtonGroup?: string,
+    paginationButton?: string
 }
+
 
