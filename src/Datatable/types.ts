@@ -46,6 +46,8 @@ export type HeaderProps = {
 export type RowProps = {
     header: Array<IColumn>,
     dense?: { isDense: boolean, denseCss: string },
+    striped?: { isStriped: boolean, stripedCss: string },
+    onHover?: { isHoverRequired: boolean, onHoverCss: string },
     classNames: { rowElementCss: string, cellElementCss: ICellElementCss },
     dataItem: any,
     index: string,

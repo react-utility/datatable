@@ -27,6 +27,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         let newOptions = { ...defaultOptions, ...props.options };
         setTableOptions(newOptions);
+        //console.log('Options is fired');
     }, [props.options]);
 
     /**
@@ -37,6 +38,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         let target = JSON.parse(JSON.stringify(defaultCss));
         let newCss = useDeepMerge({ source: props.classNames, target: target });
         setTableCss(newCss);
+        //console.log('CSS is fired');
     }, [props.classNames]);
 
     /**
@@ -48,6 +50,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
             let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false }));
             setTableColumns(newHeader);
         }
+        //console.log('Header is fired');
     }, [props.columns]);
 
     /**
@@ -76,6 +79,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
 
             setTableData(data);
         }
+        //console.log('Data is fired');
     }, [props.data, props.options]);
 
 
@@ -181,7 +185,15 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                         {
                             !tableOptions.showProgressPending && tableData.length > 0 &&
                             tableData.map((dataItem, index) => {
-                                return <Row header={tableColumns} dataItem={dataItem} index={UniqueId + index} key={UniqueId + index} classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />
+                                return <Row
+                                    header={tableColumns}
+                                    dataItem={dataItem}
+                                    index={UniqueId + index}
+                                    key={UniqueId + index}
+                                    classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
+                                    striped={{ isStriped: props.options!.showTableStriped!, stripedCss: tableCss.tableStriped! }}
+                                    onHover={{ isHoverRequired: tableOptions.highlightOnHover!, onHoverCss: tableCss.highlightOnHoverClass! }}
+                                />
                             })
                         }
                         {

@@ -23,6 +23,14 @@
     font-size: 0.8rem;
 }
 
+.table-striped:nth-child(even){
+    background-color: #f7f5f5d3;
+}
+
+.tr-onhover:hover{
+    background-color: #CBD5E1;
+}
+
 /* Elemet level CSS Styling so that class level supplied from JSX Can take default preference */
 table {
     border-collapse: collapse;
@@ -51,6 +59,9 @@ tr {
 tr:last-child {
     border-bottom:0;
 }
+
+
+
 
 td{
     padding: 0.875rem 0 0.875rem 0;

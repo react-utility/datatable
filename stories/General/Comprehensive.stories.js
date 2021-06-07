@@ -44,6 +44,8 @@ export default {
 const customClassNames = {
     tableWrapper: 'table-wrapper',
     tableHead: 'table-header',
+    tableStriped: 'table-strip',
+    highlightOnHoverClass: 'rows-onhover',
     headerElement: {
         header: 'header-cell',
     },
@@ -58,6 +60,8 @@ const options = {
     noDataMessage: 'I have nothing to show',
     dense: false,
     responsive: true,
+    showTableStriped: true,
+    highlightOnHover: true,
     hideTableHeader: false,
     pagination: true,
     showRowPerPageDropdown: true,

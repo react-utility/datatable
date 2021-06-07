@@ -16,6 +16,8 @@ export const defaultCss: IDataTableCSS = {
     tableDense: 'table-dense',
     tableResponsive: 'table-responsive',
     nodata: 'table-nodata',
+    tableStriped: 'table-striped',
+    highlightOnHoverClass: 'tr-onhover',
     tableBodyRowElement: '',
     headerElement: {
         header: '',

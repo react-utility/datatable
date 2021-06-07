@@ -27,6 +27,11 @@ export interface IDataTableOptions {
     hideTableHeader?: boolean,
     persistTableHead?: boolean,
     responsive?: boolean,
+    showTableStriped?: boolean,
+    highlightOnHover?: boolean,
+
+
+
 
     pagination?: boolean,
     paginationServer?: boolean,
@@ -57,6 +62,7 @@ export interface IDataTableCSS {
     tableFooter?: string,
     tableDense?: string,
     tableResponsive?: string,
+    tableStriped?: string,
     nodata?: string,
     highlightOnHoverClass?: string,
     tableHeaderRowElement?: string,

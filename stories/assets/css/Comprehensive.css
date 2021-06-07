@@ -25,3 +25,16 @@
 .tabel-cell:first-child {
     padding-left: 1.5rem;
 }
+
+.table-strip:nth-child(even){
+    background-color: #F8FAFC;
+}
+
+.table-strip:nth-child(odd){
+    background-color: white;
+}
+
+.rows-onhover:hover{
+    background-color: #86EFAC;
+    cursor: pointer;
+}
