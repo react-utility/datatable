@@ -58,11 +58,13 @@ Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
 tableId  | `string | number` | `Math.floor(Math.random() * 1000)` | *Unique Id for the table. Details can be provided as a number or string. By defauult it takes a random number*|
 showCaption | `boolean` | `false` | *Toggle switch to show table caption.*<br>*Expected Value `true` or `false`*<br><br>**`showCaption : true`**| |
-caption | | | |
+caption | `string` | | *Provide table title as a string to this api. This caption will be shown before table header.* |
 customCaption | | | |
+noDataMessage | `string` | `No Data to Display` | *This api allows you to provide custom message to be displayed into the table when no data is found.*<br>*`noDataMessage` is not provided then it will default to `No Data to Display`*|
 noDataComponent | | | |
-responsive | | | |
-dense | | | |
+responsive | `boolean` | | *This will make the table responive when screen size is small. Bascially it will add a scrollbar to the table so that you can scroll horizontally. This doesn't make vertically responsive to screen sizes.*<br>*Expected Value `true` or `false`*<br><br>**`responsive : true`**|
+dense | `boolean` | | *Enabling this API will make the table dense. That being said it will make compacts the row height.* <br>*Expected Value `true` or `false`*<br><br>**`dense : true`**|
+hideTableHeader | `boolean` | `false`  | *This API will allow you to hide the table header / column names. By default it is `false`.*<br> *By enabling this API will make the header disappear, hence all the functionality e.g. `sorting` will be unavailable.*<br>*Expected Value `true` or `false`*<br><br>**`hideTableHeader : true`**|
 persistTableHead | | | |
 
 
