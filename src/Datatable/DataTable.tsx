@@ -193,6 +193,8 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
                                     striped={{ isStriped: props.options!.showTableStriped!, stripedCss: tableCss.tableStriped! }}
                                     onHover={{ isHoverRequired: tableOptions.highlightOnHover!, onHoverCss: tableCss.highlightOnHoverClass! }}
+                                    rowSingleClicked={tableOptions.onRowClicked}
+                                    rowDoubleClicked={tableOptions.onRowDoubleClicked}
                                 />
                             })
                         }

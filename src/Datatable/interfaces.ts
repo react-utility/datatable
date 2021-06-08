@@ -30,8 +30,8 @@ export interface IDataTableOptions {
     showTableStriped?: boolean,
     highlightOnHover?: boolean,
 
-
-
+    onRowClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
+    onRowDoubleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
 
     pagination?: boolean,
     paginationServer?: boolean,

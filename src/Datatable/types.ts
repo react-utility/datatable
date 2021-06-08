@@ -51,7 +51,9 @@ export type RowProps = {
     classNames: { rowElementCss: string, cellElementCss: ICellElementCss },
     dataItem: any,
     index: string,
-    rest?: any
+    rest?: any,
+    rowSingleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
+    rowDoubleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
 }
 
 export type PaginationProps = {
