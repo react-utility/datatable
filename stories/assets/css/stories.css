@@ -2,6 +2,11 @@
     font-size: 0.76rem;
 }
 
+.rows-hover:hover{
+    background-color: #F0F9FF !important;
+    cursor: pointer;
+}
+
 code{
     background-color: rgb(236, 199, 103);
     font-size: medium;
@@ -73,6 +78,7 @@ code{
 .custom-pagination-dropdown p{
     font-size: small;
 }
+
 
 
 /* CUSTOM SELECT CSS */

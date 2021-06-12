@@ -1,12 +1,24 @@
+import React, { useRef, useEffect } from 'react';
 import { CellProps } from "./types";
 
-const Cell = (props: CellProps) => {
+const Cell: React.FC<CellProps> = (props: CellProps) => {
+    const cell = useRef<HTMLTableCellElement>(null);
+
+    useEffect(() => {
+        if (props.dense!.isDense) {
+            cell.current!.classList.add(props.dense!.denseCss);
+        } else {
+            cell.current!.classList.remove(props.dense!.denseCss);
+        }
+    }, []);
 
     return (
         <td
-            className={props.dense!.isDense ? props.classNames!.cell + ' ' + props.dense!.denseCss : props.classNames!.cell}
+            ref={cell}
+            className={props.classNames!.cellElelmentCss}
+            style={props.customCellStyle!}
         >
-            {props.displayValue}
+            {props.children}
         </td>
     )
 }

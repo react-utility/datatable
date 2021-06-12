@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderItem, RowsPerPage, Sorting, SortOptions } from "./types";
+import { CellStyleCustom, HeaderItem, RowsPerPage, RowStyleCustom, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
     columns: IColumn[] | undefined,
@@ -13,7 +13,9 @@ export interface IColumn {
     selector?: string,
     sortable?: boolean,
     sortIcon?: React.FC<HeaderItem>,
-    showColumn?: boolean
+    showColumn?: boolean,
+    formatting?: React.FC<{ row: any }>,
+    customCellStyles?: CellStyleCustom[],
 }
 
 export interface IDataTableOptions {
@@ -32,6 +34,8 @@ export interface IDataTableOptions {
 
     onRowClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
     onRowDoubleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
+
+    customRowStyles?: RowStyleCustom[],
 
     pagination?: boolean,
     paginationServer?: boolean,
@@ -82,8 +86,7 @@ export interface IHeaderElementCss {
 }
 
 export interface ICellElementCss {
-    cell?: string,
-    cellInner?: string,
+    cellElelmentCss?: string
 }
 
 export interface IProgressPendingCss {
@@ -101,5 +104,4 @@ export interface IPaginationCss {
     paginationButtonGroup?: string,
     paginationButton?: string
 }
-
 

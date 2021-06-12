@@ -7,6 +7,7 @@ export const defaultOptions: IDataTableOptions = {
     hideTableHeader: false,
     defaultSortAscending: true,
     pagination: false,
+    showTableStriped: false,
     showRowPerPageDropdown: false,
     rowsPerPage: { option: [5, 10, 15, 20], defaultIndex: 0 }
 }
@@ -26,7 +27,7 @@ export const defaultCss: IDataTableCSS = {
         headerIcon: 'icon'
     },
     cellElement: {
-        cell: ''
+        cellElelmentCss: ''
     },
     progressbar: {
         progressPendingWrapper: 'progress-pending-wrapper',

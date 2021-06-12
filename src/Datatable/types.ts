@@ -23,8 +23,8 @@ export type SortOptions = {
 export type CellProps = {
     dense?: { isDense: boolean, denseCss: string },
     classNames?: ICellElementCss,
-    displayValue: string,
-    rest?: any
+    customCellStyle?: React.CSSProperties,
+    children?: React.ReactNode;
 }
 
 export enum Sorting {
@@ -45,15 +45,15 @@ export type HeaderProps = {
 
 export type RowProps = {
     header: Array<IColumn>,
-    dense?: { isDense: boolean, denseCss: string },
-    striped?: { isStriped: boolean, stripedCss: string },
-    onHover?: { isHoverRequired: boolean, onHoverCss: string },
+    dense: { isDense: boolean, denseCss: string },
+    striped: { isStriped: boolean, stripedCss: string },
+    onHover: { isHoverRequired: boolean, onHoverCss: string },
     classNames: { rowElementCss: string, cellElementCss: ICellElementCss },
     dataItem: any,
     index: string,
-    rest?: any,
     rowSingleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
     rowDoubleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
+    customRowStyles?: RowStyleCustom[],
 }
 
 export type PaginationProps = {
@@ -68,7 +68,17 @@ export type DeepMerge = {
     source: any
 }
 
-export interface RowsPerPage {
+export type RowsPerPage = {
     option: number[],
     defaultIndex: number
+}
+
+export type RowStyleCustom = {
+    when: (row: any) => boolean,
+    style: (row: any) => React.CSSProperties
+}
+
+export type CellStyleCustom = {
+    when: (value: any) => boolean,
+    style: () => React.CSSProperties
 }

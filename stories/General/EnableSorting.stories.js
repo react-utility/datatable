@@ -32,8 +32,6 @@ export default {
   },
 }
 
-
-const newData = [...Data];
 const newHeader = Header.map(item => ({ ...item, sortable: true }));
 
 const Template = ({ columns }) => {

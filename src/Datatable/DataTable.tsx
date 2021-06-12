@@ -27,7 +27,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         let newOptions = { ...defaultOptions, ...props.options };
         setTableOptions(newOptions);
-        //console.log('Options is fired');
+        //console.log('Options is fired', newOptions);
     }, [props.options]);
 
     /**
@@ -191,10 +191,11 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     index={UniqueId + index}
                                     key={UniqueId + index}
                                     classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
-                                    striped={{ isStriped: props.options!.showTableStriped!, stripedCss: tableCss.tableStriped! }}
+                                    striped={{ isStriped: tableOptions.showTableStriped!, stripedCss: tableCss.tableStriped! }}
                                     onHover={{ isHoverRequired: tableOptions.highlightOnHover!, onHoverCss: tableCss.highlightOnHoverClass! }}
                                     rowSingleClicked={tableOptions.onRowClicked}
                                     rowDoubleClicked={tableOptions.onRowDoubleClicked}
+                                    customRowStyles={tableOptions.customRowStyles}
                                 />
                             })
                         }
