@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Cell from './Cell';
 import { CellStyleCustom, RowProps } from './types';
+import { addClass, removeClass, getClassesAsArray } from './util/common';
 
 
 const Row: React.FC<RowProps> = (props: RowProps) => {
@@ -8,16 +9,31 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
     const clickCount = useRef<number>(0);
     const delay: number = 300;
 
+
+
     useEffect(() => {
-        if (props.striped?.isStriped) {
-            row.current?.classList.add(props.striped!.stripedCss);
+        if (props.striped?.isStriped && props.striped!.stripedCss) {
+            if (props.striped!.stripedCss.length > 0) {
+                addClass(row.current!, getClassesAsArray(props.striped!.stripedCss));
+            }
         } else {
-            row.current?.classList.remove(props.striped!.stripedCss);
+            if (props.striped!.stripedCss) {
+                if (props.striped!.stripedCss.length > 0) {
+                    removeClass(row.current!, getClassesAsArray(props.striped!.stripedCss));
+                }
+            }
         }
-        if (props.onHover!.isHoverRequired) {
-            row.current?.classList.add(props.onHover!.onHoverCss);
+        if (props.onHover!.isHoverRequired && props.onHover!.onHoverCss) {
+            if (props.onHover!.onHoverCss.length > 0) {
+
+            }
+            addClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
         } else {
-            row.current?.classList.remove(props.onHover!.onHoverCss);
+            if (props.onHover!.onHoverCss) {
+                if (props.onHover!.onHoverCss.length > 0) {
+                    removeClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
+                }
+            }
         }
     }, [])
 
