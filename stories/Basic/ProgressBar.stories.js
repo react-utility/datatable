@@ -14,7 +14,7 @@ import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
 export default {
-    title: 'General/Progress Bar',
+    title: 'Basic/Progress Bar',
     component: DataTable,
     parameters: {
         docs: {

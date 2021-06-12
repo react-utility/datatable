@@ -11,7 +11,7 @@ import {
 
 import '../assets/css/stories.css';
 import DataTable from '../../src/index';
-import { Data, Header } from '../assets/data/weather.js';
+import { coffequality, coffequalityHeader } from '../assets/data/coffequality.js';
 
 export default {
   title: 'Progress/Custom Progress Bar',
@@ -43,18 +43,23 @@ const customLoader = () => {
 
 const options = {
   showProgressPending: true,
+  pagination: true,
+  responsive: true,
+  showRowPerPageDropdown: true,
+  showRowsPerPage: true,
   customProgressPendingComponent: customLoader
 }
 
-const Template = ({ data, options }) => {
-  const [columns] = useState([...Header]);
+const Template = ({ options }) => {
+  const [columns] = useState([...coffequalityHeader]);
   const [newData, setNewData] = useState([]);
   const [pending, setPending] = useState(true);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setPending(false);
-      setNewData([...data]);
-    }, 10000);
+      setNewData([...coffequality]);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     }

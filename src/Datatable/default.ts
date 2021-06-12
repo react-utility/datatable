@@ -19,7 +19,6 @@ export const defaultCss: IDataTableCSS = {
     nodata: 'table-nodata',
     tableStriped: 'table-striped',
     highlightOnHoverClass: 'tr-onhover',
-    tableBodyRowElement: '',
     headerElement: {
         header: '',
         headerInner: 'th-inner',

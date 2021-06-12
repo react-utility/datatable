@@ -16,7 +16,7 @@ import { Data, Header } from '../assets/data/weather.js';
 
 
 export default {
-    title: 'General/Comprehensive',
+    title: 'Basic/Comprehensive',
     component: DataTable,
     parameters: {
         docs: {
@@ -46,11 +46,12 @@ const customClassNames = {
     tableHead: 'table-header',
     tableStriped: 'table-strip',
     highlightOnHoverClass: 'rows-onhover',
+    tableBodyRowElement: 'row-element',
     headerElement: {
         header: 'header-cell',
     },
     cellElement: {
-        cell: 'tabel-cell'
+        cellElelmentCss: 'tabel-cell'
     },
 }
 

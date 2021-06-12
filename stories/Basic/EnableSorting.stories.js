@@ -14,7 +14,7 @@ import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
 export default {
-  title: 'General/Sorting',
+  title: 'Basic/Sorting',
   component: DataTable,
   parameters: {
     docs: {

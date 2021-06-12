@@ -29,7 +29,7 @@ const CustomDescription = (DescriptionProps) => {
     )
 }
 export default {
-    title: 'General/Pagination',
+    title: 'Basic/Pagination',
     component: DataTable,
     parameters: {
         docs: {

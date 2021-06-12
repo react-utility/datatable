@@ -46,6 +46,9 @@ const options = {
 }
 
 const Template = ({ options, classNames }) => {
+    const TableData = JSON.parse(JSON.stringify(Data));
+    const TableHeader = JSON.parse(JSON.stringify(Header));
+
     const actions = [{
         name: 'Actions',
         selector: 'action',
@@ -59,9 +62,10 @@ const Template = ({ options, classNames }) => {
         }
     }];
 
-    const newHeader = [...Header, ...actions];
-    const [columns] = useState([...newHeader]);
-    const [data] = useState([...Data]);
+    const newHeader = [...TableHeader, ...actions];
+
+    const [columns] = useState(newHeader);
+    const [data] = useState(TableData);
 
     return (
         <div>

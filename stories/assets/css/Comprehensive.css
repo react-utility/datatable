@@ -38,3 +38,7 @@
     background-color: #86EFAC;
     cursor: pointer;
 }
+
+.row-element {
+    background-color: rgb(253, 253, 253);
+}
