@@ -1,9 +1,7 @@
 # React Datatable
-This is another datatable library for react application. There are other great datatable libaries available on the npm repository, which doesn't comes out with much customization when it comes to CSS. While working with PWA application using react and tailwind for one of my client, I found that it's not very easy to customize CSS and themes at granular level using various CSS frameworks like bootstrap, tailwind etc or simple CSS. 
+This is another datatable library for react application.
 
-In some cases I found that when working with one css framework or none (just simple css) the other datatables libaries available in the market for react, uses another framework or some uses style-components, and then I have to manage CSS with both the framework and have to write some extra codes to work seamlessly.
-
-*If you are looking for some simple react datatable with some in built functionality like pagination, sorting, progress bar etc. or full customization of these components and granular access to the table elements for any CSS framework or none of your choice then this is the datable library you are looking for. Give this React Datatable a try.*
+*If you are looking for simple react datatable with some in built functionality like pagination, sorting, progress bar etc. or full customization of these components and granular access to the table elements for any CSS framework like tailwind, bootstrap or just css or scss of your choice, then this is the datable library you are looking for. Give this React Datatable a try.*
 <br>
 <br>
 ## Table of contents
@@ -13,50 +11,78 @@ In some cases I found that when working with one css framework or none (just sim
 3. [Requirement / Dependency](#Requirement-/-Dependency)
 4. [Installation](#Installation)
 5. [API](#API)
-    - [Pagination](#Pagination)
-    - [Sorting](#Sorting)
-    - [Progressbar](#Progressbar)
-
+    - [Basic Table API](#Basic-Table---interface-IDataTableProps)
+    - [Column API](#Columns---interface-IColumn)
+    - [Options / Properties](#Options-/-Properties---interface-IDataTableOptions`)
+        - [Basic](#Basic)
+        - [Pagination](#Pagination)
+        - [Sorting](#Sorting)
+        - [Progressbar](#Progressbar)
+    - [Styling](#Styling)
+6. [Code Examples](#Code-Examples)
+7. [Development](#Development)
+    - [Setup](#Setup)
+    - [Local Development](#Local-Development)
+    - [Build](#Build)
+    - [Test](#Test)
+8. [Contributors](#Contributors)
 
 ## Demo and Example
 <hr>
 
+[Click here for Live Demo with Storybook](https://sangramthecoder.github.io/@react-datatable-stories)
+
 ## Key Features
 <hr>
+
+
+* Simple to install
+* Easy customization with tailwind, bootstrap 5, vanilla css, scss.
+* In Built Pagination, sorting functionality.
 
 ## Requirement / Dependency
 <hr>
 
+React framework `>=16.8.0`
+
 ## Installation
 <hr>
 
+`npm -i @react/datatable`
 
-## API
-<hr>
+# API
 
-### Basic Table
+## Basic Table - `interface IDataTableProps`
 Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
-columns | | | | 
-data | | | | 
-options | | | | 
-classNames | | | | 
+columns | `IColumn` | | **Mandatory Props**<br>*Column defination for the table.*<br> Please check [Columns](#Columns---interface-IColumn) | 
+data | `any` | | **Mandatory Props**<br>*Data of you choice* | 
+options | `IDataTableOptions` | | *Props for table configuration. Use various options to customize your table.*<br>Please check [Options / Properties](#Options-/-Properties---interface-IDataTableOptions`) for details options available for react datatable configuration| 
+classNames | `IDataTableCSS` | | *Props for table styling configuration. Use various options to customize your table css.*<br>Please check [Styling](#Styling) for details css options available for react datatable configuration| 
 
-## Columns
+<br>
+
+## Columns - `interface IColumn`
 Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
-name | | | |
-selector | | | |
-sortable | | | |
-sortIcon | | | |
-showColumn | | | |
+name | `string` | | **Mandatory**<br>*Name of the column to be displayed in table* |
+selector | `string` | | **Mandatory**<br>*Id of the column that matches your data object keys*|
+sortable | `boolean` | | *Toggle switch to make a column sortable or not*<br>*Expected Value `true` or `false`*<br><br>**`sortable : true`**|
+sortIcon | `React.FC<HeaderItem>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
+showColumn | `boolean` | | *Toggle switch to show a column or not in table*<br>*Expected Value `true` or `false`*<br><br>**`showColumn : true`** |
+formatting | `React.FC<{ row: any }>` | | *Full control over cell customization with custom React functional component* |
+customCellStyles | `CellStyleCustom[]` | | *Array of your custom cell css style with conditional statements like `when : true` then `style : React CSSProperties`*<br>*Please note that this will follow CSS hiearchy for DOM styling. Any style provided in this style object will take as top priority.*<br><br>**`customCellStyles : [`**<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`when: (value: any) => boolean`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`style: () => React.CSSProperties`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>&nbsp;`]` |
 
-## Options / Properties
+<br>
+
+## Options / Properties - `interface IDataTableOptions`
+*`IDataTableOptions` has been grouped according to their unit of work*
 
 ### Basic
+
 Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
-tableId  | `string | number` | `Math.floor(Math.random() * 1000)` | *Unique Id for the table. Details can be provided as a number or string. By defauult it takes a random number*|
+tableId  | `string` | `number` | `Math.floor(Math.random() * 1000)` | *Unique Id for the table. Details can be provided as a number or string. By defauult it takes a random number*|
 showCaption | `boolean` | `false` | *Toggle switch to show table caption.*<br>*Expected Value `true` or `false`*<br><br>**`showCaption : true`**| |
 caption | `string` | | *Provide table title as a string to this api. This caption will be shown before table header.* |
 customCaption | | | |
@@ -110,3 +136,102 @@ Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
 showProgressPending | boolean | | *This is an boolean flag to show progress pending in the table. The state of this API should be managed in your React Component. This react datatable will not handle, or switch flags for this api.*<br>*Expected Value `true` or `false`*<br><br>**`showProgressPending : true`** |
 customProgressPendingComponent | `React.FC<any>` | | *This api allow you to provide custom progress component which should be react functional component. This will allow you to create your own custom progress details as per your requirement* |
+
+
+## Styling
+*All the below mentioned CSS Api's/ options can be overitten by your custom CSS Class.*
+
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+caption | `string` | `"table-caption"` | *Css for table caption. This will be added to the className* |
+tableWrapper | `string` | | *Css for tableWrapper. The div element wrapping you datatable. This will be added to the className* |
+table | `string` | | *Css for react datatable. This will be added to the className* |
+tableHead | `string` | | *Css for table head. This refers to the `thead` element. This will be added to the className* |
+tableBody | `string` | | *Css for table body. This refers to the `tbody` element. Note: This will be overitten by `tableHeaderRowElement` css option if mentioned. This will be added to the className* |
+tableFooter |  | | *Not Implemented* |
+tableDense | `string` | `"table-dense"` | *Css for making table dense. This will be added to the className* |
+tableResponsive | `string` | `"table-responsive"` | *Css for making table responsive. This will be added to the className* |
+tableStriped | `string` | table-striped | *Css for making table striped. This will be added to the className* |
+nodata | `string` | `"table-nodata"` | *Css for table when no data component is shown. This will be added to the className* |
+highlightOnHoverClass | `string` | `"tr-onhover"` | *Css for highlight rows when you hover. This will be added to the className* |
+tableHeaderRowElement | `string` | | *Css for table column wrapper element. Note: This will be overitten by `cellElelmentCss` if mentioned. This is for entier header row. This will be added to the className* |
+tableBodyRowElement | | `string` | *Css for each table rows. This will be added to the className* |
+headerElement | `IHeaderElementCss` | | *Header Eelement CSS.*<br>*Please refer [interface IHeaderElementCss](Interface-IHeaderElementCss) for more details.* |
+cellElement | `ICellElementCss` | | *Each Cell Eelement CSS.*<br>*Please refer [interface ICellElementCss](Interface-ICellElementCss) for more details.*|
+progressbar | `IProgressPendingCss` | | *Progress bar component CSS.*<br>*Please refer [interface IProgressPendingCss](Interface-IProgressPendingCss) for more details.*|
+pagination | `IPaginationCss` | | *Pagination Component CSS.*<br>*Please refer [interface IPaginationCss](Interface-IPaginationCss) for more details.*|
+
+<br><br>
+
+### Interface IHeaderElementCss
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+header | `string` | | *Css for table header wrapper element. This is individaul header. This will be added to the className*|
+headerInner | `string` | `"th-inner"` | *Css for table header inner element. This will be added to the className*|
+headerButton | `string` | `"button"` | *Css for table header name. Column name has been implemented in a button element. This will be added to the className*|
+headerIcon | `string` | `"icon"` | *Css for table icon element. This will be added to the className*|
+
+<br><br>
+
+### Interface ICellElementCss
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+cellElelmentCss | `string` | | *Css for each table cell component. Note this will be overritten if `Column customCellStyles` is mentioned at column level. This will be added to the className*|
+
+<br><br>
+ 
+### Interface IProgressPendingCss
+*Note: Progress Pending CSS is applied to the default progress pending component provided by this react datatable. This API will not be applicable to Custom Progress Pending component.*
+<br>
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+progressPendingWrapper | `string` | `"progress-pending-wrapper"` | *Css for table progress pending wrapper div element. This will be added to the className*|
+progressPending | `string` | `"progress-pending"` | *Css for table progress pending. This will be added to the className*|
+progressPendingAnimation | `string` | `"progress-pending-animation"` | *Css for progress pending animation effect. This will be added to the className*|
+progressPendingCircle | `string` | `"progress-pending-circle "`| *Css for proogress pending circle. This will be added to the className*|
+progressPendingPath | `string` | `"progress-pending-path"` | *Css for progress pending path. This will be added to the className*|
+
+<br><br>
+
+### Interface IPaginationCss
+*Note: Pagination CSS is applied to the default pagination component provided by this react datatable. This API will not be applicable to Custom Pagination component.*
+<br>
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+pagination | `string` | `"pagination"` | *Css for pagination Group. This will be added to the className* |
+paginationDropdown | `string` | `"pagination-dropdown"` | *Css for pagination dropdown. This will be added to the className* |
+rowPerPageDisplay | `string` | `"pagination-rowsperpage"` | *Css for pagination rowsperpage. This will be added to the className* |
+paginationButtonGroup | `string` | `"button pagination-button"` | *Css for pagination button. This will be added to the className* |
+paginationButton | `string` | `"pagination-buttonGroup"` | *Css for pagination button Group. This will be added to the className* |
+<br>
+
+## Code Examples
+*All code example are show in the live [demo](#https://sangramthecoder.github.io/@react-datatable-stories) and within docs tab.*
+<br><br>
+
+# Development
+## Setup
+Install the latest [NODE JS](https://nodejs.org/en/) and simply run npm install command in the root directory of this project.
+
+## Local Development 
+During Development.
+```
+# watch and build new source changes
+npm start
+
+# or serve *.stories.js files and manually test on the Storybook app
+npm run storybook
+```
+## Build
+```
+# to build the project use the following command
+npm build
+```
+## Test
+```
+# to test the project use the following command
+npm test
+```
+<br>
+
+# Contributors

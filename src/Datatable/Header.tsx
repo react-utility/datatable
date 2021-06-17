@@ -66,12 +66,4 @@ const SortIcon: React.FC<HeaderItem> = ({ isHeaderClicked, onSortClicked, prevDi
     )
 }
 
-/**
- * {
-                    props.item.sortable && !props.item.isSorted && <Icon name="sortAsc" className={props.classNames!.headerButton + ' ' + props.classNames!.headerIcon} />
-                }
-                {
-                    props.item.sortable && props.item.isSorted && <Icon name="sortDesc" className={props.classNames!.headerButton + ' ' + props.classNames!.headerIcon} />
-                }
- */
 export default Header;

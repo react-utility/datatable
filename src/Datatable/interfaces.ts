@@ -9,8 +9,8 @@ export interface IDataTableProps {
 }
 
 export interface IColumn {
-    name?: string,
-    selector?: string,
+    name: string,
+    selector: string,
     sortable?: boolean,
     sortIcon?: React.FC<HeaderItem>,
     showColumn?: boolean,
