@@ -4,7 +4,8 @@ html {
 
 pre{
     background-color: rgb(91, 97, 185);
-    width: fit-content;
+    width: inherit;
+    overflow-wrap: break-word;
     white-space: pre-wrap;
     padding: 0.3rem;
     color: rgb(239, 240, 243);

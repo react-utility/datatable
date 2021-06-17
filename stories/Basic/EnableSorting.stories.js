@@ -13,24 +13,9 @@ import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
-
 export default {
-  title: 'Sorting/Default Sorting',
+  title: 'Basic/Sorting',
   component: DataTable,
-  argsType: {
-    label: {
-      name: 'label',
-      type: { name: 'string', required: false },
-      defaultValue: 'Hello',
-      description: 'demo description',
-      table: {
-        type: { summary: 'string' },
-        defaultValue: { summary: 'Hello' },
-      }
-    }
-  },
-
-
   parameters: {
     docs: {
       page: () => (
@@ -47,29 +32,22 @@ export default {
   },
 }
 
-const options = {
-  defaultSortHeader: 'id',
-  defaultSortAscending: true
-}
+const newHeader = Header.map(item => ({ ...item, sortable: true }));
 
-const Template = ({ options }) => {
-  const [columns] = useState([...Header]);
+const Template = ({ columns }) => {
   const [data] = useState([...Data]);
   return (
     <div>
       <div>
         <h2 className="header">Weather Report</h2>
         <p className="header-desc">Change the options in below control tab to see effect</p>
-        <pre>
-          {JSON.stringify(options)}
-        </pre>
       </div>
-      <DataTable columns={columns} data={data} options={options} />
+      <DataTable data={data} columns={columns} />
     </div>
   )
 }
 
-export const DefaultSorting = Template.bind({});
-DefaultSorting.args = {
-  options: options,
+export const Sorting = Template.bind({});
+Sorting.args = {
+  columns: newHeader,
 }

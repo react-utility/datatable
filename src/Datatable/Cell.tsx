@@ -1,12 +1,32 @@
-import { CellProps } from "./interfaces";
+import React, { useRef, useEffect } from 'react';
+import { CellProps } from "./types";
+import { addClass, getClassesAsArray, removeClass } from './util/common';
 
-const Cell = (props: CellProps) => {
+const Cell: React.FC<CellProps> = (props: CellProps) => {
+    const cell = useRef<HTMLTableCellElement>(null);
+
+    useEffect(() => {
+        if (props.dense!.isDense && props.dense!.denseCss) {
+            if (props.dense!.denseCss.length > 0) {
+                addClass(cell.current!, getClassesAsArray(props.dense!.denseCss));
+            }
+
+        } else {
+            if (props.dense!.denseCss) {
+                if (props.dense!.denseCss.length > 0) {
+                    removeClass(cell.current!, getClassesAsArray(props.dense!.denseCss));
+                }
+            }
+        }
+    }, []);
 
     return (
         <td
-            className="border border-gray-900 text-left pl-2 pr-8"
+            ref={cell}
+            className={props.classNames!.cellElelmentCss}
+            style={props.customCellStyle!}
         >
-            {props.displayValue}
+            {props.children}
         </td>
     )
 }

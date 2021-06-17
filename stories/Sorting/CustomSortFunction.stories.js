@@ -15,7 +15,7 @@ import { Data, Header } from '../assets/data/weather.js';
 
 
 export default {
-    title: 'Sorting/Custom Sort Icon',
+    title: 'Sorting/Custom Sort Function',
     component: DataTable,
     parameters: {
         docs: {
@@ -33,9 +33,15 @@ export default {
     },
 }
 
+
+const CustomSorting = () => {
+
+}
+
 const options = {
     defaultSortHeader: 'id',
-    defaultSortAscending: true
+    defaultSortAscending: true,
+    customSortFunction: CustomSorting
 }
 
 
@@ -89,6 +95,7 @@ const newHeader = Header.map(item => {
     return ({ ...item, sortable: true })
 });
 
+
 const Template = ({ columns }) => {
     const [data] = useState([...Data]);
     return (
@@ -111,7 +118,7 @@ const Template = ({ columns }) => {
     )
 }
 
-export const CustomSortIcon = Template.bind({});
-CustomSortIcon.args = {
+export const CustomSortFunction = Template.bind({});
+CustomSortFunction.args = {
     columns: newHeader,
 }
