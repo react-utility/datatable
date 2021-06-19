@@ -4,6 +4,15 @@ This is another datatable library for react application.
 *If you are looking for simple react datatable with some in built functionality like pagination, sorting, progress bar etc. or full customization of these components and granular access to the table elements for any CSS framework like tailwind, bootstrap or just css or scss of your choice, then this is the datable library you are looking for. Give this React Datatable a try.*
 <br>
 <br>
+
+### Upcoming Changes
+✅ &nbsp;&nbsp;&nbsp;Row Expansion<br>
+✅ &nbsp;&nbsp;&nbsp;IColumns with more functionality<br>
+✅ &nbsp;&nbsp;&nbsp;Pagination Changes<br>
+
+
+<br>
+
 ## Table of contents
 
 1. [Demo and Example](#Demo-and-Example)
