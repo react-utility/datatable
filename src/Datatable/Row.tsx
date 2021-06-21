@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import Cell from './Cell';
+import RowExpansion from './RowExpansion';
 import { CellStyleCustom, RowProps } from './types';
 import { addClass, removeClass, getClassesAsArray } from './util/common';
 
 
 const Row: React.FC<RowProps> = (props: RowProps) => {
+    const [showExpandedRow, setShowExpandedRow] = useState(false);
     const row = useRef<HTMLTableRowElement>(null);
     const clickCount = useRef<number>(0);
     const delay: number = 300;
@@ -38,15 +40,21 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
     }, [])
 
     const handleOnClick = (dataItem: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => {
-        clickCount.current += 1;
-        setTimeout(() => {
-            if (clickCount.current === 1) {
-                props.rowSingleClicked!(dataItem, event);
-            } else if (clickCount.current === 2) {
-                props.rowDoubleClicked!(dataItem, event);
-            }
-            clickCount.current = 0;
-        }, delay);
+        if(!props.rowExpansion.enableRowExpansion){
+            clickCount.current += 1;
+            setTimeout(() => {
+                if (clickCount.current === 1) {
+                    if(props.rowSingleClicked){
+                        props.rowSingleClicked!(dataItem, event);
+                    }
+                } else if (clickCount.current === 2) {
+                    if(props.rowDoubleClicked){
+                        props.rowDoubleClicked!(dataItem, event);
+                    }
+                }
+                clickCount.current = 0;
+            }, delay);
+        }
     }
 
     const conditionalRowStyle = (row: any): React.CSSProperties => {
@@ -86,30 +94,63 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         //displayValue={props.dataItem[item.selector!]}
     }
 
+    const handleOnRowExpansion = (isExpanded: boolean) => {
+        setShowExpandedRow(isExpanded);
+        isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
+    }
+
     return (
-        <tr key={props.index}
-            className={props.classNames.rowElementCss}
-            ref={row}
-            onClick={handleOnClick.bind(this, props.dataItem)}
-            style={conditionalRowStyle(props.dataItem)}
-        >
+        <>
+            <tr key={props.index}
+                className={props.classNames.rowElementCss}
+                ref={row}
+                onClick={handleOnClick.bind(this, props.dataItem)}
+                style={conditionalRowStyle(props.dataItem)}
+            >
+                {
+                    props.header.map((item, index) => {
+                        if(props.rowExpansion.enableRowExpansion && item.selector==="expansion"){
+                            return (
+                                <Cell
+                                    key={index + item.selector!}
+                                    classNames={props.classNames.cellElementCss}
+                                    dense={props.dense}
+                                >
+                                    <RowExpansion id="rowExansion" rowIsExpanded={handleOnRowExpansion} 
+                                        customRowExpansionIcon={{show:props.rowExpansion.customRowExpansionIcon.show,
+                                            hide:props.rowExpansion.customRowExpansionIcon.hide}}
+                                        isRowExpansionDisabled={props.rowExpansion.isRowExpansionDisabled ? props.rowExpansion.isRowExpansionDisabled(props.dataItem) : false}
+                                    />
+                                </Cell>
+                            )
+                        }
+                        return (
+                            <Cell
+                                key={index + item.selector!}
+                                classNames={props.classNames.cellElementCss}
+                                dense={props.dense}
+                                customCellStyle={conditionalCellStyle(props.dataItem[item.selector!], item.customCellStyles!)}>
+                                {
+                                    !item.formatting && <>{props.dataItem[item.selector!]}</>
+                                }
+                                {item.formatting && <item.formatting row={props.dataItem} />}
+                            </Cell>
+                        )
+                    })
+                }
+            </tr>
             {
-                props.header.map((item, index) => {
-                    return (
-                        <Cell
-                            key={index + item.selector!}
-                            classNames={props.classNames.cellElementCss}
-                            dense={props.dense}
-                            customCellStyle={conditionalCellStyle(props.dataItem[item.selector!], item.customCellStyles!)}>
-                            {
-                                !item.formatting && <>{props.dataItem[item.selector!]}</>
-                            }
-                            {item.formatting && <item.formatting row={props.dataItem} />}
-                        </Cell>
-                    )
-                })
+                showExpandedRow && 
+                <tr>
+                    <td colSpan={props.header.length} className="row-expanded-area">
+                        {
+                            props.rowExpansion.onRowExpanded && < props.rowExpansion.onRowExpanded row={props.dataItem}/>
+                        }
+                    </td>
+                </tr>
             }
-        </tr>
+        </>
+        
 
     )
 }

@@ -48,7 +48,12 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         if (props.columns) {
             let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false }));
-            setTableColumns(newHeader);
+            if(props.options!.enableRowExpansion){
+                let rowExpansionHeader : TableColumn[] = [{name:'',selector:'expansion'}];
+                setTableColumns([...rowExpansionHeader,...newHeader]);
+            }else{
+                setTableColumns(newHeader);
+            }
         }
         //console.log('Header is fired');
     }, [props.columns]);
@@ -196,6 +201,19 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     rowSingleClicked={tableOptions.onRowClicked}
                                     rowDoubleClicked={tableOptions.onRowDoubleClicked}
                                     customRowStyles={tableOptions.customRowStyles}
+                                    rowExpansion={
+                                        {
+                                            enableRowExpansion : tableOptions.enableRowExpansion!,
+                                            customRowExpansionIcon : {
+                                                show: tableOptions.customRowExpansionIcon!.show!, 
+                                                hide: tableOptions.customRowExpansionIcon!.hide!,
+                                            }, 
+                                            onRowExpansionClicked: tableOptions.onRowExpansionClicked!, 
+                                            onRowHideClicked: tableOptions.onRowHideClicked!, 
+                                            isRowExpansionDisabled: tableOptions.isRowExpansionDisabled!, 
+                                            onRowExpanded : tableOptions.onRowExpanded!
+                                        }
+                                    }
                                 />
                             })
                         }

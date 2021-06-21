@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState } from 'react';
 import {
     Title,
     Subtitle,
@@ -14,14 +14,14 @@ import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
 export default {
-    title: 'Formatting/Custom Formating',
+    title: 'Row Expansion/Basic Expansion',
     component: DataTable,
     parameters: {
         docs: {
             page: () => (
                 <>
                     <Title />
-                    <Subtitle>Use <code>formatting</code> option for custom cell Formatting.</Subtitle>
+                    <Subtitle>Use <code>customRowStyles</code> option for custom Row Formatting.</Subtitle>
                     <Description />
                     <Primary />
                     <ArgsTable story={PRIMARY_STORY} />
@@ -38,58 +38,49 @@ const customClassNames = {
 
 const options = {
     responsive: true,
-    highlightOnHover: true,
     pagination: true,
-    showRowPerPageDropdown: true,
-    showRowsPerPage: true,
+    enableRowExpansion: true,
+    onRowClicked : (row, event) => {
+        console.log(row,event);
+    },
+    onRowExpansionClicked : (row) => {
+        console.log('onRowExpansionClicked is clicked');
+    },
+    onRowHideClicked : (row) => {
+        console.log('onRowHideClicked is clicked');
+    },
+    isRowExpansionDisabled : (row) => {
+        return [10,112,51,8,9,4].includes(row.id)
+    },
+    onRowExpanded: (row) => {
+        return (
+            <pre>
+                {JSON.stringify(row,null,4)}
+            </pre>
+        )
+    }
 }
 
 const Template = ({ options, classNames }) => {
-    const TableData = JSON.parse(JSON.stringify(Data));
-    const TableHeader = JSON.parse(JSON.stringify(Header));
-
-    const actions = [{
-        name: 'Actions',
-        selector: 'action',
-        formatting: (row) => {
-            return (
-                <div>
-                    <button onClick={handleEdit.bind(this,row)}>Edit</button>
-                    <button>Delete</button>
-                </div>
-            )
-        }
-    }];
-
-    const newHeader = [...TableHeader, ...actions];
-
-    const [columns] = useState(newHeader);
-    const [data] = useState(TableData);
-
-    const editClickDiv = useRef(null);
-
-    const handleEdit = (row) => {
-        console.log(row);
-        editClickDiv.current.textContent = JSON.stringify(row);
-    }
+    const [columns] = useState(JSON.parse(JSON.stringify(Header)));
+    const [data] = useState(JSON.parse(JSON.stringify(Data)));
 
     return (
         <div>
             <div>
-                <h2 className="header">Weather Report - <span>Cell Formatting</span></h2>
+                <h2 className="header">Weather Report -<span>Custom Row Styles</span></h2>
                 <p className="header-desc">Change the options in below control tab to see effect</p>
                 <pre>
                     {JSON.stringify(options)}
                 </pre>
-                <div ref={editClickDiv}></div>
             </div>
             <DataTable columns={columns} data={data} options={options} classNames={classNames} />
         </div>
     )
 }
 
-export const CustomFormating = Template.bind({});
-CustomFormating.args = {
+export const BasicExpansion = Template.bind({});
+BasicExpansion.args = {
     options: options,
     classNames: customClassNames
 }
