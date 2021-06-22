@@ -47,7 +47,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      */
     useEffect(() => {
         if (props.columns) {
-            let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false }));
+            let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false, showColumn: true }));
             setTableColumns(newHeader);
         }
         //console.log('Header is fired');
@@ -162,7 +162,10 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                             <tr className={tableCss.tableHeaderRowElement}>
                                 {
                                     tableColumns.map((item, index) => {
-                                        return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />)
+                                        if(item.showColumn){
+                                            return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />)
+                                        }
+                                        return
                                     })
                                 }
                             </tr>

@@ -16,7 +16,7 @@ import { Data, Header } from '../assets/data/weather.js';
 const TableData = JSON.parse(JSON.stringify(Data));
 const TableHeader = JSON.parse(JSON.stringify(Header));
 export default {
-    title: 'Formatting/Custom Cell Styling',
+    title: 'Column/Custom Cell Styling',
     component: DataTable,
     parameters: {
         docs: {

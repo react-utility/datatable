@@ -12,9 +12,9 @@ export interface IColumn {
     name: string,
     selector: string,
     sortable?: boolean,
-    sortIcon?: React.FC<HeaderItem>,
+    customSortIcon?: React.FC<HeaderItem>,
     showColumn?: boolean,
-    formatting?: React.FC<{ row: any }>,
+    customCell?: React.FC<{ row: any }>,
     customCellStyles?: CellStyleCustom[],
 }
 

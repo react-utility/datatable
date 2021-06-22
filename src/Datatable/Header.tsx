@@ -21,10 +21,10 @@ const Header: React.FC<HeaderProps> = (props) => {
                     {props.item.name!}
                 </Button>
                 {
-                    props.item.sortable && props.item.sortIcon && <props.item.sortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} isHovered={isHovered} />
+                    props.item.sortable && props.item.customSortIcon && <props.item.customSortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} isHovered={isHovered} />
                 }
                 {
-                    props.item.sortable && !props.item.sortIcon && <SortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} />
+                    props.item.sortable && !props.item.customSortIcon && <SortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} />
                 }
 
             </div>
@@ -60,7 +60,6 @@ const SortIcon: React.FC<HeaderItem> = ({ isHeaderClicked, onSortClicked, prevDi
             }} />
             <Icon id="sortAsc" name="sortAsc" className={sortClass.asc} onClick={(event: React.MouseEvent<SVGSVGElement>) => {
                 onSortClicked(Sorting.ASC, props.item, event);
-
             }} />
         </div>
     )
