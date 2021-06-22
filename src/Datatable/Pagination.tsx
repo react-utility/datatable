@@ -151,9 +151,3 @@ const Pagination: React.FC<PaginationProps> = (props) => {
 }
 
 export default Pagination;
-
-/**
- * In Case of Enable Debug
- * console.log('Next is clicked');
- * console.table([{ currentSliceIndex: currentSliceIndex.current.start + '-' + currentSliceIndex.current.end, rowPerPage: rowPerPage, remainder: remainder, startIndex: startIndex, endIndex: endIndex }]);
- */

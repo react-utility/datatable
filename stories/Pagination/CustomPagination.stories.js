@@ -33,12 +33,6 @@ export default {
 }
 
 
-const customClassNames = {
-  pagination: {
-    paginationButton: 'paginationCustomButton'
-  }
-}
-
 const options = {
   pagination: true,
   showRowPerPageDropdown: true,
@@ -67,5 +61,5 @@ export const CustomPagination = Template.bind({});
 
 CustomPagination.args = {
   options: options,
-  classNames: customClassNames,
+  classNames: {},
 }
