@@ -7,10 +7,11 @@ This is another datatable library for react application.
 ## Table of contents
 
 1. [Demo and Example](#Demo-and-Example)
-2. [Key Features](#Key-Features)
-3. [Requirement / Dependency](#Requirement-/-Dependency)
-4. [Installation](#Installation)
-5. [API](#API)
+2. [PNG View](#PNG-View)
+3. [Key Features](#Key-Features)
+4. [Requirement / Dependency](#Requirement-/-Dependency)
+5. [Installation](#Installation)
+6. [API](#API)
     - [Basic Table API](#Basic-Table---interface-IDataTableProps)
     - [Column API](#Columns---interface-IColumn)
     - [Options / Properties](#Options-/-Properties---interface-IDataTableOptions`)
@@ -19,18 +20,22 @@ This is another datatable library for react application.
         - [Sorting](#Sorting)
         - [Progressbar](#Progressbar)
     - [Styling](#Styling)
-6. [Code Examples](#Code-Examples)
-7. [Development](#Development)
+7. [Code Examples](#Code-Examples)
+8. [Development](#Development)
     - [Setup](#Setup)
     - [Local Development](#Local-Development)
     - [Build](#Build)
     - [Test](#Test)
-8. [Contributors](#Contributors)
+9. [Contributors](#Contributors)
 
 ## Demo and Example
 <hr>
 
 [Click here for Live Demo with Storybook](https://sangramthecoder.github.io/@react-datatable-stories)
+
+## PNG View
+
+![image info](./assets/img/image.png)
 
 ## Key Features
 <hr>
@@ -68,7 +73,7 @@ Property | Type | Default | Description/Example
 name | `string` | | **Mandatory**<br>*Name of the column to be displayed in table* |
 selector | `string` | | **Mandatory**<br>*Id of the column that matches your data object keys*|
 sortable | `boolean` | | *Toggle switch to make a column sortable or not*<br>*Expected Value `true` or `false`*<br><br>**`sortable : true`**|
-customSortIcon | `React.FC<HeaderItem>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
+customSortIcon | `React.FC<{selector: string,isHeaderClicked :boolean, onSortClicked: (asc : boolean, event: React.MouseEvent<Element, MouseEvent>) => void, prevDirection : Sorting, isHeaderHovered: boolean, onSearch : (searchData : string, selector : string ) => void }>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
 showColumn | `boolean` | | *Toggle switch to show a column or not in table*<br>*Expected Value `true` or `false`*<br><br>**`showColumn : true`** |
 customCell | `React.FC<{ row: any }>` | | *Full control over cell customization with custom React functional component* |
 customCellStyles | `CellStyleCustom[]` | | *Array of your custom cell css style with conditional statements like `when : true` then `style : React CSSProperties`*<br>*Please note that this will follow CSS hiearchy for DOM styling. Any style provided in this style object will take as top priority.*<br><br>**`customCellStyles : [`**<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`when: (value: any) => boolean`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`style: () => React.CSSProperties`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>&nbsp;`]` |
