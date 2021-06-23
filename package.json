@@ -1,6 +1,6 @@
 {
   "name": "@react-utility/datatable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An advance interaction to HTML table with react",
   "main": "dist/index.cjs.js",
   "scripts": {
