@@ -7,7 +7,7 @@ import { HeaderProps, Sorting } from './types';
 
 const Header: React.FC<HeaderProps> = (props) => {
 
-    const [headerClicked, setHeaderClicked] = useState<boolean>(props.item.isSorted);
+    const [headerClicked, setHeaderClicked] = useState<boolean>(props.item.isSorted!);
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {

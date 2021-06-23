@@ -65,6 +65,14 @@ const options = {
     showTableStriped: true,
     highlightOnHover: true,
     hideTableHeader: false,
+    enableRowExpansion: true,
+    onRowExpanded: (row) => {
+        return (
+            <pre>
+                {JSON.stringify(row,null,4)}
+            </pre>
+        )
+    },
     pagination: true,
     showRowPerPageDropdown: true,
     showRowsPerPage: true,

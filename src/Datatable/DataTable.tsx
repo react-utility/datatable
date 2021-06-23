@@ -49,7 +49,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         if (props.columns) {
             let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false, showColumn: true }));
             if(props.options!.enableRowExpansion){
-                let rowExpansionHeader : TableColumn[] = [{name:'',selector:'expansion'}];
+                let rowExpansionHeader : TableColumn[] = [{name:' ',selector:'expansion', showColumn: true}];
                 setTableColumns([...rowExpansionHeader,...newHeader]);
             }else{
                 setTableColumns(newHeader);
