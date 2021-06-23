@@ -14,7 +14,7 @@ export interface IColumn {
     sortable?: boolean,
     customSortIcon?: React.FC<{selector: string,isHeaderClicked :boolean, onSortClicked: (asc : boolean, event: React.MouseEvent<Element, MouseEvent>) => void, prevDirection : Sorting, isHeaderHovered: boolean, onSearch : (searchData : string, selector : string ) => void }>,
     showColumn?: boolean,
-    customCell?: React.FC<{ row: any }>,
+    customCell?: React.FC<{ row: any,selector: string }>,
     customCellStyles?: CellStyleCustom[],
 }
 

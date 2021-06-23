@@ -12,7 +12,7 @@ import {
 import '../assets/css/stories.css';
 import '../assets/css/Comprehensive.css';
 import DataTable from '../../src/index';
-import { Data, Header } from '../assets/data/weather.js';
+import { Data, Header } from '../assets/data/weather_unnformated.js';
 import { isTemplateLiteral } from 'typescript';
 
 
@@ -147,10 +147,49 @@ const CustomIcon = ({selector,isHeaderClicked, onSortClicked, prevDirection, isH
     )
 }
 
+const degreeConversion = ({row,selector}) => {
+    if(selector === 'maxTemp' || selector === 'minTemp'){
+        return (
+            <>{row[selector]}&#8451;</>
+        )
+    }
+    if(selector === 'lat' || selector === 'long'){
+        return (
+            parseFloat(row[selector]).toFixed(3)
+        )
+    }
+}
+
+const custonCellStylesForTemp = [
+    {
+        when: (value) => {
+            var temp = parseInt(value);
+            if (temp > 30) {
+                return true;
+            }
+            return false;
+        },
+        style: () => {
+            return ({
+                backgroundColor: '#F87171',
+                color: '#FAFAFA',
+                paddingLeft: '0.25rem',
+            });
+        }
+    }
+]
 
 const Template = ({ options, classNames }) => {
     
-    const [columns] = useState(() => Header.map(item => ({ ...item, sortable: true, customSortIcon: CustomIcon })));
+    const [columns] = useState(() => Header.map(item => {
+        if(item.selector === 'maxTemp' || item.selector === 'minTemp'){
+            return { ...item, sortable: true, customSortIcon: CustomIcon, customCell : degreeConversion, customCellStyles: custonCellStylesForTemp}
+        }
+        if(item.selector === 'lat' || item.selector === 'long'){
+            return { ...item, sortable: true, customSortIcon: CustomIcon, customCell : degreeConversion }
+        }
+        return { ...item, sortable: true, customSortIcon: CustomIcon }
+    }));
     const [data,setData] = useState([...Data]);
 
     return (

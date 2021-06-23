@@ -105,7 +105,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                 {
                                     !item.customCell && <>{props.dataItem[item.selector!]}</>
                                 }
-                                {item.customCell && <item.customCell row={props.dataItem} />}
+                                {item.customCell && <item.customCell row={props.dataItem} selector={item.selector} />}
                             </Cell>
                         )
                     }
