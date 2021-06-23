@@ -48,7 +48,6 @@ th {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-width: 10rem/* 160px */;
 }
 
 
@@ -214,6 +213,30 @@ td{
     color: #c8c8c9;
     pointer-events: none !important;
 }
+
+/** Row Expansion*/
+.row-expansion-show-icon{
+    color:rgb(75, 75, 75);
+    cursor: pointer;
+}
+
+.row-expansion-show-icon-disabled{
+    color:rgb(48, 48, 48);
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.row-expanded-area{
+    animation: 400ms ease-out 0s 1 appear;
+}
+@keyframes appear {
+    0% {
+      transform: translateY(-5%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
     .pagination-rowsperpage{

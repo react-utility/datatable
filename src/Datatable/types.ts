@@ -1,8 +1,9 @@
 import React from "react";
 import { ICellElementCss, IColumn, IDataTableOptions, IHeaderElementCss, IPaginationCss } from "./interfaces";
+import RowExpansion from "./RowExpansion";
 
 export type TableColumn = IColumn & {
-    isSorted: boolean,
+    isSorted?: boolean,
     sortDirection?: Sorting
 }
 
@@ -46,6 +47,17 @@ export type HeaderProps = {
 
 export type RowProps = {
     header: Array<IColumn>,
+    rowExpansion : {
+        enableRowExpansion : boolean, 
+        customRowExpansionIcon: {
+            show: React.FC<any>,
+            hide: React.FC<any>
+        },
+        onRowExpansionClicked:() => void,
+        onRowHideClicked:() => void,
+        isRowExpansionDisabled? : (row:any) => boolean,
+        onRowExpanded?: React.FC<{row:any}>
+    },
     dense: { isDense: boolean, denseCss: string },
     striped: { isStriped: boolean, stripedCss: string },
     onHover: { isHoverRequired: boolean, onHoverCss: string },
@@ -82,4 +94,14 @@ export type RowStyleCustom = {
 export type CellStyleCustom = {
     when: (value: any) => boolean,
     style: () => React.CSSProperties
+}
+
+export type RowExpansionProps = {
+    id? : string,
+    rowIsExpanded:(isExpanded: boolean) => void,
+    customRowExpansionIcon: {
+        show: React.FC<any>,
+        hide: React.FC<any>
+    },
+    isRowExpansionDisabled: boolean
 }

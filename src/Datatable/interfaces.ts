@@ -37,6 +37,16 @@ export interface IDataTableOptions {
 
     customRowStyles?: RowStyleCustom[],
 
+    enableRowExpansion?: boolean,
+    customRowExpansionIcon?: {
+        show?: React.FC<any>,
+        hide?: React.FC<any>
+    },
+    onRowExpansionClicked?:() => void,
+    onRowHideClicked?:() => void,
+    isRowExpansionDisabled? : (row:any) => boolean,
+    onRowExpanded?: React.FC<{row:any}>,
+
     pagination?: boolean,
     paginationServer?: boolean,
     showRowPerPageDropdown?: boolean,
@@ -86,7 +96,8 @@ export interface IHeaderElementCss {
 }
 
 export interface ICellElementCss {
-    cellElelmentCss?: string
+    cellElelmentCss?: string,
+
 }
 
 export interface IProgressPendingCss {

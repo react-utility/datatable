@@ -8,7 +8,11 @@ export const defaultOptions: IDataTableOptions = {
     defaultSortAscending: true,
     pagination: false,
     showTableStriped: false,
-    showRowPerPageDropdown: false,
+    showRowPerPageDropdown: true,
+    customRowExpansionIcon: {
+        show: undefined,
+        hide: undefined
+    },
     rowsPerPage: { option: [5, 10, 15, 20], defaultIndex: 0 }
 }
 
