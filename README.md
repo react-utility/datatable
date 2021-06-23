@@ -84,7 +84,7 @@ selector | `string` | | **Mandatory**<br>*Id of the column that matches your dat
 sortable | `boolean` | | *Toggle switch to make a column sortable or not*<br>*Expected Value `true` or `false`*<br><br>**`sortable : true`**|
 customSortIcon | `React.FC<{selector: string,isHeaderClicked :boolean, onSortClicked: (asc : boolean, event: React.MouseEvent<Element, MouseEvent>) => void, prevDirection : Sorting, isHeaderHovered: boolean, onSearch : (searchData : string, selector : string ) => void }>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
 showColumn | `boolean` | | *Toggle switch to show a column or not in table*<br>*Expected Value `true` or `false`*<br><br>**`showColumn : true`** |
-customCell | `React.FC<{ row: any }>` | | *Full control over cell customization with custom React functional component* |
+customCell | `React.FC<{ row: any,selector: string }>` | | *Full control over cell customization with custom React functional component* |
 customCellStyles | `CellStyleCustom[]` | | *Array of your custom cell css style with conditional statements like `when : true` then `style : React CSSProperties`*<br>*Please note that this will follow CSS hiearchy for DOM styling. Any style provided in this style object will take as top priority.*<br><br>**`customCellStyles : [`**<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`when: (value: any) => boolean`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`style: () => React.CSSProperties`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>&nbsp;`]` |
 
 <br>
