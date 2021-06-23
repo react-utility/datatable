@@ -14,7 +14,7 @@ import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
 export default {
-    title: 'Row Expansion/Custom Icon Row Expansion',
+    title: 'Row/Custom Icon Row Expansion',
     component: DataTable,
     parameters: {
         docs: {

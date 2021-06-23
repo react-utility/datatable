@@ -93,8 +93,21 @@ dense | `boolean` | | *Enabling this API will make the table dense. That being s
 hideTableHeader | `boolean` | `false`  | *This API will allow you to hide the table header / column names. By default it is `false`.*<br> *By enabling this API will make the header disappear, hence all the functionality e.g. `sorting` will be unavailable.*<br>*Expected Value `true` or `false`*<br><br>**`hideTableHeader : true`**|
 persistTableHead | | | |
 
+<br>
 
+### Row Expansion
+<br>
 
+Property | Type | Default | Description/Example
+-------- | ---- | ------- | -------------------
+enableRowExpansion | `boolean` | | *This will enable or disable row expansion for the table.*<br>*Expected Value `true` or `false`*<br><br>**`enableRowExpansion : true`** |
+customRowExpansionIcon | `{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`show?: React.FC<any>,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`hide?: React.FC<any>`<br>`}` | | ** |
+onRowExpansionClicked | `function` | | ** |
+onRowHideClicked | `function` | | ** |
+isRowExpansionDisabled | `(row:any) => boolean` | | ** |
+onRowExpanded | `React.FC<{row:any}>` | | ** |
+
+<br>
 
 ### Pagination
 *Pagination is a property to navigate rows within the table when dataset is large. By default pagination starts from begining. Following are the API available to controll pagination from your React Functional Component (JSX/TSX).*
