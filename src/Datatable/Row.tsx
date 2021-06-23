@@ -95,18 +95,21 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         >
             {
                 props.header.map((item, index) => {
-                    return (
-                        <Cell
-                            key={index + item.selector!}
-                            classNames={props.classNames.cellElementCss}
-                            dense={props.dense}
-                            customCellStyle={conditionalCellStyle(props.dataItem[item.selector!], item.customCellStyles!)}>
-                            {
-                                !item.formatting && <>{props.dataItem[item.selector!]}</>
-                            }
-                            {item.formatting && <item.formatting row={props.dataItem} />}
-                        </Cell>
-                    )
+                    if(item.showColumn){
+                        return (
+                            <Cell
+                                key={index + item.selector!}
+                                classNames={props.classNames.cellElementCss}
+                                dense={props.dense}
+                                customCellStyle={conditionalCellStyle(props.dataItem[item.selector!], item.customCellStyles!)}>
+                                {
+                                    !item.customCell && <>{props.dataItem[item.selector!]}</>
+                                }
+                                {item.customCell && <item.customCell row={props.dataItem} selector={item.selector} />}
+                            </Cell>
+                        )
+                    }
+                    return
                 })
             }
         </tr>

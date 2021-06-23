@@ -47,7 +47,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
      */
     useEffect(() => {
         if (props.columns) {
-            let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false }));
+            let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false, showColumn: true }));
             setTableColumns(newHeader);
         }
         //console.log('Header is fired');
@@ -133,6 +133,18 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         setTableData(data);
     };
 
+    const handleOnSearch = (searchData : string, selector : string ) => {
+        let data = [...props.data!];
+        let newData = data.filter(dataitem => {
+            let dataToCompare = dataitem[selector].toString();
+            if(dataToCompare.search(searchData) >= 0)
+                return dataitem;
+        });
+        console.log(newData);
+        setTableData(newData);
+    }
+
+
     const handleUpdateRowsPerPage = (data: any[], newIndex: number) => {
         setTableData(data);
         setTableOptions(prevOptions => {
@@ -162,7 +174,10 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                             <tr className={tableCss.tableHeaderRowElement}>
                                 {
                                     tableColumns.map((item, index) => {
-                                        return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />)
+                                        if(item.showColumn){
+                                            return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} onSearch={handleOnSearch} />)
+                                        }
+                                        return
                                     })
                                 }
                             </tr>

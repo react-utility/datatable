@@ -16,10 +16,11 @@ This is another datatable library for react application.
 ## Table of contents
 
 1. [Demo and Example](#Demo-and-Example)
-2. [Key Features](#Key-Features)
-3. [Requirement / Dependency](#Requirement-/-Dependency)
-4. [Installation](#Installation)
-5. [API](#API)
+2. [PNG View](#PNG-View)
+3. [Key Features](#Key-Features)
+4. [Requirement / Dependency](#Requirement-/-Dependency)
+5. [Installation](#Installation)
+6. [API](#API)
     - [Basic Table API](#Basic-Table---interface-IDataTableProps)
     - [Column API](#Columns---interface-IColumn)
     - [Options / Properties](#Options-/-Properties---interface-IDataTableOptions`)
@@ -28,18 +29,22 @@ This is another datatable library for react application.
         - [Sorting](#Sorting)
         - [Progressbar](#Progressbar)
     - [Styling](#Styling)
-6. [Code Examples](#Code-Examples)
-7. [Development](#Development)
+7. [Code Examples](#Code-Examples)
+8. [Development](#Development)
     - [Setup](#Setup)
     - [Local Development](#Local-Development)
     - [Build](#Build)
     - [Test](#Test)
-8. [Contributors](#Contributors)
+9. [Contributors](#Contributors)
 
 ## Demo and Example
 <hr>
 
 [Click here for Live Demo with Storybook](https://sangramthecoder.github.io/@react-datatable-stories)
+
+## PNG View
+
+![image info](./assets/img/image.png)
 
 ## Key Features
 <hr>
@@ -77,9 +82,9 @@ Property | Type | Default | Description/Example
 name | `string` | | **Mandatory**<br>*Name of the column to be displayed in table* |
 selector | `string` | | **Mandatory**<br>*Id of the column that matches your data object keys*|
 sortable | `boolean` | | *Toggle switch to make a column sortable or not*<br>*Expected Value `true` or `false`*<br><br>**`sortable : true`**|
-sortIcon | `React.FC<HeaderItem>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
+customSortIcon | `React.FC<{selector: string,isHeaderClicked :boolean, onSortClicked: (asc : boolean, event: React.MouseEvent<Element, MouseEvent>) => void, prevDirection : Sorting, isHeaderHovered: boolean, onSearch : (searchData : string, selector : string ) => void }>` | | *React functional component for custom sort icon for your column. You can define your custom icon components of your choice.* |
 showColumn | `boolean` | | *Toggle switch to show a column or not in table*<br>*Expected Value `true` or `false`*<br><br>**`showColumn : true`** |
-formatting | `React.FC<{ row: any }>` | | *Full control over cell customization with custom React functional component* |
+customCell | `React.FC<{ row: any }>` | | *Full control over cell customization with custom React functional component* |
 customCellStyles | `CellStyleCustom[]` | | *Array of your custom cell css style with conditional statements like `when : true` then `style : React CSSProperties`*<br>*Please note that this will follow CSS hiearchy for DOM styling. Any style provided in this style object will take as top priority.*<br><br>**`customCellStyles : [`**<br>&nbsp;&nbsp;&nbsp;&nbsp;`{`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`when: (value: any) => boolean`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`style: () => React.CSSProperties`<br>&nbsp;&nbsp;&nbsp;&nbsp;`}`<br>&nbsp;`]` |
 
 <br>
@@ -133,7 +138,7 @@ Property | Type | Default | Description/Example
 -------- | ---- | ------- | -------------------
 defaultSortHeader | string | | *Which column required to be initially sorted before data loads into UI.*<br><br>**`defaultSortHeader : 'id'`**
 defaultSortAscending | boolean | true | *Toogle flag to sort column Ascending or Descending.*<br>*By Default Ascending order is choosen, if not specified with `defaultSortHeader` API*<br>*Expected Value `true` or `false`*<br><br>**`defaultSortAscending : true`**
-sortIcon | Component `React.FC<HeaderItem>` | | *Please refer Column API's for sortIcon. Since sortIcon is more related to the header. This will ovveride the default sort icon. This should be a React Functional Component.*<br><br>*Please refer **Header API***
+customSortIcon | Component `React.FC<HeaderItem>` | | *Please refer Column API's for customSortIcon. Since customSortIcon is more related to the header. This will ovveride the default sort icon. This should be a React Functional Component.*<br><br>*Please refer **Header API***
 onSort __(not-implemented)__ | function | | *callback function to access the sorted state when a cloumn is clicked*<br>**return**<br>`column : any[], sortDirection: Sorting, event: React.MouseEvent<HTMLButtonElement>`<br><br>Where interface Sorting as<br>`enum Sorting {`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`ASC,`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`DESC`<br>`}`
 customSortFunction __(not present in story book)__| function | | *Custom sort function of your own. If custom sort function is provided, default sort function will not take effect*<br><br> ***Should return an array of data***
 

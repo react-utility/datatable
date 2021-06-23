@@ -13,16 +13,15 @@ import '../assets/css/stories.css';
 import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
-console.log(Header);
 export default {
-    title: 'Formatting/Custom Formating',
+    title: 'Column/Custom Row Styling',
     component: DataTable,
     parameters: {
         docs: {
             page: () => (
                 <>
                     <Title />
-                    <Subtitle>Use <code>formatting</code> option for custom cell Formatting.</Subtitle>
+                    <Subtitle>Use <code>customRowStyles</code> option for custom Row Formatting.</Subtitle>
                     <Description />
                     <Primary />
                     <ArgsTable story={PRIMARY_STORY} />
@@ -42,35 +41,28 @@ const options = {
     highlightOnHover: true,
     pagination: true,
     showRowPerPageDropdown: true,
-    showRowsPerPage: true
+    showRowsPerPage: true,
+    customRowStyles: [
+        {
+            when: (row) => row.minTemp <= '15' + String.fromCharCode(176) + 'C',
+            style: (row) => {
+                return ({
+                    color: '#84CC16',
+                    backgroundColor: '#ECFDF5',
+                })
+            }
+        }
+    ]
 }
 
 const Template = ({ options, classNames }) => {
-    const TableData = JSON.parse(JSON.stringify(Data));
-    const TableHeader = JSON.parse(JSON.stringify(Header));
-
-    const actions = [{
-        name: 'Actions',
-        selector: 'action',
-        formatting: (row) => {
-            return (
-                <div>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            )
-        }
-    }];
-
-    const newHeader = [...TableHeader, ...actions];
-
-    const [columns] = useState(newHeader);
-    const [data] = useState(TableData);
+    const [columns] = useState([...Header]);
+    const [data] = useState([...Data]);
 
     return (
         <div>
             <div>
-                <h2 className="header">Weather Report - <span>Cell Formatting</span></h2>
+                <h2 className="header">Weather Report -<span>Custom Row Styles</span></h2>
                 <p className="header-desc">Change the options in below control tab to see effect</p>
                 <pre>
                     {JSON.stringify(options)}
@@ -81,8 +73,8 @@ const Template = ({ options, classNames }) => {
     )
 }
 
-export const CustomFormating = Template.bind({});
-CustomFormating.args = {
+export const CustomRowStyling = Template.bind({});
+CustomRowStyling.args = {
     options: options,
     classNames: customClassNames
 }
