@@ -175,7 +175,6 @@ td{
     align-items: center;
     justify-content: flex-end;
 }
-
 .pagination *:nth-child(n+2) {
     --tw-space-x-reverse: 0;
     margin-right: calc(2rem * var(--tw-space-x-reverse));
@@ -214,4 +213,28 @@ td{
 .pagination-button:disabled{
     color: #c8c8c9;
     pointer-events: none !important;
+}
+
+@media screen and (min-width: 400px) and (max-width: 600px) {
+    .pagination-rowsperpage{
+        font-size: 0.6rem;
+        width:3.5rem;
+    }
+
+    .pagination-dropdown{
+        min-width: 1.5rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    .pagination .pagination-dropdown p {
+        font-size: 0.6rem;
+        font-weight: 500;
+        width: 2rem;
+    }
+
+    .pagination-buttonGroup button{
+        font-size: 0.7rem;
+    }
+
 }
