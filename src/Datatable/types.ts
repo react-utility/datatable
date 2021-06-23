@@ -39,7 +39,8 @@ export type HeaderProps = {
     dense?: { isDense: boolean, denseCss: string },
     classNames?: IHeaderElementCss,
     onHeaderClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortIconClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void
+    onSortIconClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
+    onSearch? : (searchData : string, selector : string ) => void,
 }
 
 

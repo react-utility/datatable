@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useState } from 'react';
 import Button from './Elements/Button';
-import { Icon } from './icon';
-import { HeaderItem, HeaderProps, Sorting } from './types';
+import SortIcon from './SortIcon';
+import { HeaderProps, Sorting } from './types';
 
 
 
@@ -14,6 +14,12 @@ const Header: React.FC<HeaderProps> = (props) => {
         setHeaderClicked(!headerClicked);
         props.onHeaderClick!(!headerClicked, props.item, event);
     }
+
+    const onSortClickedCustom = (asc : boolean, event : any) => {
+        props.onSortIconClick!(asc ? Sorting.ASC : Sorting.DESC, props.item, event);
+    }
+
+
     return (
         <th className={props.dense!.isDense ? props.classNames!.header + ' ' + props.dense!.denseCss : props.classNames!.header}>
             <div className={props.classNames!.headerInner}>
@@ -21,7 +27,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                     {props.item.name!}
                 </Button>
                 {
-                    props.item.sortable && props.item.customSortIcon && <props.item.customSortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} isHovered={isHovered} />
+                    props.item.sortable && props.item.customSortIcon && <props.item.customSortIcon selector={props.item.selector} isHeaderClicked={headerClicked} onSortClicked={onSortClickedCustom} prevDirection={props.item.sortDirection!} isHeaderHovered={isHovered} onSearch={props.onSearch!}/>
                 }
                 {
                     props.item.sortable && !props.item.customSortIcon && <SortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} />
@@ -29,39 +35,6 @@ const Header: React.FC<HeaderProps> = (props) => {
 
             </div>
         </th>
-    )
-}
-
-const SortIcon: React.FC<HeaderItem> = ({ isHeaderClicked, onSortClicked, prevDirection, props }) => {
-    const iconRef = useRef<HTMLDivElement>(null);
-    const [sortClass, setSortClass] = useState({ asc: '', desc: '' });
-
-    useEffect(() => {
-        if (isHeaderClicked) {
-            iconRef.current?.classList.add("show");
-            if (prevDirection) {
-                if (prevDirection === Sorting.DESC) {
-                    setSortClass({ asc: '', desc: 'icon-focus' });
-                } else {
-                    setSortClass({ asc: 'icon-focus', desc: '' });
-                }
-            } else {
-                setSortClass({ asc: 'icon-focus', desc: '' });
-            }
-        } else {
-            iconRef.current?.classList.remove("show");
-            setSortClass({ asc: '', desc: '' });
-        }
-    }, []);
-    return (
-        <div ref={iconRef} className={props.classNames!.headerIcon}>
-            <Icon id="sortDesc" name="sortDesc" className={sortClass.desc} onClick={(event: React.MouseEvent<SVGSVGElement>) => {
-                onSortClicked(Sorting.DESC, props.item, event);
-            }} />
-            <Icon id="sortAsc" name="sortAsc" className={sortClass.asc} onClick={(event: React.MouseEvent<SVGSVGElement>) => {
-                onSortClicked(Sorting.ASC, props.item, event);
-            }} />
-        </div>
     )
 }
 

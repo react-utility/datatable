@@ -1,5 +1,5 @@
 import React from "react";
-import { CellStyleCustom, HeaderItem, RowsPerPage, RowStyleCustom, Sorting, SortOptions } from "./types";
+import { CellStyleCustom, RowsPerPage, RowStyleCustom, Sorting, SortOptions } from "./types";
 
 export interface IDataTableProps {
     columns: IColumn[] | undefined,
@@ -12,7 +12,7 @@ export interface IColumn {
     name: string,
     selector: string,
     sortable?: boolean,
-    customSortIcon?: React.FC<HeaderItem>,
+    customSortIcon?: React.FC<{selector: string,isHeaderClicked :boolean, onSortClicked: (asc : boolean, event: React.MouseEvent<Element, MouseEvent>) => void, prevDirection : Sorting, isHeaderHovered: boolean, onSearch : (searchData : string, selector : string ) => void }>,
     showColumn?: boolean,
     customCell?: React.FC<{ row: any }>,
     customCellStyles?: CellStyleCustom[],

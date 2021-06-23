@@ -133,6 +133,18 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         setTableData(data);
     };
 
+    const handleOnSearch = (searchData : string, selector : string ) => {
+        let data = [...props.data!];
+        let newData = data.filter(dataitem => {
+            let dataToCompare = dataitem[selector].toString();
+            if(dataToCompare.search(searchData) >= 0)
+                return dataitem;
+        });
+        console.log(newData);
+        setTableData(newData);
+    }
+
+
     const handleUpdateRowsPerPage = (data: any[], newIndex: number) => {
         setTableData(data);
         setTableOptions(prevOptions => {
@@ -163,7 +175,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                 {
                                     tableColumns.map((item, index) => {
                                         if(item.showColumn){
-                                            return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} />)
+                                            return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} onSearch={handleOnSearch} />)
                                         }
                                         return
                                     })
