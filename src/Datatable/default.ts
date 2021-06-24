@@ -32,6 +32,8 @@ export const defaultCss: IDataTableCSS = {
     cellElement: {
         cellElelmentCss: ''
     },
+    rowDefaultActions: 'row-default-actions',
+    rowExpansion: 'row-expansion',
     progressbar: {
         progressPendingWrapper: 'progress-pending-wrapper',
         progressPending: 'progress-pending',

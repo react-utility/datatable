@@ -47,6 +47,13 @@ export interface IDataTableOptions {
     isRowExpansionDisabled? : (row:any) => boolean,
     onRowExpanded?: React.FC<{row:any}>,
 
+    enableRowSelection?: boolean,
+    highlightOnRowSelect?: boolean,
+    isRowSelectionDisabled?: (row: any) => boolean,
+    isRowSelectionHidden?:(row: any) => boolean,
+    customRowSelection?: React.FC<any>,
+    onRowSelected?: (rows: any, event: React.ChangeEvent<HTMLInputElement>) => void,
+
     pagination?: boolean,
     paginationServer?: boolean,
     showRowPerPageDropdown?: boolean,
@@ -83,6 +90,9 @@ export interface IDataTableCSS {
     tableBodyRowElement?: string,
     headerElement?: IHeaderElementCss,
     cellElement?: ICellElementCss,
+    rowDefaultActions?: string,
+    rowExpansion?: string,
+    rowSelection?: string,
     progressbar: IProgressPendingCss
     pagination?: IPaginationCss
 }

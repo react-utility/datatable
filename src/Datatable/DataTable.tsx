@@ -9,6 +9,7 @@ import useSort from './hooks/useSort';
 import Progress from './Progress';
 import Pagination from './Pagination';
 import useDeepMerge from './hooks/useDeepMerge';
+import usePrevious from './hooks/usePrevious';
 
 
 const DataTable: React.FC<IDataTableProps> = (props) => {
@@ -20,6 +21,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     const [tableColumns, setTableColumns] = useState<TableColumn[]>([]);
     const [tableData, setTableData] = useState<any[]>([]);
 
+    const previousSelection = useRef<any[]>([]);
     /**
      * Set the table options by merging default options and props options to TableOptions.
      * Re-render the table if props.options changes
@@ -48,12 +50,20 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         if (props.columns) {
             let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false, showColumn: true }));
+            if(props.options!.enableRowSelection || props.options!.enableRowExpansion){
+                let rowDefaultActions : TableColumn[] = [{name:' ',selector:'rowDefaultActions', showColumn: true}];
+                newHeader = [...rowDefaultActions,...newHeader];
+            }
+
+            /* if(props.options!.enableRowSelection){
+                let rowExpansionHeader : TableColumn[] = [{name:' ',selector:'selection', showColumn: true}];
+                newHeader = [...rowExpansionHeader,...newHeader];
+            }
             if(props.options!.enableRowExpansion){
                 let rowExpansionHeader : TableColumn[] = [{name:' ',selector:'expansion', showColumn: true}];
-                setTableColumns([...rowExpansionHeader,...newHeader]);
-            }else{
-                setTableColumns(newHeader);
-            }
+                newHeader = [...rowExpansionHeader,...newHeader];
+            } */
+            setTableColumns(newHeader);
         }
         //console.log('Header is fired');
     }, [props.columns]);
@@ -158,6 +168,16 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         })
     }
 
+    const handleRowSelection = (row: any[], event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.checked){
+            previousSelection.current.push(row);
+        }else{
+            let newRows = previousSelection.current.filter(item => item !== row);
+            previousSelection.current = newRows;
+        }
+        props.options!.onRowSelected!(previousSelection.current,event);
+    }
+
     return (
         <>
             {
@@ -210,7 +230,16 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     dataItem={dataItem}
                                     index={UniqueId + index}
                                     key={UniqueId + index}
-                                    classNames={{ rowElementCss: tableCss.tableBodyRowElement!, cellElementCss: tableCss.cellElement! }} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
+                                    classNames={
+                                        { 
+                                            rowElementCss: tableCss.tableBodyRowElement!, 
+                                            cellElementCss: tableCss.cellElement!,
+                                            rowDefaultActions: tableCss.rowDefaultActions!,
+                                            rowExpansion: tableCss.rowExpansion!,
+                                            rowSelection: tableCss.rowSelection!,
+                                        }
+                                    } 
+                                    dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
                                     striped={{ isStriped: tableOptions.showTableStriped!, stripedCss: tableCss.tableStriped! }}
                                     onHover={{ isHoverRequired: tableOptions.highlightOnHover!, onHoverCss: tableCss.highlightOnHoverClass! }}
                                     rowSingleClicked={tableOptions.onRowClicked}
@@ -218,7 +247,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     customRowStyles={tableOptions.customRowStyles}
                                     rowExpansion={
                                         {
-                                            enableRowExpansion : tableOptions.enableRowExpansion!,
+                                            enableRowExpansion: tableOptions.enableRowExpansion!,
                                             customRowExpansionIcon : {
                                                 show: tableOptions.customRowExpansionIcon!.show!, 
                                                 hide: tableOptions.customRowExpansionIcon!.hide!,
@@ -229,6 +258,11 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                             onRowExpanded : tableOptions.onRowExpanded!
                                         }
                                     }
+
+                                    rowSelection={{
+                                        enableRowSelection : tableOptions.enableRowSelection!,
+                                        onRowSelected : handleRowSelection
+                                    }}
                                 />
                             })
                         }

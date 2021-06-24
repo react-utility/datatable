@@ -24,7 +24,7 @@
 
 .header-cell:first-child,
 .tabel-cell:first-child {
-    padding-left: 1.5rem;
+    padding-left: 0.25rem;
 }
 
 .table-strip:nth-child(even){
@@ -36,7 +36,7 @@
 }
 
 .rows-onhover:hover{
-    background-color: #86EFAC;
+    background-color: #b5d4c0;
     cursor: pointer;
 }
 

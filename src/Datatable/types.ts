@@ -58,10 +58,14 @@ export type RowProps = {
         isRowExpansionDisabled? : (row:any) => boolean,
         onRowExpanded?: React.FC<{row:any}>
     },
+    rowSelection : {
+        enableRowSelection : boolean,
+        onRowSelected : (rows:any, event: React.ChangeEvent<HTMLInputElement>) => void,
+    },
     dense: { isDense: boolean, denseCss: string },
     striped: { isStriped: boolean, stripedCss: string },
     onHover: { isHoverRequired: boolean, onHoverCss: string },
-    classNames: { rowElementCss: string, cellElementCss: ICellElementCss },
+    classNames: { rowElementCss: string, cellElementCss: ICellElementCss, rowDefaultActions: string, rowExpansion: string, rowSelection: string,},
     dataItem: any,
     index: string,
     rowSingleClicked?: (row: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => void,
@@ -98,10 +102,18 @@ export type CellStyleCustom = {
 
 export type RowExpansionProps = {
     id? : string,
+    classNames?: string,
     rowIsExpanded:(isExpanded: boolean) => void,
     customRowExpansionIcon: {
         show: React.FC<any>,
         hide: React.FC<any>
     },
     isRowExpansionDisabled: boolean
+}
+
+export type RowSelectionProps = {
+    id? : string,
+    classNames?: string,
+    row?:any,
+    onRowSelection: (row: any[], event: React.ChangeEvent<HTMLInputElement>) => void,
 }

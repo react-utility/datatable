@@ -1,17 +1,18 @@
 import React, { useState,useRef, useEffect } from 'react';
 import Cell from './Cell';
 import RowExpansion from './RowExpansion';
+import RowSelection from './RowSelection';
 import { CellStyleCustom, RowProps } from './types';
 import { addClass, removeClass, getClassesAsArray } from './util/common';
 
 
 const Row: React.FC<RowProps> = (props: RowProps) => {
     const [showExpandedRow, setShowExpandedRow] = useState(false);
+    
     const row = useRef<HTMLTableRowElement>(null);
     const clickCount = useRef<number>(0);
     const delay: number = 300;
-
-
+    const ignoreRowClick = props.rowSelection.enableRowSelection || props.rowExpansion.enableRowExpansion;
 
     useEffect(() => {
         if (props.striped?.isStriped && props.striped!.stripedCss) {
@@ -40,7 +41,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
     }, [])
 
     const handleOnClick = (dataItem: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => {
-        if(!props.rowExpansion.enableRowExpansion){
+        if(!ignoreRowClick){
             clickCount.current += 1;
             setTimeout(() => {
                 if (clickCount.current === 1) {
@@ -98,6 +99,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         setShowExpandedRow(isExpanded);
         isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
     }
+    
 
     return (
         <>
@@ -109,21 +111,44 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
             >
                 {
                     props.header.map((item, index) => {
-                        if(props.rowExpansion.enableRowExpansion && item.selector==="expansion"){
+                        if(item.selector==="rowDefaultActions" ){
                             return (
                                 <Cell
                                     key={index + item.selector!}
                                     classNames={props.classNames.cellElementCss}
                                     dense={props.dense}
                                 >
-                                    <RowExpansion id="rowExansion" rowIsExpanded={handleOnRowExpansion} 
-                                        customRowExpansionIcon={{show:props.rowExpansion.customRowExpansionIcon.show,
-                                            hide:props.rowExpansion.customRowExpansionIcon.hide}}
-                                        isRowExpansionDisabled={props.rowExpansion.isRowExpansionDisabled ? props.rowExpansion.isRowExpansionDisabled(props.dataItem) : false}
-                                    />
+                                    <div className={props.classNames.rowDefaultActions}>
+                                        {
+                                            props.rowSelection.enableRowSelection && 
+                                            <RowSelection 
+                                                id={index + "_rowSelection"} 
+                                                classNames={props.classNames.rowSelection} 
+                                                row={props.dataItem}
+                                                onRowSelection={props.rowSelection.onRowSelected}
+                                            />
+                                        }
+                                        {
+                                            props.rowExpansion.enableRowExpansion && 
+                                            <RowExpansion 
+                                                id={index + "_rowExpansion"} 
+                                                rowIsExpanded={handleOnRowExpansion}
+                                                classNames={props.classNames.rowExpansion}
+                                                customRowExpansionIcon={
+                                                    {
+                                                        show:props.rowExpansion.customRowExpansionIcon.show,
+                                                        hide:props.rowExpansion.customRowExpansionIcon.hide
+                                                    }
+                                                }
+                                                isRowExpansionDisabled={props.rowExpansion.isRowExpansionDisabled ? props.rowExpansion.isRowExpansionDisabled(props.dataItem) : false}
+                                            />
+                                        }
+                                    </div>
+                                    
                                 </Cell>
                             )
                         }
+                        
                         return (
                             <Cell
                                 key={index + item.selector!}

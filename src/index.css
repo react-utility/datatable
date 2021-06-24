@@ -215,8 +215,11 @@ td{
 }
 
 /** Row Expansion*/
+.row-expansion{
+    padding-top: 0.2rem;
+}
 .row-expansion-show-icon{
-    color:rgb(75, 75, 75);
+    color:rgb(27, 27, 27);
     cursor: pointer;
 }
 
@@ -237,6 +240,14 @@ td{
       transform: translateY(0);
     }
   }
+
+.row-default-actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
     .pagination-rowsperpage{
