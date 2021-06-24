@@ -48,10 +48,11 @@ export interface IDataTableOptions {
     onRowExpanded?: React.FC<{row:any}>,
 
     enableRowSelection?: boolean,
+    isRowSelectAllHidden?: boolean,
     highlightOnRowSelect?: boolean,
     isRowSelectionDisabled?: (row: any) => boolean,
     isRowSelectionHidden?:(row: any) => boolean,
-    customRowSelection?: React.FC<{row:any,invokeRowSelection:(rows: any, event: React.ChangeEvent<HTMLInputElement>) => void}>,
+    customRowSelection?: React.FC<{row:any,invokeRowSelection:(rows: any,isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => void}>,
     onRowSelected?: (rows: any, event: React.ChangeEvent<HTMLInputElement>) => void,
 
     pagination?: boolean,

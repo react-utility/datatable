@@ -99,9 +99,8 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
     }
     
-    const onRowSelection = (rows: any, event: React.ChangeEvent<HTMLInputElement>) => {
-        
-        if(props.rowSelection.highlightOnRowSelect && event.target.checked){
+    const onRowSelection = (rows: any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => {
+        if(props.rowSelection.highlightOnRowSelect && isSelected){
             addClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
         }else{
             if (props.classNames.onRowSelectHighlight.length > 0) {
@@ -109,7 +108,14 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
             }
         }
 
-        props.rowSelection.onRowSelected(rows,event);
+        props.rowSelection.onRowSelected(rows,isSelected,event);
+    }
+
+    const getSelectionClassName = () : string => {
+        if(props.rowSelection.enableRowSelection && props.rowExpansion.enableRowExpansion) {
+            return props.classNames.rowDefaultActions;
+        }
+        return 'first-item-nopadding';
     }
 
     return (
@@ -129,15 +135,16 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                     classNames={props.classNames.cellElementCss}
                                     dense={props.dense}
                                 >
-                                    <div className={props.classNames.rowDefaultActions}>
+                                    <div className={getSelectionClassName()}>
                                         {
                                             props.rowSelection.enableRowSelection && 
                                             <RowSelection 
                                                 id={index + "_rowSelection"} 
                                                 classNames={props.classNames.rowSelectionComponent} 
                                                 row={props.dataItem}
-                                                isRowSelectionDisabled={props.rowSelection.isRowSelectionDisabled}
-                                                isRowSelectionHidden={props.rowSelection.isRowSelectionHidden}
+                                                selectAll={props.rowSelection.selectAll}
+                                                isRowSelectionDisabled={props.rowSelection.isRowSelectionDisabled!}
+                                                isRowSelectionHidden={props.rowSelection.isRowSelectionHidden!}
                                                 customRowSelection={props.rowSelection.customRowSelection}
                                                 onRowSelection={onRowSelection}
                                             />

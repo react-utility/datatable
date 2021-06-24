@@ -1,19 +1,18 @@
 import React from "react";
 import { ICellElementCss, IColumn, IDataTableOptions, IHeaderElementCss, IPaginationCss } from "./interfaces";
-import RowExpansion from "./RowExpansion";
 
 export type TableColumn = IColumn & {
     isSorted?: boolean,
     sortDirection?: Sorting
 }
 
-export type HeaderItem = {
+/* export type HeaderItem = {
     isHeaderClicked: boolean,
     onSortClicked: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
     prevDirection: Sorting,
     isHovered?: boolean,
     props: HeaderProps
-}
+} */
 
 export type SortOptions = {
     sortArray: any[],
@@ -37,11 +36,12 @@ export type HeaderProps = {
     item: TableColumn,
     sortState?: { sortKey: string | null | undefined, isSorted: boolean }
     sortIcon?: React.FC,
-    dense?: { isDense: boolean, denseCss: string },
+    dense: { isDense: boolean, denseCss: string },
     classNames?: IHeaderElementCss,
-    onHeaderClick?: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
-    onSortIconClick?: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
-    onSearch? : (searchData : string, selector : string ) => void,
+    rowSelection: {isRowSelectionEnabled: boolean, isRowSelectAllHidden: boolean, onSelectAll: (event: React.ChangeEvent<HTMLInputElement>) => void, isAlreadySelected: boolean}
+    onHeaderClick: (isSortOpen: boolean, selectedItem: TableColumn, event: React.MouseEvent<HTMLButtonElement>) => void,
+    onSortIconClick: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
+    onSearch: (searchData : string, selector : string ) => void,
 }
 
 
@@ -60,11 +60,12 @@ export type RowProps = {
     },
     rowSelection : {
         enableRowSelection : boolean,
+        selectAll: boolean,
         highlightOnRowSelect: boolean,
         isRowSelectionDisabled: (row: any) => boolean,
         isRowSelectionHidden:(row: any) => boolean,
-        customRowSelection: React.FC<{row:any,invokeRowSelection:(rows: any, event: React.ChangeEvent<HTMLInputElement>) => void}>,
-        onRowSelected: (rows:any, event: React.ChangeEvent<HTMLInputElement>) => void,
+        customRowSelection: React.FC<{row:any,invokeRowSelection:(rows: any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => void}>,
+        onRowSelected: (rows:any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => void,
     },
     dense: { isDense: boolean, denseCss: string },
     striped: { isStriped: boolean, stripedCss: string },
@@ -119,8 +120,9 @@ export type RowSelectionProps = {
     id? : string,
     classNames?: string,
     row?:any,
+    selectAll: boolean,
     isRowSelectionDisabled: (row: any) => boolean,
     isRowSelectionHidden:(row: any) => boolean,
-    customRowSelection: React.FC<{row:any,invokeRowSelection:(rows: any, event: React.ChangeEvent<HTMLInputElement>) => void}>,
-    onRowSelection: (row: any[], event: React.ChangeEvent<HTMLInputElement>) => void,
+    customRowSelection: React.FC<{row:any,invokeRowSelection:(rows: any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => void}>,
+    onRowSelection: (row: any[], isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => void,
 }

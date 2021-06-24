@@ -9,7 +9,6 @@ import useSort from './hooks/useSort';
 import Progress from './Progress';
 import Pagination from './Pagination';
 import useDeepMerge from './hooks/useDeepMerge';
-import usePrevious from './hooks/usePrevious';
 
 
 const DataTable: React.FC<IDataTableProps> = (props) => {
@@ -20,8 +19,9 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     const [tableCss, setTableCss] = useState<IDataTableCSS>(defaultCss);
     const [tableColumns, setTableColumns] = useState<TableColumn[]>([]);
     const [tableData, setTableData] = useState<any[]>([]);
-
+    const [selectAll,setSelectAll] = useState<boolean>(false);
     const previousSelection = useRef<any[]>([]);
+
     /**
      * Set the table options by merging default options and props options to TableOptions.
      * Re-render the table if props.options changes
@@ -168,14 +168,23 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         })
     }
 
-    const handleRowSelection = (row: any[], event: React.ChangeEvent<HTMLInputElement>) => {
-        if(event.target.checked){
+    const handleRowSelection = (row: any[], isSelected: boolean, event?: React.ChangeEvent<HTMLInputElement>) => {
+        if(isSelected){
             previousSelection.current.push(row);
+            previousSelection.current = previousSelection.current.filter((thing, index) => {
+                const _thing = JSON.stringify(thing);
+                return index === previousSelection.current.findIndex(obj => {
+                  return JSON.stringify(obj) === _thing;
+                });
+            });
         }else{
-            let newRows = previousSelection.current.filter(item => item !== row);
-            previousSelection.current = newRows;
+            previousSelection.current = previousSelection.current.filter(item => item !== row);
         }
-        props.options!.onRowSelected!(previousSelection.current,event);
+        props.options!.onRowSelected!(previousSelection.current,event!);
+    }
+
+    const handleOnSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectAll(event.target.checked);
     }
 
     return (
@@ -200,7 +209,19 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                 {
                                     tableColumns.map((item, index) => {
                                         if(item.showColumn){
-                                            return (<Header item={item} key={UniqueId + '_' + index + item.selector!} classNames={tableCss.headerElement} onHeaderClick={handleOnHeaderClick} onSortIconClick={handleOnSortIconClick} dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} onSearch={handleOnSearch} />)
+                                            return (<Header 
+                                                item={item} key={UniqueId + '_' + index + item.selector!} 
+                                                classNames={tableCss.headerElement} 
+                                                onHeaderClick={handleOnHeaderClick} 
+                                                onSortIconClick={handleOnSortIconClick} 
+                                                dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} 
+                                                onSearch={handleOnSearch} 
+                                                rowSelection={{
+                                                    isRowSelectionEnabled : tableOptions.enableRowSelection!,
+                                                    isRowSelectAllHidden: tableOptions.isRowSelectAllHidden!,
+                                                    onSelectAll: handleOnSelectAll,
+                                                    isAlreadySelected: selectAll
+                                                }}/>)
                                         }
                                         return
                                     })
@@ -266,7 +287,8 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                         isRowSelectionDisabled: tableOptions.isRowSelectionDisabled!,
                                         isRowSelectionHidden:tableOptions.isRowSelectionHidden!,
                                         customRowSelection: tableOptions.customRowSelection!,
-                                        onRowSelected : handleRowSelection
+                                        onRowSelected : handleRowSelection,
+                                        selectAll : selectAll
                                     }}
                                 />
                             })

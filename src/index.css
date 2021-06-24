@@ -252,6 +252,12 @@ td{
     background-color: #67E8F9;
 }
 
+.first-item-nopadding{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
 @media screen and (min-width: 400px) and (max-width: 600px) {
     .pagination-rowsperpage{
         font-size: 0.6rem;
