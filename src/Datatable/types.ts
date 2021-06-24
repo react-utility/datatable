@@ -119,6 +119,8 @@ export type RowSelectionProps = {
     id? : string,
     classNames?: string,
     row?:any,
+    isRowSelectionDisabled: (row: any) => boolean,
+    isRowSelectionHidden:(row: any) => boolean,
     customRowSelection: React.FC<{row:any,invokeRowSelection:(rows: any, event: React.ChangeEvent<HTMLInputElement>) => void}>,
     onRowSelection: (row: any[], event: React.ChangeEvent<HTMLInputElement>) => void,
 }

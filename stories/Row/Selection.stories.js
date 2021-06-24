@@ -41,6 +41,12 @@ const options = {
     pagination: true,
     enableRowSelection: true,
     highlightOnRowSelect: true,
+    isRowSelectionDisabled: (row) => {
+        return [10,8,9,4].includes(row.id)
+    },
+    isRowSelectionHidden: (row) => {
+        return [122,51].includes(row.id)
+    },
     onRowSelected: (rows,event) => {
         console.log(rows);
     }

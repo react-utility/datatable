@@ -136,6 +136,8 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                                 id={index + "_rowSelection"} 
                                                 classNames={props.classNames.rowSelectionComponent} 
                                                 row={props.dataItem}
+                                                isRowSelectionDisabled={props.rowSelection.isRowSelectionDisabled}
+                                                isRowSelectionHidden={props.rowSelection.isRowSelectionHidden}
                                                 customRowSelection={props.rowSelection.customRowSelection}
                                                 onRowSelection={onRowSelection}
                                             />
