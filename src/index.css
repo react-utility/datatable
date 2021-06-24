@@ -248,6 +248,9 @@ td{
     justify-content: space-evenly;
 }
 
+.on-selection-highlight{
+    background-color: #67E8F9;
+}
 
 @media screen and (min-width: 400px) and (max-width: 600px) {
     .pagination-rowsperpage{

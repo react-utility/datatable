@@ -28,9 +28,8 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         }
         if (props.onHover!.isHoverRequired && props.onHover!.onHoverCss) {
             if (props.onHover!.onHoverCss.length > 0) {
-
+                addClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
             }
-            addClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
         } else {
             if (props.onHover!.onHoverCss) {
                 if (props.onHover!.onHoverCss.length > 0) {
@@ -100,6 +99,18 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
     }
     
+    const onRowSelection = (rows: any, event: React.ChangeEvent<HTMLInputElement>) => {
+        
+        if(props.rowSelection.highlightOnRowSelect && event.target.checked){
+            addClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
+        }else{
+            if (props.classNames.onRowSelectHighlight.length > 0) {
+                removeClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
+            }
+        }
+
+        props.rowSelection.onRowSelected(rows,event);
+    }
 
     return (
         <>
@@ -123,9 +134,10 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                             props.rowSelection.enableRowSelection && 
                                             <RowSelection 
                                                 id={index + "_rowSelection"} 
-                                                classNames={props.classNames.rowSelection} 
+                                                classNames={props.classNames.rowSelectionComponent} 
                                                 row={props.dataItem}
-                                                onRowSelection={props.rowSelection.onRowSelected}
+                                                customRowSelection={props.rowSelection.customRowSelection}
+                                                onRowSelection={onRowSelection}
                                             />
                                         }
                                         {

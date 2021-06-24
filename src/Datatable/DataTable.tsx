@@ -236,7 +236,8 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                             cellElementCss: tableCss.cellElement!,
                                             rowDefaultActions: tableCss.rowDefaultActions!,
                                             rowExpansion: tableCss.rowExpansion!,
-                                            rowSelection: tableCss.rowSelection!,
+                                            rowSelectionComponent: tableCss.rowSelectionComponent!,
+                                            onRowSelectHighlight: tableCss.onRowSelectHighlight!,
                                         }
                                     } 
                                     dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
@@ -261,6 +262,10 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
 
                                     rowSelection={{
                                         enableRowSelection : tableOptions.enableRowSelection!,
+                                        highlightOnRowSelect: tableOptions.highlightOnRowSelect!,
+                                        isRowSelectionDisabled: tableOptions.isRowSelectionDisabled!,
+                                        isRowSelectionHidden:tableOptions.isRowSelectionHidden!,
+                                        customRowSelection: tableOptions.customRowSelection!,
                                         onRowSelected : handleRowSelection
                                     }}
                                 />
