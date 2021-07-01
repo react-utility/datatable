@@ -8,7 +8,7 @@ import { addClass, removeClass, getClassesAsArray } from './util/common';
 
 const Row: React.FC<RowProps> = (props: RowProps) => {
     const [showExpandedRow, setShowExpandedRow] = useState(false);
-    
+
     const row = useRef<HTMLTableRowElement>(null);
     const clickCount = useRef<number>(0);
     const delay: number = 300;
@@ -98,7 +98,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         setShowExpandedRow(isExpanded);
         isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
     }
-    
+
     const onRowSelection = (rows: any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => {
         if(props.rowSelection.highlightOnRowSelect && isSelected){
             addClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
@@ -137,10 +137,10 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                 >
                                     <div className={getSelectionClassName()}>
                                         {
-                                            props.rowSelection.enableRowSelection && 
-                                            <RowSelection 
-                                                id={index + "_rowSelection"} 
-                                                classNames={props.classNames.rowSelectionComponent} 
+                                            props.rowSelection.enableRowSelection &&
+                                            <RowSelection
+                                                id={index + "_rowSelection"}
+                                                classNames={props.classNames.rowSelectionComponent}
                                                 row={props.dataItem}
                                                 selectAll={props.rowSelection.selectAll}
                                                 isRowSelectionDisabled={props.rowSelection.isRowSelectionDisabled!}
@@ -150,9 +150,9 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                             />
                                         }
                                         {
-                                            props.rowExpansion.enableRowExpansion && 
-                                            <RowExpansion 
-                                                id={index + "_rowExpansion"} 
+                                            props.rowExpansion.enableRowExpansion &&
+                                            <RowExpansion
+                                                id={index + "_rowExpansion"}
                                                 rowIsExpanded={handleOnRowExpansion}
                                                 classNames={props.classNames.rowExpansion}
                                                 customRowExpansionIcon={
@@ -165,11 +165,11 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                                             />
                                         }
                                     </div>
-                                    
+
                                 </Cell>
                             )
                         }
-                        
+
                         return (
                             <Cell
                                 key={index + item.selector!}
@@ -186,7 +186,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                 }
             </tr>
             {
-                showExpandedRow && 
+                showExpandedRow &&
                 <tr>
                     <td colSpan={props.header.length} className="row-expanded-area">
                         {
@@ -196,7 +196,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                 </tr>
             }
         </>
-        
+
 
     )
 }

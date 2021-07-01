@@ -23,13 +23,13 @@ const Header: React.FC<HeaderProps> = (props) => {
     return (
         <th className={props.dense!.isDense ? props.classNames!.header + ' ' + props.dense!.denseCss : props.classNames!.header}>
             {
-                props.rowSelection.isRowSelectionEnabled && props.item.selector === 'rowDefaultActions' && !props.rowSelection.isRowSelectAllHidden && 
+                props.rowSelection.isRowSelectionEnabled && props.item.selector === 'rowDefaultActions' && !props.rowSelection.isRowSelectAllHidden &&
                 <>
                     <input type='checkbox' onChange={props.rowSelection.onSelectAll} defaultChecked={props.rowSelection.isAlreadySelected}/>
                 </>
             }
             {
-                props.item.selector !== 'rowDefaultActions' && 
+                props.item.selector !== 'rowDefaultActions' &&
                 <div className={props.classNames!.headerInner}>
                     <Button className={props.classNames!.headerButton} onClickHandler={handleOnClick} onMouseOutHandler={() => { setIsHovered(false) }} onMouseOverHandler={() => { setIsHovered(true) }}>
                         {props.item.name!}
@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                         props.item.sortable && props.item.customSortIcon && <props.item.customSortIcon selector={props.item.selector} isHeaderClicked={headerClicked} onSortClicked={onSortClickedCustom} prevDirection={props.item.sortDirection!} isHeaderHovered={isHovered} onSearch={props.onSearch!}/>
                     }
                     {
-                        props.item.sortable && !props.item.customSortIcon && <SortIcon props={props} isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} />
+                        props.item.sortable && !props.item.customSortIcon && <SortIcon isHeaderClicked={headerClicked} onSortClicked={props.onSortIconClick!} prevDirection={props.item.sortDirection!} item={props.item} classNames={props.classNames!}/>
                     }
 
                 </div>

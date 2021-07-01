@@ -44,8 +44,8 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     }, [props.classNames]);
 
     /**
-     * Set Header Data after Initial Render. 
-     * Change table Header whenever the props changes  
+     * Set Header Data after Initial Render.
+     * Change table Header whenever the props changes
      */
     useEffect(() => {
         if (props.columns) {
@@ -69,7 +69,7 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     }, [props.columns]);
 
     /**
-     * Set Table Data after Initial Render. 
+     * Set Table Data after Initial Render.
      * Change table data whenever the props changes for props.data
      */
     useEffect(() => {
@@ -180,7 +180,9 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
         }else{
             previousSelection.current = previousSelection.current.filter(item => item !== row);
         }
-        props.options!.onRowSelected!(previousSelection.current,event!);
+        if (typeof props.options!.onRowSelected === 'function'){
+          props.options!.onRowSelected!(previousSelection.current,event!);
+        }
     }
 
     const handleOnSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,13 +211,13 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                 {
                                     tableColumns.map((item, index) => {
                                         if(item.showColumn){
-                                            return (<Header 
-                                                item={item} key={UniqueId + '_' + index + item.selector!} 
-                                                classNames={tableCss.headerElement} 
-                                                onHeaderClick={handleOnHeaderClick} 
-                                                onSortIconClick={handleOnSortIconClick} 
-                                                dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }} 
-                                                onSearch={handleOnSearch} 
+                                            return (<Header
+                                                item={item} key={UniqueId + '_' + index + item.selector!}
+                                                classNames={tableCss.headerElement}
+                                                onHeaderClick={handleOnHeaderClick}
+                                                onSortIconClick={handleOnSortIconClick}
+                                                dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
+                                                onSearch={handleOnSearch}
                                                 rowSelection={{
                                                     isRowSelectionEnabled : tableOptions.enableRowSelection!,
                                                     isRowSelectAllHidden: tableOptions.isRowSelectAllHidden!,
@@ -252,15 +254,15 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                     index={UniqueId + index}
                                     key={UniqueId + index}
                                     classNames={
-                                        { 
-                                            rowElementCss: tableCss.tableBodyRowElement!, 
+                                        {
+                                            rowElementCss: tableCss.tableBodyRowElement!,
                                             cellElementCss: tableCss.cellElement!,
                                             rowDefaultActions: tableCss.rowDefaultActions!,
                                             rowExpansion: tableCss.rowExpansion!,
                                             rowSelectionComponent: tableCss.rowSelectionComponent!,
                                             onRowSelectHighlight: tableCss.onRowSelectHighlight!,
                                         }
-                                    } 
+                                    }
                                     dense={{ isDense: tableOptions.dense!, denseCss: tableCss.tableDense! }}
                                     striped={{ isStriped: tableOptions.showTableStriped!, stripedCss: tableCss.tableStriped! }}
                                     onHover={{ isHoverRequired: tableOptions.highlightOnHover!, onHoverCss: tableCss.highlightOnHoverClass! }}
@@ -271,12 +273,12 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
                                         {
                                             enableRowExpansion: tableOptions.enableRowExpansion!,
                                             customRowExpansionIcon : {
-                                                show: tableOptions.customRowExpansionIcon!.show!, 
+                                                show: tableOptions.customRowExpansionIcon!.show!,
                                                 hide: tableOptions.customRowExpansionIcon!.hide!,
-                                            }, 
-                                            onRowExpansionClicked: tableOptions.onRowExpansionClicked!, 
-                                            onRowHideClicked: tableOptions.onRowHideClicked!, 
-                                            isRowExpansionDisabled: tableOptions.isRowExpansionDisabled!, 
+                                            },
+                                            onRowExpansionClicked: tableOptions.onRowExpansionClicked!,
+                                            onRowHideClicked: tableOptions.onRowHideClicked!,
+                                            isRowExpansionDisabled: tableOptions.isRowExpansionDisabled!,
                                             onRowExpanded : tableOptions.onRowExpanded!
                                         }
                                     }

@@ -6,13 +6,14 @@ export type TableColumn = IColumn & {
     sortDirection?: Sorting
 }
 
-/* export type HeaderItem = {
+export type SortProps = {
     isHeaderClicked: boolean,
     onSortClicked: (sortDirection: Sorting, headerItem: TableColumn, event: React.MouseEvent) => void,
     prevDirection: Sorting,
     isHovered?: boolean,
-    props: HeaderProps
-} */
+    item : TableColumn,
+    classNames: IHeaderElementCss
+}
 
 export type SortOptions = {
     sortArray: any[],
@@ -48,7 +49,7 @@ export type HeaderProps = {
 export type RowProps = {
     header: Array<IColumn>,
     rowExpansion : {
-        enableRowExpansion : boolean, 
+        enableRowExpansion : boolean,
         customRowExpansionIcon: {
             show: React.FC<any>,
             hide: React.FC<any>
