@@ -50,19 +50,12 @@ const DataTable: React.FC<IDataTableProps> = (props) => {
     useEffect(() => {
         if (props.columns) {
             let newHeader: TableColumn[] = props.columns!.map((item) => ({ ...item, isSorted: false, showColumn: true }));
-            if(props.options!.enableRowSelection || props.options!.enableRowExpansion){
+            if(props.options!){
+              if(props.options!.enableRowSelection || props.options!.enableRowExpansion){
                 let rowDefaultActions : TableColumn[] = [{name:' ',selector:'rowDefaultActions', showColumn: true}];
                 newHeader = [...rowDefaultActions,...newHeader];
+              }
             }
-
-            /* if(props.options!.enableRowSelection){
-                let rowExpansionHeader : TableColumn[] = [{name:' ',selector:'selection', showColumn: true}];
-                newHeader = [...rowExpansionHeader,...newHeader];
-            }
-            if(props.options!.enableRowExpansion){
-                let rowExpansionHeader : TableColumn[] = [{name:' ',selector:'expansion', showColumn: true}];
-                newHeader = [...rowExpansionHeader,...newHeader];
-            } */
             setTableColumns(newHeader);
         }
         //console.log('Header is fired');

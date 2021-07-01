@@ -9,6 +9,8 @@ export const defaultOptions: IDataTableOptions = {
     pagination: false,
     showTableStriped: false,
     showRowPerPageDropdown: true,
+    enableRowSelection: false,
+    enableRowExpansion: false,
     customRowExpansionIcon: {
         show: undefined,
         hide: undefined
