@@ -52,12 +52,12 @@ const RowExpansion : React.FC<RowExpansionProps> = (props) => {
         <div onClick={handleRowExpansion.bind(this)}> 
             {
                 !showExpanded && <ShowIconComponent id={props.id!} showIcon={props.customRowExpansionIcon.show}
-                    className={props.isRowExpansionDisabled ? "row-expansion-show-icon-disabled" : "row-expansion-show-icon"} />
+                    className={props.isRowExpansionDisabled ? props.classNames! + ' ' + "row-expansion-show-icon-disabled" : props.classNames! + ' ' + "row-expansion-show-icon"} />
                 
             }
             {
                 showExpanded && <HideIconComponent id={props.id!} hideIcon={props.customRowExpansionIcon.hide} 
-                className={props.isRowExpansionDisabled ? "row-expansion-show-icon-disabled" : "row-expansion-show-icon"} />
+                className={props.isRowExpansionDisabled ? props.classNames! + ' ' + "row-expansion-show-icon-disabled" : props.classNames! + ' ' +  "row-expansion-show-icon"} />
             }
         </div>
     )

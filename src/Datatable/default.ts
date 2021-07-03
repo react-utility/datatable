@@ -9,6 +9,8 @@ export const defaultOptions: IDataTableOptions = {
     pagination: false,
     showTableStriped: false,
     showRowPerPageDropdown: true,
+    enableRowSelection: false,
+    enableRowExpansion: false,
     customRowExpansionIcon: {
         show: undefined,
         hide: undefined
@@ -32,6 +34,9 @@ export const defaultCss: IDataTableCSS = {
     cellElement: {
         cellElelmentCss: ''
     },
+    rowDefaultActions: 'row-default-actions',
+    rowExpansion: 'row-expansion',
+    onRowSelectHighlight: 'on-selection-highlight',
     progressbar: {
         progressPendingWrapper: 'progress-pending-wrapper',
         progressPending: 'progress-pending',

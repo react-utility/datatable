@@ -14,7 +14,7 @@ import DataTable from '../../src/index';
 import { Data, Header } from '../assets/data/weather.js';
 
 export default {
-    title: 'Row/Basic Expansion',
+    title: 'Row/Selection',
     component: DataTable,
     parameters: {
         docs: {
@@ -39,25 +39,16 @@ const customClassNames = {
 const options = {
     responsive: true,
     pagination: true,
-    enableRowExpansion: true,
-    onRowClicked : (row, event) => {
-        console.log(row,event);
+    enableRowSelection: true,
+    highlightOnRowSelect: true,
+    isRowSelectionDisabled: (row) => {
+        return [10,8,9,4].includes(row.id)
     },
-    onRowExpansionClicked : (row) => {
-        console.log('onRowExpansionClicked is clicked');
+    isRowSelectionHidden: (row) => {
+        return [122,51].includes(row.id)
     },
-    onRowHideClicked : (row) => {
-        console.log('onRowHideClicked is clicked');
-    },
-    isRowExpansionDisabled : (row) => {
-        return [10,112,51,8,9,4].includes(row.id)
-    },
-    onRowExpanded: (row) => {
-        return (
-            <pre>
-                {JSON.stringify(row,null,4)}
-            </pre>
-        )
+    onRowSelected: (rows,event) => {
+        console.log(rows);
     }
 }
 
@@ -79,8 +70,8 @@ const Template = ({ options, classNames }) => {
     )
 }
 
-export const BasicExpansion = Template.bind({});
-BasicExpansion.args = {
+export const Selection = Template.bind({});
+Selection.args = {
     options: options,
     classNames: customClassNames
 }

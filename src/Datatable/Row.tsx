@@ -1,17 +1,18 @@
 import React, { useState,useRef, useEffect } from 'react';
 import Cell from './Cell';
 import RowExpansion from './RowExpansion';
+import RowSelection from './RowSelection';
 import { CellStyleCustom, RowProps } from './types';
 import { addClass, removeClass, getClassesAsArray } from './util/common';
 
 
 const Row: React.FC<RowProps> = (props: RowProps) => {
     const [showExpandedRow, setShowExpandedRow] = useState(false);
+
     const row = useRef<HTMLTableRowElement>(null);
     const clickCount = useRef<number>(0);
     const delay: number = 300;
-
-
+    const ignoreRowClick = props.rowSelection.enableRowSelection || props.rowExpansion.enableRowExpansion;
 
     useEffect(() => {
         if (props.striped?.isStriped && props.striped!.stripedCss) {
@@ -27,9 +28,8 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         }
         if (props.onHover!.isHoverRequired && props.onHover!.onHoverCss) {
             if (props.onHover!.onHoverCss.length > 0) {
-
+                addClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
             }
-            addClass(row.current!, getClassesAsArray(props.onHover!.onHoverCss));
         } else {
             if (props.onHover!.onHoverCss) {
                 if (props.onHover!.onHoverCss.length > 0) {
@@ -40,7 +40,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
     }, [])
 
     const handleOnClick = (dataItem: any, event: React.MouseEvent<HTMLTableRowElement> | React.TouchEvent<HTMLTableRowElement>) => {
-        if(!props.rowExpansion.enableRowExpansion){
+        if(!ignoreRowClick){
             clickCount.current += 1;
             setTimeout(() => {
                 if (clickCount.current === 1) {
@@ -99,6 +99,25 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
         isExpanded ? props.rowExpansion.onRowExpansionClicked ? props.rowExpansion.onRowExpansionClicked() : undefined : props.rowExpansion.onRowHideClicked ? props.rowExpansion.onRowHideClicked() : undefined;
     }
 
+    const onRowSelection = (rows: any, isSelected:boolean, event?: React.ChangeEvent<HTMLInputElement>) => {
+        if(props.rowSelection.highlightOnRowSelect && isSelected){
+            addClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
+        }else{
+            if (props.classNames.onRowSelectHighlight.length > 0) {
+                removeClass(row.current!, getClassesAsArray(props.classNames.onRowSelectHighlight));
+            }
+        }
+
+        props.rowSelection.onRowSelected(rows,isSelected,event);
+    }
+
+    const getSelectionClassName = () : string => {
+        if(props.rowSelection.enableRowSelection && props.rowExpansion.enableRowExpansion) {
+            return props.classNames.rowDefaultActions;
+        }
+        return 'first-item-nopadding';
+    }
+
     return (
         <>
             <tr key={props.index}
@@ -109,21 +128,48 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
             >
                 {
                     props.header.map((item, index) => {
-                        if(props.rowExpansion.enableRowExpansion && item.selector==="expansion"){
+                        if(item.selector==="rowDefaultActions" ){
                             return (
                                 <Cell
                                     key={index + item.selector!}
                                     classNames={props.classNames.cellElementCss}
                                     dense={props.dense}
                                 >
-                                    <RowExpansion id="rowExansion" rowIsExpanded={handleOnRowExpansion} 
-                                        customRowExpansionIcon={{show:props.rowExpansion.customRowExpansionIcon.show,
-                                            hide:props.rowExpansion.customRowExpansionIcon.hide}}
-                                        isRowExpansionDisabled={props.rowExpansion.isRowExpansionDisabled ? props.rowExpansion.isRowExpansionDisabled(props.dataItem) : false}
-                                    />
+                                    <div className={getSelectionClassName()}>
+                                        {
+                                            props.rowSelection.enableRowSelection &&
+                                            <RowSelection
+                                                id={index + "_rowSelection"}
+                                                classNames={props.classNames.rowSelectionComponent}
+                                                row={props.dataItem}
+                                                selectAll={props.rowSelection.selectAll}
+                                                isRowSelectionDisabled={props.rowSelection.isRowSelectionDisabled!}
+                                                isRowSelectionHidden={props.rowSelection.isRowSelectionHidden!}
+                                                customRowSelection={props.rowSelection.customRowSelection}
+                                                onRowSelection={onRowSelection}
+                                            />
+                                        }
+                                        {
+                                            props.rowExpansion.enableRowExpansion &&
+                                            <RowExpansion
+                                                id={index + "_rowExpansion"}
+                                                rowIsExpanded={handleOnRowExpansion}
+                                                classNames={props.classNames.rowExpansion}
+                                                customRowExpansionIcon={
+                                                    {
+                                                        show:props.rowExpansion.customRowExpansionIcon.show,
+                                                        hide:props.rowExpansion.customRowExpansionIcon.hide
+                                                    }
+                                                }
+                                                isRowExpansionDisabled={props.rowExpansion.isRowExpansionDisabled ? props.rowExpansion.isRowExpansionDisabled(props.dataItem) : false}
+                                            />
+                                        }
+                                    </div>
+
                                 </Cell>
                             )
                         }
+
                         return (
                             <Cell
                                 key={index + item.selector!}
@@ -140,7 +186,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                 }
             </tr>
             {
-                showExpandedRow && 
+                showExpandedRow &&
                 <tr>
                     <td colSpan={props.header.length} className="row-expanded-area">
                         {
@@ -150,7 +196,7 @@ const Row: React.FC<RowProps> = (props: RowProps) => {
                 </tr>
             }
         </>
-        
+
 
     )
 }

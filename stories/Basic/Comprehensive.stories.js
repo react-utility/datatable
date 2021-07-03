@@ -73,6 +73,7 @@ const options = {
             </pre>
         )
     },
+    enableRowSelection: true,
     pagination: true,
     showRowPerPageDropdown: true,
     showRowsPerPage: true,

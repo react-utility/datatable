@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Icon } from './icon';
-import { HeaderItem, Sorting } from './types';
+import {SortProps, Sorting } from './types';
 
-const SortIcon: React.FC<HeaderItem> = ({ isHeaderClicked, onSortClicked, prevDirection, props }) => {
+const SortIcon: React.FC<SortProps> = ({ isHeaderClicked, onSortClicked, prevDirection, item, classNames}) => {
     const iconRef = useRef<HTMLDivElement>(null);
     const [sortClass, setSortClass] = useState({ asc: '', desc: '' });
 
@@ -24,12 +24,12 @@ const SortIcon: React.FC<HeaderItem> = ({ isHeaderClicked, onSortClicked, prevDi
         }
     }, []);
     return (
-        <div ref={iconRef} className={props.classNames!.headerIcon}>
+        <div ref={iconRef} className={classNames.headerIcon}>
             <Icon id="sortDesc" name="sortDesc" className={sortClass.desc} onClick={(event: React.MouseEvent<SVGSVGElement>) => {
-                onSortClicked(Sorting.DESC, props.item, event);
+                onSortClicked(Sorting.DESC, item, event);
             }} />
             <Icon id="sortAsc" name="sortAsc" className={sortClass.asc} onClick={(event: React.MouseEvent<SVGSVGElement>) => {
-                onSortClicked(Sorting.ASC, props.item, event);
+                onSortClicked(Sorting.ASC, item, event);
             }} />
         </div>
     )
